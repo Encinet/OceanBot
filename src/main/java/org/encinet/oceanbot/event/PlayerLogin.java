@@ -30,7 +30,7 @@ public class PlayerLogin implements Listener {
             do {
                 verify = Verify.get();
             } while (code.containsKey(verify));
-            code.put(verify, new Data(e.getUniqueId()));
+            code.put(verify, new Data(e.getUniqueId(), e.getName()));
 
             String message = noWhiteKick.replace("%verify%", verify);
             e.disallow(

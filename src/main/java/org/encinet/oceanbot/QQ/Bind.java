@@ -31,7 +31,7 @@ public class Bind {
         MiraiBot.getBot(BotID).getGroup(GroupID).sendMessage("绑定成功");
 
         String nick = MiraiBot.getBot(BotID).getGroup(GroupID).getMember(qq).getNick();
-        String name = Bukkit.getOfflinePlayer(code.get(text).getUUID()).getName();
+        String name = code.get(text).getName();
         if (!Objects.equals(name, nick) && !nick.endsWith("(" + name + ")")) {
             MiraiBot.getBot(BotID).getGroup(GroupID).getMember(qq).setNameCard(nick + "(" + name + ")");
         }
