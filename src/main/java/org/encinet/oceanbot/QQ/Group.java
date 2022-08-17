@@ -3,6 +3,7 @@ package org.encinet.oceanbot.QQ;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberCardChangeEvent;
+import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -124,6 +125,13 @@ public class Group implements Listener {
 
         if (!Objects.equals(name, nick) && !nick.endsWith("(" + name + ")")) {
             MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).getMember(e.getMemberID()).setNameCard(nick + "(" + name + ")");
+        }
+    }
+    @EventHandler
+    public void leaveEvent(MiraiMemberLeaveEvent e) {
+        long id = e.getMember().getId();
+        if (MiraiMC.getBind(id) != null) {
+            MiraiMC.removeBind(id);
         }
     }
 }
