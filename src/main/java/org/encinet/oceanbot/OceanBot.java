@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.encinet.oceanbot.QQ.Group;
 import org.encinet.oceanbot.event.PlayerLogin;
+import org.encinet.oceanbot.event.PlayerMessage;
 import org.encinet.oceanbot.event.PlayerNumber;
 
 import java.util.Objects;
@@ -22,8 +23,9 @@ public final class OceanBot extends JavaPlugin {
 
         logger.info("注册监听...");
         Bukkit.getPluginManager().registerEvents(new Group(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerNumber(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerMessage(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerNumber(), this);
 
         logger.info("注册Minecraft指令...");
         if (Bukkit.getPluginCommand("oc") != null) {

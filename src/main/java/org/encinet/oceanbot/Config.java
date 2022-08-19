@@ -22,6 +22,10 @@ public class Config {
     public static Boolean gnc;
     public static Map<Integer, String> numMessage;
     public static String noWhiteKick;
+    public static List<String> chatPrefix;
+    public static String qqToServer;
+    public static String serverToQQ;
+    public static List<String> command;
 
     public static void load() {
         ver = getConfig().getInt("ver", 3);
@@ -36,5 +40,9 @@ public class Config {
         }
 
         noWhiteKick = getConfig().getString("noWhiteKick");
+        chatPrefix = getConfig().getStringList("chat.prefix");
+        qqToServer = getConfig().getString("chat.format.qq-to-server");
+        serverToQQ = getConfig().getString("chat.format.server-to-qq");
+        command = getConfig().getStringList("command");
     }
 }

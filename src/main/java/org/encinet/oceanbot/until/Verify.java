@@ -28,12 +28,11 @@ public class Verify {
     }
 
     private static void g(int options) {
-        int tlength = switch (options) {
+        int randomInt = ThreadLocalRandom.current().nextInt(switch (options) {
             case 0, 1 -> 26;
             case 2 -> 10;
             default -> 0;
-        };
-        int randomInt = ThreadLocalRandom.current().nextInt(tlength);
+        });
         verify.append(TYPE[options].charAt(randomInt));
     }
 }

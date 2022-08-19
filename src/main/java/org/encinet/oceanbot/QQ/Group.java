@@ -5,6 +5,7 @@ import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberCardChangeEvent;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -17,6 +18,8 @@ import org.encinet.oceanbot.execute.Whois;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static org.encinet.oceanbot.Config.*;
+
 public class Group implements Listener {
 
     @EventHandler
@@ -24,6 +27,18 @@ public class Group implements Listener {
         for (String n : Config.prefix) {// 遍历前缀数组
             if (e.getMessage().startsWith(n)) {// 如果开头符合
                 command(e);// 就开始判断是哪个命令
+            }
+        }
+        for (String n : chatPrefix) {
+            // 群向服发送消息
+            if ("#".startsWith(e.getMessage())) {
+                String text = e.getMessage().substring(1);
+                String formatText = qqToServer
+                        .replace("$[nick]", e.getSenderName())
+                        .replace("$[qq]", String.valueOf(e.getSenderID()))
+                        .replace("$[message]", text);
+                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', formatText));
+                return;
             }
         }
     }
@@ -38,6 +53,7 @@ public class Group implements Listener {
                                 "当前可用指令前缀 " + Arrays.toString(Config.prefix.toArray()) + "\n" +
                                 "banlist - 列出封禁玩家\n" +
                                 "bind 验证码 - 绑定账号\n" +
+                                "command - 查看部分命令帮助\n" +
                                 "gnc - 开/关自动更改群名功能(仅管理可用)\n" +
                                 "help - 查看帮助\n" +
                                 "list - 列出在线玩家\n" +
@@ -108,6 +124,13 @@ public class Group implements Listener {
             case "whois":
                 Whois.core(str.length < 2 ? null : str[1], e.getSenderID());
                 break;
+            case "command":
+                StringBuilder sb = new StringBuilder();
+                for (String a : command) {
+                    sb.append(a).append("\n");
+                }
+                MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).sendMessage(sb.toString());
+                break;
             default:
                 MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("错误的命令");
                 break;
@@ -127,6 +150,7 @@ public class Group implements Listener {
             MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).getMember(e.getMemberID()).setNameCard(nick + "(" + name + ")");
         }
     }
+
     @EventHandler
     public void leaveEvent(MiraiMemberLeaveEvent e) {
         long id = e.getMember().getId();

@@ -10,10 +10,23 @@ NumMessage:
   2: "正在体验二人世界"
 noWhiteKick: |-
   &6米&f客
-  &7----------
+  &7-------------------
   &f你还没有白名单呢
   &f加入我们的QQ群1138627074并发送
   &6!bind %verify%
   来申请白名单
   &f10分钟后过期
-  &7----------
+  &7-------------------
+
+chat:
+  prefix:
+    - "#"
+    - "＃"
+  format:
+    qq-to-server: '&e$[nick]&7: &f$[message]'
+    # 这行支持papi
+    server-to-qq: '$[player]: $[message]'
+
+command:
+  - "shift+f 菜单"
+  - ""
