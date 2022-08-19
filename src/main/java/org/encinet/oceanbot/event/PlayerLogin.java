@@ -3,6 +3,7 @@ package org.encinet.oceanbot.event;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,7 +37,7 @@ public class PlayerLogin implements Listener {
             String message = noWhiteKick.replace("%verify%", verify);
             e.disallow(
                     AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST,
-                    Component.text(ChatColor.translateAlternateColorCodes('&', message)).asComponent()
+                    LegacyComponentSerializer.legacyAmpersand().deserialize(ChatColor.translateAlternateColorCodes('&', message))
             );
         }
     }

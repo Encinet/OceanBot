@@ -7,6 +7,7 @@ import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberJoinEvent;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -43,17 +44,18 @@ public class Group implements Listener {
         for (String n : Config.prefix) {// 遍历前缀数组
             if (e.getMessage().startsWith(n)) {// 如果开头符合
                 command(e);// 就开始判断是哪个命令
+                return;
             }
         }
         for (String n : Config.chatPrefix) {
             // 群向服发送消息
-            if (n.startsWith(e.getMessage())) {
+            if (e.getMessage().startsWith(n)) {
                 String text = e.getMessage().substring(1);
                 String formatText = qqToServer
                         .replace("$[nick]", e.getSenderName())
                         .replace("$[qq]", String.valueOf(e.getSenderID()))
                         .replace("$[message]", text);
-                Bukkit.getServer().broadcast(Component.text(ChatColor.translateAlternateColorCodes('&', formatText)).asComponent());
+                Bukkit.getServer().sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(ChatColor.translateAlternateColorCodes('&', formatText)));
                 return;
             }
         }
