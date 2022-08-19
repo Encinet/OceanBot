@@ -3,10 +3,12 @@ package org.encinet.oceanbot.QQ;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberCardChangeEvent;
+import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberJoinEvent;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,9 +20,23 @@ import org.encinet.oceanbot.execute.Whois;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.encinet.oceanbot.Config.*;
+import static org.encinet.oceanbot.Config.command;
+import static org.encinet.oceanbot.Config.qqToServer;
 
 public class Group implements Listener {
+
+    @EventHandler
+    public void join(MiraiMemberJoinEvent e) {
+        MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(Config.join);
+    }
+
+    @EventHandler
+    public void leave(MiraiMemberLeaveEvent e) {
+        long id = e.getTargetID();
+        if (MiraiMC.getBind(id) != null) {
+            MiraiMC.removeBind(id);
+        }
+    }
 
     @EventHandler
     public void Players(MiraiGroupMessageEvent e) {
@@ -29,15 +45,15 @@ public class Group implements Listener {
                 command(e);// 就开始判断是哪个命令
             }
         }
-        for (String n : chatPrefix) {
+        for (String n : Config.chatPrefix) {
             // 群向服发送消息
-            if ("#".startsWith(e.getMessage())) {
+            if (n.startsWith(e.getMessage())) {
                 String text = e.getMessage().substring(1);
                 String formatText = qqToServer
                         .replace("$[nick]", e.getSenderName())
                         .replace("$[qq]", String.valueOf(e.getSenderID()))
                         .replace("$[message]", text);
-                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', formatText));
+                Bukkit.getServer().broadcast(Component.text(ChatColor.translateAlternateColorCodes('&', formatText)).asComponent());
                 return;
             }
         }
@@ -148,14 +164,6 @@ public class Group implements Listener {
 
         if (!Objects.equals(name, nick) && !nick.endsWith("(" + name + ")")) {
             MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).getMember(e.getMemberID()).setNameCard(nick + "(" + name + ")");
-        }
-    }
-
-    @EventHandler
-    public void leaveEvent(MiraiMemberLeaveEvent e) {
-        long id = e.getMember().getId();
-        if (MiraiMC.getBind(id) != null) {
-            MiraiMC.removeBind(id);
         }
     }
 }

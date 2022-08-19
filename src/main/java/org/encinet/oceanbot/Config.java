@@ -26,6 +26,7 @@ public class Config {
     public static String qqToServer;
     public static String serverToQQ;
     public static List<String> command;
+    public static String join;
 
     public static void load() {
         ver = getConfig().getInt("ver", 3);
@@ -40,6 +41,7 @@ public class Config {
         }
 
         noWhiteKick = getConfig().getString("noWhiteKick");
+        join = getConfig().getString("join");
         chatPrefix = getConfig().getStringList("chat.prefix");
         qqToServer = getConfig().getString("chat.format.qq-to-server");
         serverToQQ = getConfig().getString("chat.format.server-to-qq");

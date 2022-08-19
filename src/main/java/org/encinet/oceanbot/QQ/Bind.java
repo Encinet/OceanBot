@@ -13,7 +13,7 @@ import static org.encinet.oceanbot.Config.BotID;
 import static org.encinet.oceanbot.Config.GroupID;
 
 public class Bind {
-    public static Map<String, Data> code = new HashMap<>();
+    public static final Map<String, Data> code = new HashMap<>();
 
     public static void qqGroup(String text, Long qq) {
         if (MiraiMC.getBind(qq) != null) {
