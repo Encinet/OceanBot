@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.encinet.oceanbot.Config;
+import org.encinet.oceanbot.execute.Function;
 
 import java.util.Objects;
 

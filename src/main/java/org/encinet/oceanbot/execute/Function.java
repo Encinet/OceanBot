@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.QQ;
+package org.encinet.oceanbot.execute;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.execute.Whois;
+import org.encinet.oceanbot.QQ.Bind;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -94,13 +94,13 @@ public class Function {
             }
             case "whois" -> rText = Whois.core(str.length < 2 ? null : str[1], qqNum);
             case "c" -> {
-                StringBuilder c = new StringBuilder();
                 if (str.length < 2) {
                     rText = "你还没有输入命令呢";
                 } else {
                     if (!hasPermission(qqNum)) {
                         rText = "没有权限";
                     } else {
+                        StringBuilder c = new StringBuilder();
                         for (int i = 1; i < str.length; i++) {
                             c.append(str[i]);
                             if (i < (str.length - 1)) {

@@ -5,6 +5,7 @@ import me.dreamvoid.miraimc.bukkit.event.friend.MiraiNewFriendRequestEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiFriendMessageEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.encinet.oceanbot.execute.Function;
 
 import static org.encinet.oceanbot.Config.*;
 
