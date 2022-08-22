@@ -19,8 +19,10 @@ public class PlayerLogin implements Listener {
         boolean allow = false;
         long binder = MiraiMC.getBind(e.getUniqueId());
         if (binder != 0) {
-            if (MiraiBot.getBot(BotID).getGroup(GroupID).contains(binder)) {
-                allow = true;
+            for (Long num : GroupID) {
+                if (MiraiBot.getBot(BotID).getGroup(num).contains(binder)) {
+                    allow = true;
+                }
             }
         }
 

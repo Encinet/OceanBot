@@ -3,6 +3,7 @@ package org.encinet.oceanbot;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,8 @@ public class Config {
     public static int ver;
     public static List<String> prefix;
     public static Long BotID;
-    public static Long GroupID;
+    public static List<Long> GroupID;
+    public static Long MainGroup;
     public static Boolean gnc;
     public static Map<Integer, String> numMessage;
     public static String noWhiteKick;
@@ -34,7 +36,8 @@ public class Config {
         ver = getConfig().getInt("ver", 3);
         prefix = getConfig().getStringList("prefix");
         BotID = getConfig().getLong("BotID");
-        GroupID = getConfig().getLong("GroupID");
+        GroupID = getConfig().getLongList("GroupID");
+        MainGroup = getConfig().getLong("MainGroup");
         gnc = getConfig().getBoolean("gnc", true);
 
         numMessage = new HashMap<>();

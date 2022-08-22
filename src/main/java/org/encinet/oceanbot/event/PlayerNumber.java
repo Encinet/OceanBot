@@ -10,6 +10,8 @@ import org.encinet.oceanbot.Config;
 
 import java.util.Random;
 
+import static org.encinet.oceanbot.Config.MainGroup;
+
 public class PlayerNumber implements Listener {
 
     public static final String[] noOne = {
@@ -33,10 +35,10 @@ public class PlayerNumber implements Listener {
     public static void change() {
         int now = Bukkit.getServer().getOnlinePlayers().toArray().length;
         if (now > 0) {
-            MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).setName("米客 | 现在" + now + "人在线");
+            MiraiBot.getBot(Config.BotID).getGroup(MainGroup).setName("米客 | 现在" + now + "人在线");
         } else {
             Random r = new Random();
-            MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).setName(noOne[r.nextInt(noOne.length)]);
+            MiraiBot.getBot(Config.BotID).getGroup(MainGroup).setName(noOne[r.nextInt(noOne.length)]);
         }
     }
 }

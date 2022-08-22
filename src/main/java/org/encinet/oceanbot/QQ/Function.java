@@ -1,6 +1,5 @@
 package org.encinet.oceanbot.QQ;
 
-import me.dreamvoid.miraimc.api.MiraiBot;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -20,10 +19,10 @@ import static org.encinet.oceanbot.event.PlayerNumber.change;
 
 public class Function {
     public static String on(String text, Long qqNum) {
-        String rText = "";
+        final String[] rText = new String[1];
         String[] str = text.substring(1).split(" ");
         switch (str[0]) {// 截取首位字符以后的东西
-            case "help" -> rText = (
+            case "help" -> rText[0] = (
                     "消息前加#可发送到服务器或QQ群\n" +
                             "当前可用指令前缀 " + Arrays.toString(Config.prefix.toArray()) + "\n" +
                             "banlist - 列出封禁玩家\n" +
@@ -52,7 +51,7 @@ public class Function {
                     }
                 }
                 String replenish = Config.numMessage.getOrDefault(online, "");// 补充消息
-                rText = "当前在线人数：" + Bukkit.getServer().getOnlinePlayers().size() + "人\n" + list + replenish;
+                rText[0] = "当前在线人数：" + Bukkit.getServer().getOnlinePlayers().size() + "人\n" + list + replenish;
             }
             case "banlist" -> {
                 StringBuilder list = new StringBuilder();
@@ -65,22 +64,22 @@ public class Function {
                         list.append(",");
                     }
                 }
-                rText = "当前被封禁玩家有" + max + "人\n" + list;
+                rText[0] = "当前被封禁玩家有" + max + "人\n" + list;
             }
             case "reload" -> {
                 if (hasPermission(qqNum)) {
                     Config.load();
-                    rText = "配置文件已重载!";
+                    rText[0] = "配置文件已重载!";
                 } else {
-                    rText = "没有权限";
+                    rText[0] = "没有权限";
                 }
             }
             case "gnc" -> {
                 if (!hasPermission(qqNum)) {
-                    rText = "没有权限";
+                    rText[0] = "没有权限";
                 } else {
                     Config.gnc = !Config.gnc;
-                    rText = "自动更改群名功能 " + (Config.gnc ? "开启" : "关闭");
+                    rText[0] = "自动更改群名功能 " + (Config.gnc ? "开启" : "关闭");
                     if (Config.gnc) {
                         change();
                     }
@@ -88,19 +87,19 @@ public class Function {
             }
             case "bind" -> {
                 if (str.length < 2) {
-                    rText = "你还没有输入验证码";
+                    rText[0] = "你还没有输入验证码";
                 } else if (!Bind.code.containsKey(str[1])) {
-                    rText = "无效验证码";
+                    rText[0] = "无效验证码";
                 } else return Bind.qqGroup(str[1], qqNum);
             }
-            case "whois" -> Whois.core(str.length < 2 ? null : str[1], qqNum);
+            case "whois" -> rText[0] = Whois.core(str.length < 2 ? null : str[1], qqNum);
             case "c" -> {
                 StringBuilder c = new StringBuilder();
                 if (str.length < 2) {
-                    MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).sendMessage("你还没有输入命令呢");
+                    rText[0] = "你还没有输入命令呢";
                 } else {
                     if (!hasPermission(qqNum)) {
-                        rText = "没有权限";
+                        rText[0] = "没有权限";
                     } else {
                         for (int i = 1; i < str.length; i++) {
                             c.append(str[i]);
@@ -112,7 +111,7 @@ public class Function {
                             @Override
                             public void run() {
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), c.toString());
-                                MiraiBot.getBot(Config.BotID).getGroup(Config.GroupID).sendMessage("指令发送完成");
+                                rText[0] = "指令发送完成";
                             }
                         }.runTask(JavaPlugin.getProvidingPlugin(OceanBot.class));
                     }
@@ -139,11 +138,11 @@ public class Function {
                 final long duse = dt - du;
                 sb.append("线程数: ").append(Thread.currentThread().getThreadGroup().activeCount()).append(" 磁盘: ").append(unitByte(dt)).append("-").append(unitByte(duse)).append("=").append(unitByte(du));
 
-                rText = sb.toString();
+                rText[0] = sb.toString();
             }
-            default -> rText = "错误的命令";
+            default -> rText[0] = "错误的命令";
         }
-        return rText;
+        return rText[0];
     }
 
 

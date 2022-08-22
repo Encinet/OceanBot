@@ -2,6 +2,7 @@ package org.encinet.oceanbot;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.encinet.oceanbot.QQ.Friend;
 import org.encinet.oceanbot.QQ.Group;
 import org.encinet.oceanbot.event.PlayerLogin;
 import org.encinet.oceanbot.event.PlayerMessage;
@@ -23,6 +24,7 @@ public final class OceanBot extends JavaPlugin {
 
         logger.info("注册监听...");
         Bukkit.getPluginManager().registerEvents(new Group(), this);
+        Bukkit.getPluginManager().registerEvents(new Friend(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerMessage(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerNumber(), this);

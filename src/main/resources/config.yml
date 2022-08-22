@@ -3,7 +3,10 @@ prefix:
   - "!"
   - "！"
 BotID: 2139645544
-GroupID: 1138627074
+GroupID:
+  - 1138627074
+  - 682204087
+MainGroup: 1138627074
 gnc: true
 NumMessage:
   1: "正在独自遨游世界"

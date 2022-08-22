@@ -19,7 +19,7 @@ public class PlayerMessage implements Listener {
                 String formatText = serverToQQ
                         .replace("$[player]", e.getPlayer().getName())
                         .replace("$[message]", message.substring(1));
-                MiraiBot.getBot(BotID).getGroup(GroupID)
+                MiraiBot.getBot(BotID).getGroup(MainGroup)
                         .sendMessageMirai(PlaceholderAPI.setPlaceholders(e.getPlayer(), formatText));
             }
         }
