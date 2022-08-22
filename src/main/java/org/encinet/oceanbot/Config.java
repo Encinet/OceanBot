@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Config {
-    static final Plugin config = JavaPlugin.getProvidingPlugin(OceanBot.class);
+    static final Plugin plugin = JavaPlugin.getProvidingPlugin(OceanBot.class);
 
     public static FileConfiguration getConfig() {
-        return config.getConfig();
+        return plugin.getConfig();
     }
 
     public static int ver;
@@ -25,10 +25,12 @@ public class Config {
     public static List<String> chatPrefix;
     public static String qqToServer;
     public static String serverToQQ;
-    public static List<String> command;
     public static String join;
 
+    public static List<Long> admin;
     public static void load() {
+        plugin.reloadConfig();
+
         ver = getConfig().getInt("ver", 3);
         prefix = getConfig().getStringList("prefix");
         BotID = getConfig().getLong("BotID");
@@ -45,6 +47,7 @@ public class Config {
         chatPrefix = getConfig().getStringList("chat.prefix");
         qqToServer = getConfig().getString("chat.format.qq-to-server");
         serverToQQ = getConfig().getString("chat.format.server-to-qq");
-        command = getConfig().getStringList("command");
+
+        admin = getConfig().getLongList("admin");
     }
 }
