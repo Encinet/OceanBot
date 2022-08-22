@@ -71,7 +71,9 @@ public class Group implements Listener {
 
         String nick = e.getNewNick();
         String name = Bukkit.getOfflinePlayer(Objects.requireNonNull(MiraiMC.getBind(e.getMemberID()))).getName();
-
+        if (name == null) {
+            return;
+        }
         if (!Objects.equals(name, nick) && !nick.endsWith("(" + name + ")")) {
             MiraiBot.getBot(Config.BotID).getGroup(e.getGroupID()).getMember(e.getMemberID()).setNameCard(nick + "(" + name + ")");
         } else if (("(" + name + ")").equals(nick)) {

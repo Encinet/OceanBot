@@ -19,7 +19,7 @@ import static org.encinet.oceanbot.event.PlayerNumber.change;
 
 public class Function {
     public static String on(String text, Long qqNum) {
-        String rText = "";
+        String rText;
         String[] str = text.substring(1).split(" ");
         switch (str[0]) {// 截取首位字符以后的东西
             case "help" -> rText = (
