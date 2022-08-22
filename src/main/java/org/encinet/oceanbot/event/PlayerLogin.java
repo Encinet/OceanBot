@@ -10,8 +10,8 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.encinet.oceanbot.until.Data;
 import org.encinet.oceanbot.until.Verify;
 
-import static org.encinet.oceanbot.QQ.Bind.code;
 import static org.encinet.oceanbot.Config.*;
+import static org.encinet.oceanbot.QQ.Bind.code;
 
 public class PlayerLogin implements Listener {
     @EventHandler
@@ -19,10 +19,8 @@ public class PlayerLogin implements Listener {
         boolean allow = false;
         long binder = MiraiMC.getBind(e.getUniqueId());
         if (binder != 0) {
-            for (Long num : GroupID) {
-                if (MiraiBot.getBot(BotID).getGroup(num).contains(binder)) {
-                    allow = true;
-                }
+            if (MiraiBot.getBot(BotID).getGroup(MainGroup).contains(binder)) {
+                allow = true;
             }
         }
 

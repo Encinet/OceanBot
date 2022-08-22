@@ -21,7 +21,7 @@ public class Group implements Listener {
 
     @EventHandler
     public void join(MiraiMemberJoinEvent e) {
-        if (!inGroup(e.getGroupID())) {
+        if (!Objects.equals(e.getGroupID(), MainGroup)) {
             return;
         }
         MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessageMirai("[mirai:at:" + e.getNewMemberID() + "]\n" + Config.join);
@@ -29,7 +29,7 @@ public class Group implements Listener {
 
     @EventHandler
     public void leave(MiraiMemberLeaveEvent e) {
-        if (!inGroup(e.getGroupID())) {
+        if (!Objects.equals(e.getGroupID(), MainGroup)) {
             return;
         }
         long id = e.getTargetID();
@@ -65,9 +65,7 @@ public class Group implements Listener {
 
     @EventHandler
     public void cardChange(MiraiMemberCardChangeEvent e) {
-        if (!inGroup(e.getGroupID())) {
-            return;
-        } else if (MiraiMC.getBind(e.getMemberID()) == null) {
+        if (!Objects.equals(e.getGroupID(), MainGroup) || MiraiMC.getBind(e.getMemberID()) == null) {
             return;
         }
 
