@@ -23,12 +23,12 @@ public class Whois {
                 if (MiraiMC.getBind(num) != null) {
                     return search(MiraiMC.getBind(num));
                 } else {
-                    return "未知的玩家";
+                    return "查无此人";
                 }
             } else if (MiraiMC.getBind(Long.parseLong(on)) != null) {
                 return search(MiraiMC.getBind(Long.parseLong(on)));
             } else {
-                return "未知的玩家";
+                return "查无此人";
             }
         } catch (NumberFormatException e) {
             // 尝试为游戏ID
@@ -36,7 +36,7 @@ public class Whois {
             if (MiraiMC.getBind(uuid) != 0) {
                 return search(uuid);
             } else {
-                return "未知的玩家";
+                return "查无此人";
             }
         }
     }
@@ -45,6 +45,9 @@ public class Whois {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+        if (!player.hasPlayedBefore()) {
+            return "此玩家尚未进服";
+        }
         return "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + (player.isBanned() ? "封禁" : (player.isOnline() ? "在线" : "离线")) + "\n" +
                 "UUID: " + uuid + "\n" +
                 "QQ: " + MiraiMC.getBind(uuid) + "\n" +
