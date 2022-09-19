@@ -42,7 +42,7 @@ public class Group implements Listener {
     @EventHandler
     public void Players(MiraiGroupMessageEvent e) {
         String message = e.getMessage();
-        if (message.length() < 2 ||!inGroup(e.getGroupID())) {
+        if (message.length() < 2 || !inGroup(e.getGroupID())) {
             return;
         }
         for (String n : Config.prefix) {// 遍历前缀数组
