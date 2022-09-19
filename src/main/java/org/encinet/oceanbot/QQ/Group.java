@@ -41,18 +41,19 @@ public class Group implements Listener {
 
     @EventHandler
     public void Players(MiraiGroupMessageEvent e) {
-        if (!inGroup(e.getGroupID())) {
+        String message = e.getMessage();
+        if (message.length() < 2 ||!inGroup(e.getGroupID())) {
             return;
         }
         for (String n : Config.prefix) {// 遍历前缀数组
-            if (e.getMessage().startsWith(n)) {// 如果开头符合
+            if (message.startsWith(n)) {// 如果开头符合
                 MiraiBot.getBot(BotID).getGroup(e.getGroupID()).sendMessageMirai(Function.on(e.getMessage(), e.getSenderID()));
                 return;
             }
         }
         for (String n : Config.chatPrefix) {
             // 群向服发送消息
-            if (e.getMessage().startsWith(n)) {
+            if (message.startsWith(n)) {
                 String text = e.getMessage().substring(1);
                 String formatText = qqToServer
                         .replace("$[nick]", e.getSenderName())

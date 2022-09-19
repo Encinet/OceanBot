@@ -2,13 +2,12 @@ ver: 3
 prefix:
   - "!"
   - "！"
-  - "."
 BotID: 2139645544
 GroupID:
   - 1138627074
   - 682204087
 MainGroup: 1138627074
-gnc: false
+gnc: true
 NumMessage:
   1: "正在独自遨游世界"
   2: "正在体验二人世界"
@@ -16,23 +15,21 @@ noWhiteKick: |-
   &6米&f客
   &7-------------------
   &f你还没有白名单呢
-  &f您的验证码是&6%verify%
-  &f加入我们的QQ群1138627074并在群里发送
+  &f加入我们的QQ群1138627074并发送
   &6!bind %verify%
   来申请白名单
-  &f验证码10分钟后过期
+  &f10分钟后过期
   &7-------------------
 join: |-
   欢迎加入米客服务器
-  您需要进入服务器并根据提示将您的游戏ID和您的QQ账号绑定
-  求求你看看公告吧
-  公告能解决您的大部分问题
+  白名单要进游戏才能申请
+  看公告是个好习惯
 chat:
   prefix:
     - "#"
     - "＃"
   format:
-    qq-to-server: '&8[&cQQ&8]&e$[nick]&7: &f$[message]'
+    qq-to-server: '&e$[nick]&7: &f$[message]'
     # 这行支持papi
     server-to-qq: '$[player]: $[message]'
 admin:
