@@ -6,7 +6,6 @@ import org.encinet.oceanbot.QQ.Friend;
 import org.encinet.oceanbot.QQ.Group;
 import org.encinet.oceanbot.event.PlayerLogin;
 import org.encinet.oceanbot.event.PlayerMessage;
-import org.encinet.oceanbot.event.PlayerNumber;
 
 import java.util.Objects;
 import java.util.logging.Logger;
