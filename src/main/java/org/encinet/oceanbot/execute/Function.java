@@ -36,8 +36,6 @@ public class Function {
                             "当前版本:" + Config.ver + "\n" +
                             "Made By Encinet");
             case "list" -> {
-                change();
-
                 StringBuilder list = new StringBuilder();
                 int online = Bukkit.getServer().getOnlinePlayers().toArray().length;// 在线玩家
                 int nl = 0;// 计数器
