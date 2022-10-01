@@ -27,9 +27,8 @@ public final class OceanBot extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Friend(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerMessage(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerNumber(), this);
 
-        logger.info("注册Minecraft指令...");
+        logger.info("注册Minecraft指令");
         if (Bukkit.getPluginCommand("oc") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("oc")).setExecutor(new MCCommand());
         }

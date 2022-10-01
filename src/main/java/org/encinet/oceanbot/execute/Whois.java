@@ -52,7 +52,7 @@ public class Whois {
                 "UUID: " + uuid + "\n" +
                 "QQ: " + MiraiMC.getBind(uuid) + "\n" +
                 "加入时间: " + dateFormat.format(player.getFirstPlayed()) + "\n" +
-                "最近游玩: " + dateFormat.format(player.getLastSeen()) + "\n"
+                "最近游玩: " + dateFormat.format(player.getLastSeen())
                 ;
     }
 }

@@ -20,7 +20,7 @@ public class Config {
     public static Long BotID;
     public static List<Long> GroupID;
     public static Long MainGroup;
-    public static Boolean gnc;
+
     public static Map<Integer, String> numMessage;
     public static String noWhiteKick;
     public static List<String> chatPrefix;
@@ -37,7 +37,6 @@ public class Config {
         BotID = getConfig().getLong("BotID");
         GroupID = getConfig().getLongList("GroupID");
         MainGroup = getConfig().getLong("MainGroup");
-        gnc = getConfig().getBoolean("gnc", true);
 
         numMessage = new HashMap<>();
         for (int num : getConfig().getIntegerList("NumMessage")) {

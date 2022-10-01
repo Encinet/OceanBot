@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.encinet.oceanbot.Config.admin;
-import static org.encinet.oceanbot.event.PlayerNumber.change;
 
 public class Function {
     public static String on(String text, Long qqNum) {
@@ -34,7 +33,6 @@ public class Function {
                             "list - 列出在线玩家\n" +
                             "reload - 重载配置文件(仅管理可用)\n" +
                             "whois 玩家名/QQ - 查询信息\n" +
-                            "当前自动更改群名功能状态: " + (Config.gnc ? "开启" : "关闭") + "\n" +
                             "当前版本:" + Config.ver + "\n" +
                             "Made By Encinet");
             case "list" -> {
@@ -72,17 +70,6 @@ public class Function {
                     rText = "配置文件已重载!";
                 } else {
                     rText = "没有权限";
-                }
-            }
-            case "gnc" -> {
-                if (!hasPermission(qqNum)) {
-                    rText = "没有权限";
-                } else {
-                    Config.gnc = !Config.gnc;
-                    rText = "自动更改群名功能 " + (Config.gnc ? "开启" : "关闭");
-                    if (Config.gnc) {
-                        change();
-                    }
                 }
             }
             case "bind" -> {
