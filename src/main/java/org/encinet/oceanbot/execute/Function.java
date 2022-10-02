@@ -27,7 +27,6 @@ public class Function {
                             "banlist - 列出封禁玩家\n" +
                             "bind 验证码 - 绑定账号\n" +
                             "c - 执行命令(仅管理可用)\n" +
-                            "gnc - 开/关自动更改群名功能(仅管理可用)\n" +
                             "help - 查看帮助\n" +
                             "info - 查看服务器信息\n" +
                             "list - 列出在线玩家\n" +

@@ -16,12 +16,12 @@ public final class OceanBot extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        logger.info("加载配置文件...");
+        logger.info("加载配置文件");
         saveDefaultConfig();
         reloadConfig();
         Config.load();
 
-        logger.info("注册监听...");
+        logger.info("注册监听");
         Bukkit.getPluginManager().registerEvents(new Group(), this);
         Bukkit.getPluginManager().registerEvents(new Friend(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);

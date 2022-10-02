@@ -6,15 +6,20 @@ import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberCardChangeEvent
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberJoinEvent;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.execute.Function;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import static org.encinet.oceanbot.Config.*;
 
@@ -25,7 +30,8 @@ public class Group implements Listener {
         if (!Objects.equals(e.getGroupID(), MainGroup)) {
             return;
         }
-        MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessageMirai("[mirai:at:" + e.getNewMemberID() + "]\n" + Config.join);
+        MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID())
+                .sendMessageMirai("[mirai:at:" + e.getNewMemberID() + "]\n" + Config.join);
     }
 
     @EventHandler
@@ -47,7 +53,8 @@ public class Group implements Listener {
         }
         for (String n : Config.prefix) {// 遍历前缀数组
             if (message.startsWith(n)) {// 如果开头符合
-                MiraiBot.getBot(BotID).getGroup(e.getGroupID()).sendMessageMirai(Function.on(e.getMessage(), e.getSenderID()));
+                MiraiBot.getBot(BotID).getGroup(e.getGroupID())
+                        .sendMessageMirai(Function.on(e.getMessage(), e.getSenderID()));
                 return;
             }
         }
@@ -55,11 +62,21 @@ public class Group implements Listener {
             // 群向服发送消息
             if (message.startsWith(n)) {
                 String text = e.getMessage().substring(1);
-                String formatText = qqToServer
-                        .replace("$[nick]", e.getSenderName())
-                        .replace("$[qq]", String.valueOf(e.getSenderID()))
-                        .replace("$[message]", text);
-                Bukkit.getServer().sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(ChatColor.translateAlternateColorCodes('&', formatText)));
+
+                UUID bind = MiraiMC.getBind(e.getSenderID());
+                String hoverName = "§7QQ: §3" + String.valueOf(e.getSenderID()) + "\n" +
+                        "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
+                final TextComponent textComponent = Component.text("")
+                        .append(Component.text("§8[§cQQ§8]").hoverEvent(HoverEvent.showText(Component.text("""
+                                §8| §7这是一条从QQ群发来的消息
+
+                                §8➥ §7点击加入""")))
+                                .clickEvent(ClickEvent.openUrl("https://ock.cn/nojtp")))
+                        .append(Component.text(e.getSenderName()).color(NamedTextColor.YELLOW)
+                                .hoverEvent(HoverEvent.showText(Component.text(hoverName))))
+                        .append(Component.text(": ").color(NamedTextColor.GRAY))
+                        .append(Component.text(text));
+                Bukkit.getServer().sendMessage(textComponent);
                 return;
             }
         }
@@ -77,7 +94,8 @@ public class Group implements Listener {
             return;
         }
         if (!Objects.equals(name, nick) && !nick.endsWith("(" + name + ")")) {
-            MiraiBot.getBot(Config.BotID).getGroup(e.getGroupID()).getMember(e.getMemberID()).setNameCard(nick + "(" + name + ")");
+            MiraiBot.getBot(Config.BotID).getGroup(e.getGroupID()).getMember(e.getMemberID())
+                    .setNameCard(nick + "(" + name + ")");
         } else if (("(" + name + ")").equals(nick)) {
             MiraiBot.getBot(Config.BotID).getGroup(e.getGroupID()).getMember(e.getMemberID()).setNameCard(name);
         }
