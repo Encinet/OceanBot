@@ -68,12 +68,14 @@ public class Group implements Listener {
                         "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
                 final TextComponent textComponent = Component.text("")
                         .append(Component.text("§8[§cQQ§8]").hoverEvent(HoverEvent.showText(Component.text("""
-                                §8| §7这是一条从QQ群发来的消息
+                                §8| §b这是一条从QQ群发来的消息
+                                §8| §b消息开头为#可互通
 
-                                §8➥ §7点击加入""")))
-                                .clickEvent(ClickEvent.openUrl("https://ock.cn/nojtp")))
+                                §a➥ §b点击回复""")))
+                                .clickEvent(ClickEvent.suggestCommand("#")))
                         .append(Component.text(e.getSenderName()).color(NamedTextColor.YELLOW)
-                                .hoverEvent(HoverEvent.showText(Component.text(hoverName))))
+                                .hoverEvent(HoverEvent.showText(Component.text(hoverName)))
+                                .clickEvent(ClickEvent.runCommand("/oc !whois " + e.getSenderID())))
                         .append(Component.text(": ").color(NamedTextColor.GRAY))
                         .append(Component.text(text));
                 Bukkit.getServer().sendMessage(textComponent);
