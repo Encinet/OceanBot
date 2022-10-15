@@ -17,11 +17,4 @@ public class Friend implements Listener {
             MiraiBot.getBot(BotID).getFriend(e.getSenderID()).sendMessageMirai(Function.on(e.getMessage(), e.getSenderID()));
         }
     }
-
-    @EventHandler
-    public void newFriend(MiraiNewFriendRequestEvent e) {
-        if (MiraiBot.getBot(BotID).getGroup(MainGroup).contains(e.getFromID())) {
-            e.accept();
-        } else e.reject(false);
-    }
 }
