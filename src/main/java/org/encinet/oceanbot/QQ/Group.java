@@ -60,7 +60,7 @@ public class Group implements Listener {
         }
         for (String n : Config.chatPrefix) {
             // 群向服发送消息
-            if (message.startsWith(n) && e.getGroupID().equals(MainGroup)) {
+            if (message.startsWith(n) && Objects.equals(e.getGroupID(), MainGroup)) {
                 String text = e.getMessage().substring(1);
 
                 UUID bind = MiraiMC.getBind(e.getSenderID());
