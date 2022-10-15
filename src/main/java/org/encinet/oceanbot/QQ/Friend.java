@@ -1,7 +1,6 @@
 package org.encinet.oceanbot.QQ;
 
 import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.bukkit.event.friend.MiraiNewFriendRequestEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiFriendMessageEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
