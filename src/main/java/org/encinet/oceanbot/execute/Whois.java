@@ -53,7 +53,7 @@ boolean online = player.isOnline();
 String f;
         if (online) {
         Player o = Bukkit.getPlayer(uuid);
-f = "在线 " + o.getPing() + "ms");
+f = "在线 " + o.getPing() + "ms";
         } else {
 f = player.isBanned() ? "封禁" : "离线";
 }
