@@ -53,11 +53,11 @@ boolean online = player.isOnline();
 String f;
         if (online) {
         Player o = Bukkit.getPlayer(uuid);
-f = "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + "在线 " + o.getPing() + "ms");
+f = "在线 " + o.getPing() + "ms");
         } else {
-f = "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + (player.isBanned() ? "封禁" : "离线");
+f = player.isBanned() ? "封禁" : "离线";
 }
-return  + "\n" + f + "\n" +
+return "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + f + "\n" +
                 "UUID: " + uuid + "\n" +
                 "QQ: " + MiraiMC.getBind(uuid) + "\n" +
                 "加入时间: " + dateFormat.format(player.getFirstPlayed()) + "\n" +
