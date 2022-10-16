@@ -45,11 +45,10 @@ public class Whois {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-
+boolean online = player.isOnline();
         if (!player.hasPlayedBefore()) {
             return "此玩家尚未进服";
-        } else if (player.isOnline) {
-        boolean online = player.isOnline();
+        } else {
         if (online) {
         Player o = Bukkit.getPlayer(uuid);
         }
