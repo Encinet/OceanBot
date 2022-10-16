@@ -20,7 +20,7 @@ jobs:
        ./gradlew build
 
     - name: Upload Jar
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           name: OceanBot
           path: build/libs/
