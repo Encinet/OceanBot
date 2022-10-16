@@ -45,9 +45,15 @@ public class Whois {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+
+
+
         if (!player.hasPlayedBefore()) {
             return "此玩家尚未进服";
+        } else if (player.isOnline) {
+
         }
+
         return "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + (player.isBanned() ? "封禁" : (player.isOnline() ? "在线" : "离线")) + "\n" +
                 "UUID: " + uuid + "\n" +
                 "QQ: " + MiraiMC.getBind(uuid) + "\n" +
