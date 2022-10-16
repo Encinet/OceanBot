@@ -4,7 +4,6 @@ import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiBotInvitedJoinGroupRequestEvent;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberCardChangeEvent;
-
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberJoinEvent;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
@@ -114,9 +113,9 @@ public class Group implements Listener {
         return false;
     }
 
-	// 同意管理的邀请
-	@EventHandler
-	public void invite(MiraiBotInvitedJoinGroupRequestEvent e) {
+    // 同意管理的邀请
+    @EventHandler
+    public void invite(MiraiBotInvitedJoinGroupRequestEvent e) {
         for (long n : admin) {
             if (Objects.equals(n, e.getInvitorID())) {
                 e.accept();
