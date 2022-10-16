@@ -50,10 +50,14 @@ boolean online = player.isOnline();
         if (!player.hasPlayedBefore()) {
             return "此玩家尚未进服";
         } else {
+String f;
         if (online) {
         Player o = Bukkit.getPlayer(uuid);
-        }
-return "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + (player.isBanned() ? "封禁" : (online ? ("在线" + o.getPing()) : "离线")) + "\n" +
+f = "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + "在线 " + o.getPing() + "ms")
+        } else {
+f = "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + (player.isBanned() ? "封禁" : "离线")
+}
+return  + "\n" + f + "\n" +
                 "UUID: " + uuid + "\n" +
                 "QQ: " + MiraiMC.getBind(uuid) + "\n" +
                 "加入时间: " + dateFormat.format(player.getFirstPlayed()) + "\n" +
