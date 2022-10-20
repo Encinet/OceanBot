@@ -29,6 +29,7 @@ public class Config {
     public static String join;
 
     public static List<Long> admin;
+    public static List<String> recall;
     public static void load() {
         plugin.reloadConfig();
 
@@ -50,5 +51,6 @@ public class Config {
         serverToQQ = getConfig().getString("chat.format.server-to-qq");
 
         admin = getConfig().getLongList("admin");
+        recall = getConfig().getStringList("recall");
     }
 }
