@@ -83,11 +83,13 @@ public class Group implements Listener {
                 return;
             }
         }
+        if (e.getBotPermission() > e.getSenderPermission()) {
         for (String n : Config.recall) {
-            if (message.contains(n)) {
+            if (message.equals(n) || message.contains(n)) {
                 e.recall();
                 return;
             }
+        }
         }
     }
 
