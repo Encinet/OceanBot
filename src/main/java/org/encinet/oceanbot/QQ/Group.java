@@ -83,6 +83,12 @@ public class Group implements Listener {
                 return;
             }
         }
+        for (String n : Config.recall) {
+            if (message.contains(n)) {
+                e.recall();
+                return;
+            }
+        }
     }
 
     @EventHandler
