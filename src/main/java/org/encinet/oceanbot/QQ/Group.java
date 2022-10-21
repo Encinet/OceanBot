@@ -1,5 +1,6 @@
 package org.encinet.oceanbot.QQ;
 
+import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiBotInvitedJoinGroupRequestEvent;
@@ -92,6 +93,10 @@ String m = message.toLowerCase();
                 e.recall();
 tAdd(qq);
 if (tiger.get(qq) >= 3) {
+    MiraiNormalMember mem = new MiraiNormalMember(e.getGroup(), qq);
+    if (!mem.isMuted()) {
+        mem.setMute(1);
+    }
 tiger.remove(qq);
 }
                 return;
