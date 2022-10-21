@@ -48,7 +48,7 @@ recall:
   mute:
     # 单位: 次数
     value: 3
-    # 单位: 分钟
+    # 单位: 秒
     time: 120
   text:
     # 英文请用小写

@@ -90,14 +90,14 @@ long qq = e.getSenderID();
         }
         if (e.getBotPermission() > e.getSenderPermission()) {
 String m = message.toLowerCase();
-        for (String n : Config.recall) {
+        for (String n : Config.recallText) {
             if (m.equals(n) || m.contains(n)) {
                 e.recall();
 tAdd(qq);
-if (tiger.get(qq) >= 3) {
+if (tiger.get(qq) >= Config.recallMuteValue) {
     MiraiNormalMember mem = e.getGroup().getMember(qq);
     if (!mem.isMuted()) {
-        mem.setMute(1);
+        mem.setMute(Config.recallMuteTime);
     }
 tiger.remove(qq);
 }

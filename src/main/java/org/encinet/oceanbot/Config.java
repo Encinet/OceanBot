@@ -29,7 +29,10 @@ public class Config {
     public static String join;
 
     public static List<Long> admin;
-    public static List<String> recall;
+    
+    public static int recallMuteValue;
+    public static int recallMuteTime;
+    public static List<String> recallText;
     public static void load() {
         plugin.reloadConfig();
 
@@ -51,6 +54,9 @@ public class Config {
         serverToQQ = getConfig().getString("chat.format.server-to-qq");
 
         admin = getConfig().getLongList("admin");
-        recall = getConfig().getStringList("recall");
+        
+        recallMuteValue = getConfig().getInt("recall.mute.value", 3);
+        recallMuteTime = getConfig().getInt("recall.mute.time", 120);
+        recallText = getConfig().getStringList("recall.text");
     }
 }
