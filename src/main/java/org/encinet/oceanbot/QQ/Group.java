@@ -25,6 +25,7 @@ import java.util.UUID;
 import static org.encinet.oceanbot.Config.*;
 
 public class Group implements Listener {
+private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
 
     @EventHandler
     public void join(MiraiMemberJoinEvent e) {
@@ -49,6 +50,7 @@ public class Group implements Listener {
     @EventHandler
     public void Players(MiraiGroupMessageEvent e) {
         String message = e.getMessage();
+long qq = e.getSenderID();
         if (message.length() < 2 || !inGroup(e.getGroupID())) {
             return;
         }
@@ -84,9 +86,14 @@ public class Group implements Listener {
             }
         }
         if (e.getBotPermission() > e.getSenderPermission()) {
+String m = message.toLowerCase();
         for (String n : Config.recall) {
-            if (message.equals(n) || message.contains(n)) {
+            if (m.equals(n) || m.contains(n)) {
                 e.recall();
+tAdd(qq);
+if (tiger.get(qq) >= 3) {
+tiger.remove(qq);
+}
                 return;
             }
         }
@@ -129,6 +136,16 @@ public class Group implements Listener {
                 e.accept();
                 return;
             }
+        }
+    }
+
+//触发关键词计数
+    protected void tAdd(long qq) {
+        if (tiger.containsKey(qq)) {
+            int now = tiger.get(qq) + 1;
+            tiger.put(qq, now);
+        } else {
+            tiger.put(qq, 1);
         }
     }
 }
