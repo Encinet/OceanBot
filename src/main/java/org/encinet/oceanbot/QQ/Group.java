@@ -20,6 +20,8 @@ import org.bukkit.event.Listener;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.execute.Function;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -93,7 +95,7 @@ String m = message.toLowerCase();
                 e.recall();
 tAdd(qq);
 if (tiger.get(qq) >= 3) {
-    MiraiNormalMember mem = new MiraiNormalMember(e.getGroup(), qq);
+    MiraiNormalMember mem = e.getGroup().getMember(qq);
     if (!mem.isMuted()) {
         mem.setMute(1);
     }
