@@ -21,19 +21,22 @@ public class Function {
         String rText;
         String[] str = text.substring(1).split(" ");
         switch (str[0]) {// 截取首位字符以后的东西
-            case "help" -> rText = (
+            case "help" -> {
+                String adminT = "c - 执行命令(仅管理可用)\n" +
+                "reload - 重载配置 (仅管理可用)\n";
+            rText = (
                     "消息前加#可发送到服务器或QQ群\n" +
                             "当前可用指令前缀 " + Arrays.toString(Config.prefix.toArray()) + "\n" +
                             "banlist - 列出封禁玩家\n" +
                             "bind 验证码 - 绑定账号\n" +
-                            "c - 执行命令(仅管理可用)\n" +
                             "help - 查看帮助\n" +
                             "info - 查看服务器信息\n" +
                             "list - 列出在线玩家\n" +
-                            "reload - 重载配置文件(仅管理可用)\n" +
                             "whois 玩家名/QQ - 查询信息\n" +
+                            Config.admin.contains(qqNum) ? adminT : "" +
                             "当前版本:" + Config.ver + "\n" +
                             "Made By Encinet");
+            }
             case "list" -> {
                 StringBuilder list = new StringBuilder();
                 int online = Bukkit.getServer().getOnlinePlayers().toArray().length;// 在线玩家
