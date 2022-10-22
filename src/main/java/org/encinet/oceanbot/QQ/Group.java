@@ -55,6 +55,7 @@ private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线
         String message = e.getMessage();
 long senderID = e.getSenderID();
 long groupID = e.getGroupID();
+
         if (message.length() < 2 || !inGroup(groupID)) {
             return;
         }
