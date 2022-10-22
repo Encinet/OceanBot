@@ -34,7 +34,7 @@ public class Function {
                             "info - 查看服务器信息\n" +
                             "list - 列出在线玩家\n" +
                             "whois 玩家名/QQ - 查询信息\n" +
-                            Tool.listCon(Config.admin, qqNum) ? adminT : "" +
+                            (Tool.listCon(Config.admin, qqNum) ? adminT : "") +
                             "当前版本:" + Config.ver + "\n" +
                             "Made By Encinet");
             }
