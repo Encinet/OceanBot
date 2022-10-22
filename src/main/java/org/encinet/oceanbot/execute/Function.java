@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.encinet.oceanbot.Config;
-import org.encinet.oceanbot.until.Tool;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.QQ.Bind;
 
@@ -34,7 +33,7 @@ public class Function {
                             "info - 查看服务器信息\n" +
                             "list - 列出在线玩家\n" +
                             "whois 玩家名/QQ - 查询信息\n" +
-                            (Tool.listCon(Config.admin, qqNum) ? adminT : "") +
+                            (Config.admin.contains(qqNum) ? adminT : "") +
                             "当前版本:" + Config.ver + "\n" +
                             "Made By Encinet");
             }
