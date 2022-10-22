@@ -53,24 +53,25 @@ private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线
     @EventHandler
     public void Players(MiraiGroupMessageEvent e) {
         String message = e.getMessage();
-long qq = e.getSenderID();
-        if (message.length() < 2 || !inGroup(e.getGroupID())) {
+long senderID = e.getSenderID();
+long groupID = e.getGroupID();
+        if (message.length() < 2 || !inGroup(groupID)) {
             return;
         }
         for (String n : Config.prefix) {// 遍历前缀数组
             if (message.startsWith(n)) {// 如果开头符合
-                MiraiBot.getBot(BotID).getGroup(e.getGroupID())
-                        .sendMessageMirai(Function.on(e.getMessage(), e.getSenderID()));
+                MiraiBot.getBot(BotID).getGroup(groupID)
+                        .sendMessageMirai(Function.on(message, senderID));
                 return;
             }
         }
         for (String n : Config.chatPrefix) {
             // 群向服发送消息
-            if (message.startsWith(n) && Objects.equals(e.getGroupID(), MainGroup)) {
-                String text = e.getMessage().substring(1);
+            if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
+                String text = message.substring(1);
 
-                UUID bind = MiraiMC.getBind(e.getSenderID());
-                String hoverName = "§7QQ: §3" + String.valueOf(e.getSenderID()) + "\n" +
+                UUID bind = MiraiMC.getBind(senderID);
+                String hoverName = "§7QQ: §3" + String.valueOf(senderID) + "\n" +
                         "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
                 final TextComponent textComponent = Component.text("")
                         .append(Component.text("§8[§cQQ§8]").hoverEvent(HoverEvent.showText(Component.text("""
@@ -81,7 +82,7 @@ long qq = e.getSenderID();
                                 .clickEvent(ClickEvent.suggestCommand("#")))
                         .append(Component.text(e.getSenderName()).color(NamedTextColor.YELLOW)
                                 .hoverEvent(HoverEvent.showText(Component.text(hoverName)))
-                                .clickEvent(ClickEvent.runCommand("/oc !whois " + e.getSenderID())))
+                                .clickEvent(ClickEvent.runCommand("/oc !whois " + senderID)))
                         .append(Component.text(": ").color(NamedTextColor.GRAY))
                         .append(Component.text(text));
                 Bukkit.getServer().sendMessage(textComponent);
@@ -93,13 +94,13 @@ String m = message.toLowerCase();
         for (String n : Config.recallText) {
             if (m.equals(n) || m.contains(n)) {
                 e.recall();
-tAdd(qq);
-if (tiger.get(qq) >= Config.recallMuteValue) {
-    MiraiNormalMember mem = e.getGroup().getMember(qq);
+tAdd(senderID);
+if (tiger.get(senderID) >= Config.recallMuteValue) {
+    MiraiNormalMember mem = e.getGroup().getMember(senderID);
     if (!mem.isMuted()) {
         mem.setMute(Config.recallMuteTime);
     }
-tiger.remove(qq);
+tiger.remove(senderID);
 }
                 return;
             }
