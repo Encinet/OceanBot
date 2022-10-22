@@ -120,7 +120,7 @@ tiger.remove(senderID);
         if (name == null) {
             return;
         }
-        if (!Objects.equals(name, nick) && !nick.endsWith("(" + name + ")")) {
+        if (!nick.contains(name)) {
             MiraiBot.getBot(Config.BotID).getGroup(e.getGroupID()).getMember(e.getMemberID())
                     .setNameCard(nick + "(" + name + ")");
         } else if (("(" + name + ")").equals(nick)) {
