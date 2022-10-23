@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.GenericArrayType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +31,11 @@ public class Config {
 
     public static List<Long> admin;
     
+    public static boolean recallEnable;
     public static int recallMuteValue;
     public static int recallMuteTime;
     public static List<String> recallText;
+    
     public static void load() {
         plugin.reloadConfig();
 
@@ -55,6 +58,7 @@ public class Config {
 
         admin = getConfig().getLongList("admin");
         
+        recallEnable = getConfig().getBoolean("recall.enable", true);
         recallMuteValue = getConfig().getInt("recall.mute.value", 3);
         recallMuteTime = getConfig().getInt("recall.mute.time", 120);
         recallText = getConfig().getStringList("recall.text");
