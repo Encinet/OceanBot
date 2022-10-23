@@ -45,6 +45,7 @@ admin:
   - 3589711038
   - 752779588
 recall:
+  enable: true
   mute:
     # 单位: 次数
     value: 3
