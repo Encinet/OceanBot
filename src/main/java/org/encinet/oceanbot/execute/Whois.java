@@ -46,23 +46,22 @@ public class Whois {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-boolean online = player.isOnline();
+        boolean online = player.isOnline();
         if (!player.hasPlayedBefore()) {
             return "此玩家尚未进服";
         } else {
-String f;
+            String f;
         if (online) {
         Player o = Bukkit.getPlayer(uuid);
-f = "在线 " + o.getPing() + "ms";
+            f = "在线 " + o.getPing() + "ms";
         } else {
-f = player.isBanned() ? "封禁" : "离线";
-}
-return "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + f + "\n" +
+            f = player.isBanned() ? "封禁" : "离线";
+        }
+                return "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + f + "\n" +
                 "UUID: " + uuid + "\n" +
                 "QQ: " + MiraiMC.getBind(uuid) + "\n" +
                 "加入时间: " + dateFormat.format(player.getFirstPlayed()) + "\n" +
-                "最近游玩: " + dateFormat.format(player.getLastSeen())
-                ;
+                "最近游玩: " + dateFormat.format(player.getLastSeen());
         }
     }
 }
