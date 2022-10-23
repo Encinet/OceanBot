@@ -8,6 +8,6 @@ public class Verify {
     private static final int min = 1000000;
 
     public static String get() {
-        return r.nextInt(max - min) + min;
+        return (r.nextInt(max - min) + min).toString();
     }
 }
