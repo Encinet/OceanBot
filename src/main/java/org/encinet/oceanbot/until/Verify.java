@@ -1,19 +1,13 @@
 package org.encinet.oceanbot.until;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class Verify {
-    private static final int extent = 7;
+    private static final Random r = new Random();
+    private static final int max = 9999999;
+    private static final int min = 1000000;
 
     public static String get() {
-        return generate();
-    }
-
-    private static String generate() {
-        StringBuilder verify = new StringBuilder(extent);
-        for (byte i = 0; i < extent; i++) {
-            verify.append(ThreadLocalRandom.current().nextInt(9));
-        }
-        return verify.toString();
+        return r.nextInt(max - min) + min;
     }
 }
