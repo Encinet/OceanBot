@@ -90,7 +90,7 @@ long groupID = e.getGroupID();
                 return;
             }
         }
-        if (e.getBotPermission() > e.getSenderPermission()) {
+        if (Config.recallEnable && e.getBotPermission() > e.getSenderPermission()) {
 String m = message.toLowerCase();
         for (String n : Config.recallText) {
             if (m.equals(n) || m.contains(n)) {
