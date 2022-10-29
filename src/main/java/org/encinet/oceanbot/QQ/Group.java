@@ -64,7 +64,7 @@ long groupID = e.getGroupID();
 String answer = Function.on(message, senderID);
 if (!answer.equals("")) {
                 MiraiBot.getBot(BotID).getGroup(groupID)
-                        .sendMessageMirai();
+                        .sendMessageMirai(answer);
 }
                 return;
             }
