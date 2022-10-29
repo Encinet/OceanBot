@@ -18,7 +18,7 @@ import static org.encinet.oceanbot.Config.admin;
 
 public class Function {
     public static String on(String text, Long qqNum) {
-        String rText;
+        String rText = "";
         String[] str = text.substring(1).split(" ");
         switch (str[0]) {// 截取首位字符以后的东西
             case "help" -> {
@@ -68,8 +68,6 @@ public class Function {
                 if (hasPermission(qqNum)) {
                     Config.load();
                     rText = "配置文件已重载!";
-                } else {
-                    rText = "没有权限";
                 }
             }
             case "bind" -> {
@@ -81,12 +79,11 @@ public class Function {
             }
             case "whois" -> rText = Whois.core(str.length < 2 ? null : str[1], qqNum);
             case "c" -> {
-                if (str.length < 2) {
+if (!hasPermission(qqNum)) {
+                        rText = "";// 没有权限
+                    } else if (str.length < 2) {
                     rText = "你还没有输入命令呢";
                 } else {
-                    if (!hasPermission(qqNum)) {
-                        rText = "没有权限";
-                    } else {
                         StringBuilder c = new StringBuilder();
                         for (int i = 1; i < str.length; i++) {
                             c.append(str[i]);
@@ -101,7 +98,6 @@ public class Function {
                             }
                         }.runTask(JavaPlugin.getProvidingPlugin(OceanBot.class));
                         rText = "指令发送完成";
-                    }
                 }
             }
             case "info" -> {
@@ -127,7 +123,7 @@ public class Function {
 
                 rText = sb.toString();
             }
-            default -> rText = "错误的命令";
+            default -> rText = "";// 错误的命令
         }
         return rText;
     }
