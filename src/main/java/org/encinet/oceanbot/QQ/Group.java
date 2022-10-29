@@ -61,8 +61,11 @@ long groupID = e.getGroupID();
         }
         for (String n : Config.prefix) {// 遍历前缀数组
             if (message.startsWith(n)) {// 如果开头符合
+String answer = Function.on(message, senderID);
+if (!answer.equals("")) {
                 MiraiBot.getBot(BotID).getGroup(groupID)
-                        .sendMessageMirai(Function.on(message, senderID));
+                        .sendMessageMirai();
+}
                 return;
             }
         }
