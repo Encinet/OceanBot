@@ -57,41 +57,43 @@ public class Group implements Listener {
         long senderID = e.getSenderID();
         long groupID = e.getGroupID();
 
-        if (message.length() < 2 || !inGroup(groupID)) {
+        if (!inGroup(groupID)) {
             return;
         }
-        for (String n : Config.prefix) {// 遍历前缀数组
-            if (message.startsWith(n)) {// 如果开头符合
-                String answer = Function.on(message, senderID);
-                if (!answer.equals("")) {
-                    MiraiBot.getBot(BotID).getGroup(groupID)
-                            .sendMessageMirai(answer);
+        if (message.length() > 1) {
+            for (String n : Config.prefix) {// 遍历前缀数组
+                if (message.startsWith(n)) {// 如果开头符合
+                    String answer = Function.on(message, senderID);
+                    if (!answer.equals("")) {
+                        MiraiBot.getBot(BotID).getGroup(groupID)
+                                .sendMessageMirai(answer);
+                    }
+                    return;
                 }
-                return;
             }
-        }
-        for (String n : Config.chatPrefix) {
-            // 群向服发送消息
-            if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
-                String text = message.substring(1);
+            for (String n : Config.chatPrefix) {
+                // 群向服发送消息
+                if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
+                    String text = message.substring(1);
 
-                UUID bind = MiraiMC.getBind(senderID);
-                String hoverName = "§7QQ: §3" + String.valueOf(senderID) + "\n" +
-                        "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
-                final TextComponent textComponent = Component.text("")
-                        .append(Component.text("§8[§cQQ§8]").hoverEvent(HoverEvent.showText(Component.text("""
-                                §8| §b这是一条从QQ群发来的消息
-                                §8| §b消息开头为#可互通
+                    UUID bind = MiraiMC.getBind(senderID);
+                    String hoverName = "§7QQ: §3" + String.valueOf(senderID) + "\n" +
+                            "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
+                    final TextComponent textComponent = Component.text("")
+                            .append(Component.text("§8[§cQQ§8]").hoverEvent(HoverEvent.showText(Component.text("""
+                                    §8| §b这是一条从QQ群发来的消息
+                                    §8| §b消息开头为#可互通
 
-                                §a➥ §b点击回复""")))
-                                .clickEvent(ClickEvent.suggestCommand("#")))
-                        .append(Component.text(e.getSenderName()).color(NamedTextColor.YELLOW)
-                                .hoverEvent(HoverEvent.showText(Component.text(hoverName)))
-                                .clickEvent(ClickEvent.runCommand("/oc !whois " + senderID)))
-                        .append(Component.text(": ").color(NamedTextColor.GRAY))
-                        .append(Component.text(text));
-                Bukkit.getServer().sendMessage(textComponent);
-                return;
+                                    §a➥ §b点击回复""")))
+                                    .clickEvent(ClickEvent.suggestCommand("#")))
+                            .append(Component.text(e.getSenderName()).color(NamedTextColor.YELLOW)
+                                    .hoverEvent(HoverEvent.showText(Component.text(hoverName)))
+                                    .clickEvent(ClickEvent.runCommand("/oc !whois " + senderID)))
+                            .append(Component.text(": ").color(NamedTextColor.GRAY))
+                            .append(Component.text(text));
+                    Bukkit.getServer().sendMessage(textComponent);
+                    return;
+                }
             }
         }
         if (Config.recallEnable && e.getBotPermission() > e.getSenderPermission()) {
