@@ -28,7 +28,8 @@ import java.util.UUID;
 import static org.encinet.oceanbot.Config.*;
 
 public class Group implements Listener {
-private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
+    private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
+    private static long yuukLastTime = 0;
 
     @EventHandler
     public void join(MiraiMemberJoinEvent e) {
@@ -50,22 +51,22 @@ private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线
         }
     }
 
+    
     @EventHandler
     public void Players(MiraiGroupMessageEvent e) {
         String message = e.getMessage();
-long senderID = e.getSenderID();
-long groupID = e.getGroupID();
+        long senderID = e.getSenderID();
+        long groupID = e.getGroupID();
 
         if (message.length() < 2 || !inGroup(groupID)) {
             return;
         }
         for (String n : Config.prefix) {// 遍历前缀数组
             if (message.startsWith(n)) {// 如果开头符合
-String answer = Function.on(message, senderID);
-if (!answer.equals("")) {
-                MiraiBot.getBot(BotID).getGroup(groupID)
-                        .sendMessageMirai(answer);
-}
+                String answer = Function.on(message, senderID);
+                if (!answer.equals("")) {
+                    e.sendMessageMirai(answer);
+                }
                 return;
             }
         }
@@ -94,21 +95,29 @@ if (!answer.equals("")) {
             }
         }
         if (Config.recallEnable && e.getBotPermission() > e.getSenderPermission()) {
-String m = message.toLowerCase();
-        for (String n : Config.recallText) {
-            if (m.equals(n) || m.contains(n)) {
-                e.recall();
-tAdd(senderID);
-if (tiger.get(senderID) >= Config.recallMuteValue) {
-    MiraiNormalMember mem = e.getGroup().getMember(senderID);
-    if (!mem.isMuted()) {
-        mem.setMute(Config.recallMuteTime);
-    }
-tiger.remove(senderID);
-}
-                return;
+            String m = message.toLowerCase();
+            for (String n : Config.recallText) {
+                if (m.equals(n) || m.contains(n)) {
+                    e.recall();
+                    tAdd(senderID);
+                    if (tiger.get(senderID) >= Config.recallMuteValue) {
+                        MiraiNormalMember mem = e.getGroup().getMember(senderID);
+                        if (!mem.isMuted()) {
+                            mem.setMute(Config.recallMuteTime);
+                        }
+                        tiger.remove(senderID);
+                    }
+                    return;
+                }
             }
         }
+        // YuuK
+        if (senderID == 2704804982l) {
+            long nowTime = System.currentTimeMillis();
+            if ((nowTime - yuukLastTime) >= 120000) {
+                yuukLastTime = nowTime;
+                e.sendMessageMirai("[mirai:at:2704804982]滚去学习");
+            }
         }
     }
 
@@ -151,7 +160,7 @@ tiger.remove(senderID);
         }
     }
 
-//触发关键词计数
+    // 触发关键词计数
     protected void tAdd(long qq) {
         if (tiger.containsKey(qq)) {
             int now = tiger.get(qq) + 1;
