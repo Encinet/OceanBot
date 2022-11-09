@@ -51,7 +51,6 @@ public class Group implements Listener {
         }
     }
 
-    
     @EventHandler
     public void Players(MiraiGroupMessageEvent e) {
         String message = e.getMessage();
@@ -65,7 +64,8 @@ public class Group implements Listener {
             if (message.startsWith(n)) {// 如果开头符合
                 String answer = Function.on(message, senderID);
                 if (!answer.equals("")) {
-                    e.sendMessageMirai(answer);
+                    MiraiBot.getBot(BotID).getGroup(groupID)
+                            .sendMessageMirai(answer);
                 }
                 return;
             }
@@ -116,7 +116,8 @@ public class Group implements Listener {
             long nowTime = System.currentTimeMillis();
             if ((nowTime - yuukLastTime) >= 120000) {
                 yuukLastTime = nowTime;
-                e.sendMessageMirai("[mirai:at:2704804982]滚去学习");
+                MiraiBot.getBot(BotID).getGroup(groupID)
+                        .sendMessageMirai("[mirai:at:2704804982]滚去学习");
             }
         }
     }
