@@ -23,6 +23,7 @@ import org.encinet.oceanbot.execute.Function;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.encinet.oceanbot.Config.*;
@@ -30,6 +31,8 @@ import static org.encinet.oceanbot.Config.*;
 public class Group implements Listener {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
     private static long yuukLastTime = 0;
+    private static final Random random = new Random();
+    private static final String[] study = {"滚去学习", "火速滚去学习", "好好学习，天天向上"};
 
     @EventHandler
     public void join(MiraiMemberJoinEvent e) {
@@ -124,7 +127,8 @@ public class Group implements Listener {
             long nowTime = System.currentTimeMillis();
             if ((nowTime - yuukLastTime) >= 60000l) {
                 yuukLastTime = nowTime;
-                e.replyMirai("[mirai:at:2704804982] 滚去学习");
+                MiraiBot.getBot(BotID).getGroup(groupID)
+                                        .sendMessageMirai("[mirai:at:2704804982] " + study[random.nextInt(study.length)]);
             }
         }
     }
