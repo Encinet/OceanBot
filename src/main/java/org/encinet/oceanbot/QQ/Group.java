@@ -96,10 +96,12 @@ public class Group implements Listener {
                 }
             }
         }
-        if (Config.recallEnable && e.getBotPermission() > e.getSenderPermission()) {
+        // 关键词检测
+        if (Config.recallEnable) {
             String m = message.toLowerCase();
             for (String n : Config.recallText) {
                 if (m.equals(n) || m.contains(n)) {
+                    if (e.getBotPermission() > e.getSenderPermission()) {
                     e.recall();
                     tAdd(senderID);
                     if (tiger.get(senderID) >= Config.recallMuteValue) {
@@ -109,6 +111,10 @@ public class Group implements Listener {
                         }
                         tiger.remove(senderID);
                     }
+                } else {
+                    MiraiBot.getBot(BotID).getGroup(groupID)
+                                            .sendMessageMirai("[mirai:at:" + senderID + "] 建议撤回");
+                }
                     return;
                 }
             }
@@ -118,8 +124,7 @@ public class Group implements Listener {
             long nowTime = System.currentTimeMillis();
             if ((nowTime - yuukLastTime) >= 60000l) {
                 yuukLastTime = nowTime;
-                MiraiBot.getBot(BotID).getGroup(groupID)
-                        .sendMessageMirai("[mirai:at:2704804982] 滚去学习");
+                e.replyMirai("[mirai:at:2704804982] 滚去学习");
             }
         }
     }
