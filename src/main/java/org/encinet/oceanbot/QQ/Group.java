@@ -112,12 +112,12 @@ public class Group implements Listener {
             }
         }
         // YuuK
-        if (senderID == 2704804982l) {
+        if (Objects.equals(senderID, 2704804982l)) {
             long nowTime = System.currentTimeMillis();
-            if ((nowTime - yuukLastTime) >= 120000) {
+            if ((nowTime - yuukLastTime) >= 60000l) {
                 yuukLastTime = nowTime;
                 MiraiBot.getBot(BotID).getGroup(groupID)
-                        .sendMessageMirai("[mirai:at:2704804982]滚去学习");
+                        .sendMessageMirai("[mirai:at:2704804982] 滚去学习");
             }
         }
     }
