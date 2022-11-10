@@ -32,7 +32,7 @@ public class Group implements Listener {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
     private static long yuukLastTime = 0;
     private static final Random random = new Random();
-    private static final String[] study = {"滚去学习", "火速滚去学习", "踏马的，想读职专？", "rnm, 快去学习", "建议主播火速滚去学习"};
+    private static final String[] study = { "滚去学习", "火速滚去学习", "踏马的，想读职专？", "rnm, 快去学习", "建议主播火速滚去学习" };
 
     @EventHandler
     public void join(MiraiMemberJoinEvent e) {
@@ -64,6 +64,7 @@ public class Group implements Listener {
             return;
         }
         if (message.length() > 1) {
+            command:
             for (String n : Config.prefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message, senderID);
@@ -71,9 +72,10 @@ public class Group implements Listener {
                         MiraiBot.getBot(BotID).getGroup(groupID)
                                 .sendMessageMirai(answer);
                     }
-                    return;
+                    break command;
                 }
             }
+            sendMessage:
             for (String n : Config.chatPrefix) {
                 // 群向服发送消息
                 if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
@@ -95,30 +97,31 @@ public class Group implements Listener {
                             .append(Component.text(": ").color(NamedTextColor.GRAY))
                             .append(Component.text(text));
                     Bukkit.getServer().sendMessage(textComponent);
-                    return;
+                    break sendMessage;
                 }
             }
         }
         // 关键词检测
+        recallCheck:
         if (Config.recallEnable) {
             String m = message.toLowerCase();
             for (String n : Config.recallText) {
                 if (m.equals(n) || m.contains(n)) {
                     if (e.getBotPermission() > e.getSenderPermission()) {
-                    e.recall();
-                    tAdd(senderID);
-                    if (tiger.get(senderID) >= Config.recallMuteValue) {
-                        MiraiNormalMember mem = e.getGroup().getMember(senderID);
-                        if (!mem.isMuted()) {
-                            mem.setMute(Config.recallMuteTime);
+                        e.recall();
+                        tAdd(senderID);
+                        if (tiger.get(senderID) >= Config.recallMuteValue) {
+                            MiraiNormalMember mem = e.getGroup().getMember(senderID);
+                            if (!mem.isMuted()) {
+                                mem.setMute(Config.recallMuteTime);
+                            }
+                            tiger.remove(senderID);
                         }
-                        tiger.remove(senderID);
+                    } else {
+                        MiraiBot.getBot(BotID).getGroup(groupID)
+                                .sendMessageMirai("[mirai:at:" + senderID + "] 建议撤回");
                     }
-                } else {
-                    MiraiBot.getBot(BotID).getGroup(groupID)
-                                            .sendMessageMirai("[mirai:at:" + senderID + "] 建议撤回");
-                }
-                    return;
+                    break recallCheck;
                 }
             }
         }
@@ -128,7 +131,7 @@ public class Group implements Listener {
             if ((nowTime - yuukLastTime) >= 60000l) {
                 yuukLastTime = nowTime;
                 MiraiBot.getBot(BotID).getGroup(groupID)
-                                        .sendMessageMirai("[mirai:at:2704804982] " + study[random.nextInt(study.length)]);
+                        .sendMessageMirai("[mirai:at:2704804982] " + study[random.nextInt(study.length)]);
             }
         }
     }
