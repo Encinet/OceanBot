@@ -32,7 +32,7 @@ public class Group implements Listener {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
     private static long yuukLastTime = 0;
     private static final Random random = new Random();
-    private static final String[] study = {"滚去学习", "火速滚去学习", "好好学习，天天向上"};
+    private static final String[] study = {"滚去学习", "火速滚去学习", "踏马的，想读职专？", "rnm, 快去学习", "建议主播火速滚去学习"};
 
     @EventHandler
     public void join(MiraiMemberJoinEvent e) {
