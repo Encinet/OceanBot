@@ -45,7 +45,7 @@ public class Config {
         List<Map<?, ?>> nums = config.getMapList("NumMessage");
         System.out.println(nums);
         for (final Map<?, ?> map : nums) {
-            int num = (int) map.get("nums");
+            int num = (int) map.get("num");
             List<String> messages = (List<String>) map.get("text");
 
             numMessage.put(num, messages);
