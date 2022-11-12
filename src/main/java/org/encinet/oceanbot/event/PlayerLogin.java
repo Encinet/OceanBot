@@ -24,7 +24,7 @@ public class PlayerLogin implements Listener {
         if (binder != 0) {
             members = MiraiBot.getBot(BotID).getGroup(MainGroup);
 
-            if (members != null) {
+            if (members == null) {
                 e.disallow(
                         AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                         LegacyComponentSerializer.legacyAmpersand().deserialize("服务器启动中, 请稍后再尝试进入"));

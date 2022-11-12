@@ -49,6 +49,7 @@ public class Function {
                 onlinePlayers = onlinePlayers.stream().sorted().collect(Collectors.toList());
                 // 执行
                 int num = onlinePlayers.size();
+                System.out.println(Config.numMessage);// test
                 if (Config.numMessage.containsKey(num)) {
                     List<String> messages = Config.numMessage.get(num);
                     rText = messages.get(random.nextInt(messages.size()));// 随机使用消息
