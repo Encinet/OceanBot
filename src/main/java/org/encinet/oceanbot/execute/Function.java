@@ -55,6 +55,8 @@ public class Function {
                     for (int i = 0; i < num; i++) {
                         rText.replace("{" + i + "}", onlinePlayers.get(i));
                     }
+                } else {
+                    rText = "当前 " + num + " 人在线\n" + String.join(", ", onlinePlayers);
                 }
             }
             case "banlist" -> {
@@ -68,6 +70,7 @@ public class Function {
                         list.append(",");
                     }
                 }
+                rText = "当前被封禁 " + num + " 人\n" + String.join(", ", onlinePlayers);
                 rText = "当前被封禁玩家有" + max + "人\n" + list;
             }
             case "reload" -> {
