@@ -11,10 +11,7 @@ import java.util.Map;
 
 public class Config {
     static final Plugin plugin = JavaPlugin.getProvidingPlugin(OceanBot.class);
-
-    public static FileConfiguration getConfig() {
-        return plugin.getConfig();
-    }
+    private static final @NotNull FileConfiguration config = plugin.getConfig();
 
     public static int ver;
     public static List<String> prefix;
@@ -38,30 +35,33 @@ public class Config {
     public static void load() {
         plugin.reloadConfig();
 
-        ver = getConfig().getInt("ver", 3);
-        prefix = getConfig().getStringList("prefix");
-        BotID = getConfig().getLong("BotID");
-        GroupID = getConfig().getLongList("GroupID");
-        MainGroup = getConfig().getLong("MainGroup");
+        ver = config.getInt("ver", 3);
+        prefix = config.getStringList("prefix");
+        BotID = config.getLong("BotID");
+        GroupID = config.getLongList("GroupID");
+        MainGroup = config.getLong("MainGroup");
 
         numMessage = new HashMap<>();
-        @NotNull List<Integer> nums = getConfig().getIntegerList("NumMessage");
+        List<Map<?, ?>> nums = config.getMapList("NumMessage");
         System.out.println(nums);
-        for (int num : nums) {
-            numMessage.put(num, getConfig().getStringList("NumMessage." + num));
-            System.out.println(num + " " + numMessage.get(num));
+        for (final Map<?, ?> map : nums) {
+            int num = (int) map.get("nums");
+            List<String> messages = (List<String>) map.get("text");
+
+            numMessage.put(num, messages);
+            System.out.println(num + " " + messages);
         }
 
-        noWhiteKick = getConfig().getString("noWhiteKick");
-        join = getConfig().getString("join");
-        chatPrefix = getConfig().getStringList("chat.prefix");
-        serverToQQ = getConfig().getString("chat.format.server-to-qq");
+        noWhiteKick = config.getString("noWhiteKick");
+        join = config.getString("join");
+        chatPrefix = config.getStringList("chat.prefix");
+        serverToQQ = config.getString("chat.format.server-to-qq");
 
-        admin = getConfig().getLongList("admin");
+        admin = config.getLongList("admin");
         
-        recallEnable = getConfig().getBoolean("recall.enable", true);
-        recallMuteValue = getConfig().getInt("recall.mute.value", 3);
-        recallMuteTime = getConfig().getInt("recall.mute.time", 120);
-        recallText = getConfig().getStringList("recall.text");
+        recallEnable = config.getBoolean("recall.enable", true);
+        recallMuteValue = config.getInt("recall.mute.value", 3);
+        recallMuteTime = config.getInt("recall.mute.time", 120);
+        recallText = config.getStringList("recall.text");
     }
 }
