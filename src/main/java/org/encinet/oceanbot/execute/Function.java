@@ -60,18 +60,16 @@ public class Function {
                 }
             }
             case "banlist" -> {
-                StringBuilder list = new StringBuilder();
-                int max = Bukkit.getServer().getBannedPlayers().toArray().length;// 长度
-                int n = 0;// 计数器
-                for (OfflinePlayer a : Bukkit.getServer().getBannedPlayers()) {// 遍历被Ban掉的玩家数组
-                    n++;// 计数+1
-                    list.append(a.getName());// 添加玩家名
-                    if (n != max) {
-                        list.append(",");
-                    }
+                List<String> banedPlayers = new ArrayList<>();
+                for (OfflinePlayer n : Bukkit.getServer().getBannedPlayers()) {
+                    banedPlayers.add(n.getName());
                 }
-                rText = "当前被封禁 " + num + " 人\n" + String.join(", ", onlinePlayers);
-                rText = "当前被封禁玩家有" + max + "人\n" + list;
+                // 字母顺序
+                banedPlayers = banedPlayers.stream().sorted().collect(Collectors.toList());
+                // 执行
+                int num = banedPlayers.size();
+
+                rText = "当前被封禁 " + num + " 人\n" + String.join(", ", banedPlayers);
             }
             case "reload" -> {
                 if (hasPermission(qqNum)) {
