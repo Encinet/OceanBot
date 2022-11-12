@@ -3,6 +3,7 @@ package org.encinet.oceanbot;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,8 +45,11 @@ public class Config {
         MainGroup = getConfig().getLong("MainGroup");
 
         numMessage = new HashMap<>();
-        for (int num : getConfig().getIntegerList("NumMessage")) {
+        @NotNull List<Integer> nums = getConfig().getIntegerList("NumMessage");
+        System.out.println(nums);
+        for (int num : nums) {
             numMessage.put(num, getConfig().getStringList("NumMessage." + num));
+            System.out.println(num + " " + numMessage.get(num));
         }
 
         noWhiteKick = getConfig().getString("noWhiteKick");

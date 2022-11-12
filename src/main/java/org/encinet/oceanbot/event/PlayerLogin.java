@@ -28,6 +28,7 @@ public class PlayerLogin implements Listener {
                 e.disallow(
                         AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                         LegacyComponentSerializer.legacyAmpersand().deserialize("服务器启动中, 请稍后再尝试进入"));
+                return;
             } else if (members.contains(binder)) {
                 allow = true;
             }
