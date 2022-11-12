@@ -4,7 +4,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +21,9 @@ public class Config {
     public static List<Long> GroupID;
     public static Long MainGroup;
 
-    public static Map<Integer, String> numMessage;
+    public static Map<Integer, List<String>> numMessage;
     public static String noWhiteKick;
     public static List<String> chatPrefix;
-    public static String qqToServer;
     public static String serverToQQ;
     public static String join;
 
@@ -47,13 +45,12 @@ public class Config {
 
         numMessage = new HashMap<>();
         for (int num : getConfig().getIntegerList("NumMessage")) {
-            numMessage.put(num, getConfig().getString("NumMessage." + num, ""));
+            numMessage.put(num, getConfig().getStringList("NumMessage." + num));
         }
 
         noWhiteKick = getConfig().getString("noWhiteKick");
         join = getConfig().getString("join");
         chatPrefix = getConfig().getStringList("chat.prefix");
-        qqToServer = getConfig().getString("chat.format.qq-to-server");
         serverToQQ = getConfig().getString("chat.format.server-to-qq");
 
         admin = getConfig().getLongList("admin");
