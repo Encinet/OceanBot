@@ -26,7 +26,8 @@ public class Function {
         switch (str[0]) {// 截取首位字符以后的东西
             case "help" -> {
                 String adminT = "c - 执行命令(仅管理可用)\n" +
-                        "reload - 重载配置 (仅管理可用)\n";
+                        "reload - 重载配置 (仅管理可用)\n" +
+                        "send - 复读消息, 支持miraicode (仅管理可用)";
                 rText = ("消息前加#可发送到服务器或QQ群\n" +
                         "当前可用指令前缀 " + Arrays.toString(Config.prefix.toArray()) + "\n" +
                         "banlist - 列出封禁玩家\n" +
@@ -75,6 +76,11 @@ public class Function {
                 if (hasPermission(qqNum)) {
                     Config.load();
                     rText = "配置文件已重载!";
+                }
+            }
+            case "send" -> {
+                if (hasPermission(qqNum)) {
+                    rText = text;
                 }
             }
             case "bind" -> {
