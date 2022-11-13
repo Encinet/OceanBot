@@ -11,6 +11,9 @@ GroupID:
   - 907187763
 MainGroup: 1138627074
 NumMessage:
+  - num: 0
+    text:
+      - "当前无人在线"
   - num: 1
     text:
       - "{0} 正在独自遨游世界"

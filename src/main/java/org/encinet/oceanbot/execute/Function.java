@@ -53,7 +53,7 @@ public class Function {
                     List<String> messages = Config.numMessage.get(num);
                     rText = messages.get(random.nextInt(messages.size()));// 随机使用消息
                     for (int i = 0; i < num; i++) {
-                        rText.replace("{" + i + "}", onlinePlayers.get(i));
+                        rText = rText.replace("{" + i + "}", onlinePlayers.get(i));
                     }
                 } else {
                     rText = "当前 " + num + " 人在线\n" + String.join(", ", onlinePlayers);
