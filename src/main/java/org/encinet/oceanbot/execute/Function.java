@@ -24,24 +24,24 @@ public class Function {
         String rText = "";
         String[] str = text.substring(1).split(" ");
         switch (str[0]) {// 截取首位字符以后的东西
-            case "help" -> {
-                String adminT = "c - 执行命令(仅管理可用)\n" +
-                        "reload - 重载配置 (仅管理可用)\n" +
-                        "send - 复读, 支持miraicode (仅管理可用)\n";
+            case "help", "帮助" -> {
+                String adminT = "c,执行 - 执行命令(仅管理可用)\n" +
+                        "reload,重载 - 重载配置 (仅管理可用)\n" +
+                        "send,发送 - 复读, 支持miraicode (仅管理可用)\n";
                 rText = ("消息前加#可发送到服务器或QQ群\n" +
                         "当前可用指令前缀 " + Arrays.toString(Config.prefix.toArray()) + "\n" +
-                        "banlist - 列出封禁玩家\n" +
-                        "bind 验证码 - 绑定账号\n" +
-                        "channel - 获取频道邀请\n" +
-                        "help - 查看帮助\n" +
-                        "info - 查看服务器信息\n" +
-                        "list - 列出在线玩家\n" +
-                        "whois 玩家名/QQ - 查询信息\n" +
+                        "banlist,封禁列表 - 列出封禁玩家\n" +
+                        "bind,绑定 验证码 - 绑定账号\n" +
+                        "channel,频道 - 获取频道邀请\n" +
+                        "help,帮助 - 查看帮助\n" +
+                        "info,状态 - 查看服务器信息\n" +
+                        "list,在线 - 列出在线玩家\n" +
+                        "whois,查 玩家名/QQ - 查询信息\n" +
                         (Config.admin.contains(qqNum) ? adminT : "") +
                         "当前版本:" + Config.ver + "\n" +
                         "Made By Encinet");
             }
-            case "list" -> {
+            case "list", "在线" -> {
                 // 添加玩家id列表
                 List<String> onlinePlayers = new ArrayList<>();
                 for (Player n : Bukkit.getServer().getOnlinePlayers()) {
@@ -61,7 +61,7 @@ public class Function {
                     rText = "当前 " + num + " 人在线\n" + String.join(", ", onlinePlayers);
                 }
             }
-            case "banlist" -> {
+            case "banlist", "封禁列表" -> {
                 List<String> banedPlayers = new ArrayList<>();
                 for (OfflinePlayer n : Bukkit.getServer().getBannedPlayers()) {
                     banedPlayers.add(n.getName());
@@ -73,21 +73,21 @@ public class Function {
 
                 rText = "当前被封禁 " + num + " 人\n" + String.join(", ", banedPlayers);
             }
-            case "reload" -> {
+            case "reload", "重载" -> {
                 if (hasPermission(qqNum)) {
                     Config.load();
                     rText = "配置文件已重载!";
                 }
             }
-            case "channel" -> {
+            case "channel", "频道" -> {
                 rText = "[mirai:app:{\"app\"\\:\"com.tencent.qun.pro\"\\,\"config\"\\:{\"autosize\"\\:0\\,\"ctime\"\\:1668305956\\,\"extendAutoSize\"\\:1\\,\"token\"\\:\"168c25ddaf0b973c4ce9f1b748950ace\"}\\,\"meta\"\\:{\"contact\"\\:{\"appId\"\\:\"3169\"\\,\"app_ark\"\\:null\\,\"ark_type\"\\:10\\,\"audio_ark\"\\:null\\,\"biz\"\\:\"ka\"\\,\"channelId\"\\:\"57694561639284782\"\\,\"channelType\"\\:\"0\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"feed_ark\"\\:null\\,\"from\"\\:\"1\"\\,\"guild_ark\"\\:{\"common_ark\"\\:{\"app_id\"\\:\"3169\"\\,\"biz\"\\:\"ka\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"from\"\\:\"1\"\\,\"guild_cover\"\\:\"https\\://groupprocover-76483.picgzc.qpic.cn/57694561639284782?imageView2/1/w/1068/h/498&t=1639285411002\"\\,\"guild_icon\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"guild_id\"\\:57694561639284782\\,\"guild_name\"\\:\"米客Mik 服务器\"\\,\"jump_url\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"tag\"\\:\"QQ频道\"\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"}\\,\"default_msg\"\\:\"朋友，邀请你来体验QQ频道!\"}\\,\"jumpUrl\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"live_ark\"\\:null\\,\"meta_ark\"\\:null\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"schedule_ark\"\\:null\\,\"tag\"\\:\"QQ频道\"\\,\"text_ark\"\\:null\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"\\,\"youle_ark\"\\:null}}\\,\"prompt\"\\:\"\\[频道邀请\\]\"\\,\"ver\"\\:\"1.0.2.8\"\\,\"view\"\\:\"contact\"}]";
             }
-            case "send" -> {
+            case "send", "发送" -> {
                 if (hasPermission(qqNum)) {
                     rText = text;
                 }
             }
-            case "bind" -> {
+            case "bind", "绑定" -> {
                 if (str.length < 2) {
                     rText = "你还没有输入验证码";
                 } else if (!Bind.code.containsKey(str[1])) {
@@ -95,8 +95,8 @@ public class Function {
                 } else
                     return Bind.qqGroup(str[1], qqNum);
             }
-            case "whois" -> rText = Whois.core(str.length < 2 ? null : str[1], qqNum);
-            case "c" -> {
+            case "whois", "查" -> rText = Whois.core(str.length < 2 ? null : str[1], qqNum);
+            case "c", "执行" -> {
                 if (!hasPermission(qqNum)) {
                     rText = "";// 没有权限
                 } else if (str.length < 2) {
@@ -118,7 +118,7 @@ public class Function {
                     rText = "指令发送完成";
                 }
             }
-            case "info" -> {
+            case "info", "状态" -> {
                 StringBuilder sb = new StringBuilder();
                 sb.append("服务器版本: ").append(Bukkit.getVersion())
                         .append(String.format(" 在线玩家: %d/%d", Bukkit.getOnlinePlayers().size(), Bukkit.getMaxPlayers()))
