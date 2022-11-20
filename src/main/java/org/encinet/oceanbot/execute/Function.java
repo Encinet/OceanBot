@@ -22,7 +22,7 @@ public class Function {
     private static final Random random = new Random();
     public static String on(String text, Long qqNum) {
         String rText = "";
-        String[] str = text.substring(1).split(" ");
+        String[] str = text.split(" ");
         switch (str[0]) {// 截取首位字符以后的东西
             case "help", "帮助" -> {
                 String adminT = "c,执行 - 执行命令(仅管理可用)\n" +

@@ -67,7 +67,7 @@ public class Group implements Listener {
             command:
             for (String n : Config.prefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
-                    String answer = Function.on(message, senderID);
+                    String answer = Function.on(message.substring(1), senderID);
                     if (!answer.equals("")) {
                         MiraiBot.getBot(BotID).getGroup(groupID)
                                 .sendMessageMirai(answer);
