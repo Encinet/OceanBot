@@ -64,8 +64,7 @@ public class Group implements Listener {
             return;
         }
         if (message.length() > 1) {
-            command:
-            for (String n : Config.prefix) {// 遍历前缀数组
+            command: for (String n : Config.prefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message.substring(1), senderID);
                     if (!answer.equals("")) {
@@ -75,8 +74,7 @@ public class Group implements Listener {
                     break command;
                 }
             }
-            sendMessage:
-            for (String n : Config.chatPrefix) {
+            sendMessage: for (String n : Config.chatPrefix) {
                 // 群向服发送消息
                 if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
                     String text = message.substring(1);
@@ -102,8 +100,7 @@ public class Group implements Listener {
             }
         }
         // 关键词检测
-        recallCheck:
-        if (Config.recallEnable) {
+        recallCheck: if (Config.recallEnable) {
             String m = message.toLowerCase();
             for (String n : Config.recallText) {
                 if (m.equals(n) || m.contains(n)) {
