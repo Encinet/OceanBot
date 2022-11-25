@@ -1,11 +1,13 @@
 package org.encinet.oceanbot;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.encinet.oceanbot.QQ.Friend;
 import org.encinet.oceanbot.QQ.Group;
 import org.encinet.oceanbot.event.PlayerLogin;
 import org.encinet.oceanbot.event.PlayerMessage;
+import org.encinet.oceanbot.event.PlayerNum;
 
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -22,15 +24,20 @@ public final class OceanBot extends JavaPlugin {
         Config.load();
 
         logger.info("注册监听");
-        Bukkit.getPluginManager().registerEvents(new Group(), this);
-        Bukkit.getPluginManager().registerEvents(new Friend(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerMessage(), this);
+        PluginManager pm = Bukkit.getPluginManager();
+        pm.registerEvents(new Group(), this);
+        pm.registerEvents(new Friend(), this);
+        pm.registerEvents(new PlayerLogin(), this);
+        pm.registerEvents(new PlayerMessage(), this);
+        pm.registerEvents(new PlayerNum(), this);
 
         logger.info("注册Minecraft指令");
         if (Bukkit.getPluginCommand("oc") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("oc")).setExecutor(new MCCommand());
         }
+
+        logger.info("开始执行启动任务");
+        PlayerNum.chance();
 
         logger.info("插件成功开启");
     }

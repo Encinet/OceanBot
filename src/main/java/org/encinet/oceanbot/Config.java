@@ -17,6 +17,7 @@ public class Config {
     public static int ver;
     public static List<String> prefix;
     public static Long BotID;
+    public static String BotNick;
     public static List<Long> GroupID;
     public static Long MainGroup;
 
@@ -39,6 +40,7 @@ public class Config {
         ver = config().getInt("ver", 3);
         prefix = config().getStringList("prefix");
         BotID = config().getLong("BotID");
+        BotNick = config().getString("BotNick", "Bot");
         GroupID = config().getLongList("GroupID");
         MainGroup = config().getLong("MainGroup");
 
