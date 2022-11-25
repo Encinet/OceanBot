@@ -27,7 +27,7 @@ public class PlayerNum implements Listener {
     public static void chance() {
         int online = Bukkit.getOnlinePlayers().size();
         int max = Bukkit.getMaxPlayers();
-        String now = BotNick + " -" + online + "/" + max;
+        String now = BotNick + " - " + online + "/" + max;
 
         MiraiNormalMember member = MiraiBot.getBot(BotID).getGroup(MainGroup).getMember(BotID);
         if (!now.equals(member.getNick())) {
