@@ -36,9 +36,6 @@ public final class OceanBot extends JavaPlugin {
             Objects.requireNonNull(Bukkit.getPluginCommand("oc")).setExecutor(new MCCommand());
         }
 
-        logger.info("开始执行启动任务");
-        PlayerNum.chance();
-
         logger.info("插件成功开启");
     }
 
