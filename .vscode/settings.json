@@ -1,5 +1,6 @@
 {
     "yaml.schemas": {
         "https://json.schemastore.org/bukkit-plugin.json": "file:///workspaces/OceanBot/src/main/resources/plugin.yml"
-    }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
 }

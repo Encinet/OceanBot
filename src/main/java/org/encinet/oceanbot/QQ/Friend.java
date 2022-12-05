@@ -20,7 +20,7 @@ public class Friend implements Listener {
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message.substring(1), e.getSenderID());
                     if (!answer.equals("")) {
-                        MiraiBot.getBot(BotID).getFriend(e.getSenderID()).sendMessageMirai(answer);
+                        e.sendMessageMirai(answer);
                     }
                     break command;
                 }

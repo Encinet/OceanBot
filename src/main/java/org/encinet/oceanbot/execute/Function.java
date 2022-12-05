@@ -9,11 +9,13 @@ import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.QQ.Bind;
 
+import me.dreamvoid.miraimc.api.MiraiMC;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.encinet.oceanbot.Config.admin;
@@ -36,6 +38,7 @@ public class Function {
                         "help,帮助 - 查看帮助\n" +
                         "info,状态 - 查看服务器信息\n" +
                         "list,在线 - 列出在线玩家\n" +
+                        "rp,修改密码 新密码 - 修改登录密码(建议私聊机器人)\n" +
                         "whois,查 玩家名/QQ - 查询信息\n" +
                         (Config.admin.contains(qqNum) ? adminT : "") +
                         "当前版本:" + Config.ver + "\n" +
@@ -116,6 +119,22 @@ public class Function {
                         }
                     }.runTask(JavaPlugin.getProvidingPlugin(OceanBot.class));
                     rText = "指令发送完成";
+                }
+            }
+            case "rp", "修改密码" -> {
+                UUID uuid = MiraiMC.getBind(qqNum);
+                if (uuid == null) {
+                    rText = "你还没有绑定游戏账号呢";
+                } else if (str.length < 2) {
+                    rText = "请输入新密码";
+                } else {
+                    OfflinePlayer player = Bukkit.getPlayer(uuid);
+                    if (player.hasPlayedBefore()) {
+                        String name = player.getName();
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/authme password " + name + " " + str[1]);
+                    } else {
+                        rText = "你还没有进入服务器";
+                    }
                 }
             }
             case "info", "状态" -> {

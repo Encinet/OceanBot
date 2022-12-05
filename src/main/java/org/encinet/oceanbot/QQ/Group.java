@@ -1,18 +1,13 @@
 package org.encinet.oceanbot.QQ;
 
-import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
-import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.api.MiraiMC;
-import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiBotInvitedJoinGroupRequestEvent;
-import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberCardChangeEvent;
-import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberJoinEvent;
-import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
-import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
+import static org.encinet.oceanbot.Config.BotID;
+import static org.encinet.oceanbot.Config.MainGroup;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -20,13 +15,20 @@ import org.bukkit.event.Listener;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.execute.Function;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
-
-import static org.encinet.oceanbot.Config.*;
+import me.dreamvoid.miraimc.api.MiraiBot;
+import me.dreamvoid.miraimc.api.MiraiMC;
+import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
+import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiBotInvitedJoinGroupRequestEvent;
+import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberCardChangeEvent;
+import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberJoinEvent;
+import me.dreamvoid.miraimc.bukkit.event.group.member.MiraiMemberLeaveEvent;
+import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
+import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupTempMessageEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class Group implements Listener {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
@@ -153,7 +155,7 @@ public class Group implements Listener {
     }
 
     protected boolean inGroup(Long qq) {
-        for (Long num : GroupID) {
+        for (Long num : Config.GroupID) {
             if (qq.equals(num)) {
                 return true;
             }
@@ -164,7 +166,7 @@ public class Group implements Listener {
     // 同意管理的邀请
     @EventHandler
     public void invite(MiraiBotInvitedJoinGroupRequestEvent e) {
-        for (long n : admin) {
+        for (long n : Config.admin) {
             if (Objects.equals(n, e.getInvitorID())) {
                 e.accept();
                 return;
@@ -179,6 +181,25 @@ public class Group implements Listener {
             tiger.put(qq, now);
         } else {
             tiger.put(qq, 1);
+        }
+    }
+
+    // 群聊临时会话
+    @EventHandler
+    public void tempMessage(MiraiGroupTempMessageEvent e) {
+        if (e.getGroupID() != Config.MainGroup) {
+            return;
+        }
+        String message = e.getMessage();
+        long senderID = e.getSenderID();
+        command: for (String n : Config.prefix) {// 遍历前缀数组
+            if (message.startsWith(n)) {// 如果开头符合
+                String answer = Function.on(message.substring(1), senderID);
+                if (!answer.equals("")) {
+                    e.sendMessageMirai(answer);
+                }
+                break command;
+            }
         }
     }
 }
