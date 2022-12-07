@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.QQ.Bind;
+import org.encinet.oceanbot.event.PlayerNum;
 
 import me.dreamvoid.miraimc.api.MiraiMC;
 import java.text.DecimalFormat;
@@ -45,10 +46,11 @@ public class Function {
                         "Made By Encinet");
             }
             case "list", "在线" -> {
+                PlayerNum.chance();
                 // 添加玩家id列表
                 List<String> onlinePlayers = new ArrayList<>();
                 for (Player n : Bukkit.getServer().getOnlinePlayers()) {
-                    onlinePlayers.add(n.getName());
+                    onlinePlayers.add(n.getName() + (n.isAfk() ? " [AFK]" : ""));
                 }
                 // 字母顺序
                 onlinePlayers = onlinePlayers.stream().sorted().collect(Collectors.toList());
@@ -61,7 +63,7 @@ public class Function {
                         rText = rText.replace("{" + i + "}", onlinePlayers.get(i));
                     }
                 } else {
-                    rText = "当前 " + num + " 人在线\n" + String.join(", ", onlinePlayers);
+                    rText = "当前 " + num + " 人在线\n" + String.join("\n", onlinePlayers);
                 }
             }
             case "banlist", "封禁列表" -> {
