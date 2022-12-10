@@ -24,6 +24,7 @@ dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
     implementation 'io.github.dreamvoid:MiraiMC-Integration:1.7'
     compileOnly 'me.clip:placeholderapi:2.11.2'
+    implementation 'com.lilittlecat:chatgpt:0.1.0'
 }
 
 def targetJavaVersion = 17
