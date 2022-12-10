@@ -11,7 +11,7 @@ public class ChatBot {
   
   public static String send(String text) {
     if (!enable) {
-      return;
+      return null;
     }
     if (chatGPT == null) {
       chatGPT = new ChatGPT(Config.ChatToken);
