@@ -6,8 +6,13 @@ import com.lilittlecat.chatgpt.ChatGPT;
 
 public class ChatBot {
   public static ChatGPT chatGPT;
+  public static boolean enable = true;// 聊天开关
   
-  public static String ask(String text) {
+  
+  public static String send(String text) {
+    if (!enable) {
+      return;
+    }
     if (chatGPT == null) {
       chatGPT = new ChatGPT(Config.ChatToken);
     }

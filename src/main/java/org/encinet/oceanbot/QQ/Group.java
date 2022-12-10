@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.encinet.oceanbot.ChatBot;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.execute.Function;
 
@@ -66,6 +67,9 @@ public class Group implements Listener {
             return;
         }
         if (message.length() > 1) {
+            chat: if (message.startsWith("chat") && message.length() >= 6) {
+              ChatBot.send(message.substring(5));
+            }
             command: for (String n : Config.prefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message.substring(1), senderID);
