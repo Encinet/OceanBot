@@ -73,7 +73,7 @@ public class Group implements Listener {
             if (message.startsWith(at) && message.length() > atLength) {
               String sub = message.substring(atLength).trim();
               if (!sub.equals("")) {
-                ChatGPT.send(message.substring(sub));
+                ChatGPT.send(sub);
               }
             }
             
