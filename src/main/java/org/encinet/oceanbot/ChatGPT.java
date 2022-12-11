@@ -17,7 +17,7 @@ public class ChatGPT {
       reload();
     }
     Map<String, Object> chatResponse = chatbot.getChatResponse(text);
-    return chatResponse.get("message");
+    return chatResponse.get("message").toString();
   }
   
   public static void reload() {

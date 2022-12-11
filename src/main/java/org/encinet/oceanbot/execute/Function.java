@@ -91,7 +91,7 @@ public class Function {
             }
             case "chat", "聊天" -> {
             if (hasPermission(qqNum)) {
-                if (str.length() > 1 && str[1] == "new") {
+                if (str.length > 1 && str[1] == "new") {
                   ChatGPT.reload();
                   rText = "新会话启动";
                 } else {
