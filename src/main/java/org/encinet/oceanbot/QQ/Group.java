@@ -62,14 +62,21 @@ public class Group implements Listener {
         String message = e.getMessage();
         long senderID = e.getSenderID();
         long groupID = e.getGroupID();
+        
+        String at = "[mirai:at:" + BotID + "]";
+        int atLength = at.length();
 
         if (!inGroup(groupID)) {
             return;
         }
         if (message.length() > 1) {
-            chat: if (message.startsWith("chat") && message.length() >= 6) {
-              ChatBot.send(message.substring(5));
+            if (message.startsWith(at) && message.length() > atLength) {
+              String sub = message.substring(atLength).trim();
+              if (!sub.equals("")) {
+                ChatBot.send(message.substring(sub));
+              }
             }
+            
             command: for (String n : Config.prefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message.substring(1), senderID);
