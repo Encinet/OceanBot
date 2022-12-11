@@ -23,8 +23,8 @@ repositories {
 dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
     implementation 'io.github.dreamvoid:MiraiMC-Integration:1.7'
-    implementation 'com.github.plexpt:chatgpt:1.0.3'
     compileOnly 'me.clip:placeholderapi:2.11.2'
+    compile fileTree(dir:'../lib',include:['*.jar'])
 }
 
 def targetJavaVersion = 17
