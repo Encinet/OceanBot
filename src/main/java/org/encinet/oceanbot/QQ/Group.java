@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.encinet.oceanbot.ChatBot;
+import org.encinet.oceanbot.ChatGPT;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.execute.Function;
 
@@ -73,7 +73,7 @@ public class Group implements Listener {
             if (message.startsWith(at) && message.length() > atLength) {
               String sub = message.substring(atLength).trim();
               if (!sub.equals("")) {
-                ChatBot.send(message.substring(sub));
+                ChatGPT.send(message.substring(sub));
               }
             }
             

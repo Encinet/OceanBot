@@ -96,7 +96,7 @@ public class Function {
                   rText = "新会话启动";
                 } else {
                   ChatGPT.enable = !ChatGPT.enable;
-                  rText = "成功" + (ChatBot.enable ? "启用" : "禁用") + "聊天机器人";
+                  rText = "成功" + (ChatGPT.enable ? "启用" : "禁用") + "聊天机器人";
                 }
             }
             }
