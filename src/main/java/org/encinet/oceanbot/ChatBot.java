@@ -5,7 +5,7 @@ import org.encinet.oceanbot.Config;
 import com.lilittlecat.chatgpt.ChatGPT;
 
 public class ChatBot {
-  public static ChatGPT chatGPT;
+  public static ChatGPT chatGPT = null;
   public static boolean enable = true;// 聊天开关
   
   
@@ -14,8 +14,11 @@ public class ChatBot {
       return null;
     }
     if (chatGPT == null) {
-      chatGPT = new ChatGPT(Config.ChatToken);
+      reload();
     }
     return chatGPT.ask(text);
+  }
+  public static void reload() {
+    chatGPT = new ChatGPT(Config.ChatToken);
   }
 }

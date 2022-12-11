@@ -66,5 +66,6 @@ public class Config {
         recallMuteValue = config().getInt("recall.mute.value", 3);
         recallMuteTime = config().getInt("recall.mute.time", 120);
         recallText = config().getStringList("recall.text");
+        ChatBot.reload();
     }
 }
