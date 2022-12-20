@@ -1,5 +1,6 @@
 package org.encinet.oceanbot.execute;
 
+import me.dreamvoid.miraimc.api.MiraiMC;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -10,37 +11,40 @@ import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.QQ.Bind;
 import org.encinet.oceanbot.event.PlayerNum;
+import org.encinet.oceanbot.until.Conversion;
+import org.encinet.oceanbot.until.TopList;
 
-import me.dreamvoid.miraimc.api.MiraiMC;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.bukkit.Statistic.*;
 import static org.encinet.oceanbot.Config.admin;
 
 public class Function {
     private static final Random random = new Random();
+
     public static String on(String text, Long qqNum) {
         String rText = "";
         String[] str = text.split(" ");
         switch (str[0]) {// 截取首位字符以后的东西
             case "help", "帮助" -> {
-                String adminT = "c,执行 - 执行命令(仅管理可用)\n" +
-                        "chat,聊天 - 开关聊天机器人(仅管理可用)\n" +
-                        "reload,重载 - 重载配置 (仅管理可用)\n" +
-                        "send,发送 - 复读, 支持miraicode (仅管理可用)\n";
+                String adminT = """
+                        c,执行 - 执行命令(仅管理可用)
+                        chat,聊天 - 开关聊天机器人(仅管理可用)
+                        reload,重载 - 重载配置 (仅管理可用)
+                        send,发送 - 复读, 支持miraicode (仅管理可用)
+                        """;
                 rText = ("消息前加#可发送到服务器或QQ群\n" +
                         "当前可用指令前缀 " + Arrays.toString(Config.prefix.toArray()) + "\n" +
                         "banlist,封禁列表 - 列出封禁玩家\n" +
                         "bind,绑定 验证码 - 绑定账号\n" +
+                        "bt,挖掘排行榜 [页码] - 列出挖掘排行榜\n" +
                         "channel,频道 - 获取频道邀请\n" +
                         "help,帮助 - 查看帮助\n" +
                         "info,状态 - 查看服务器信息\n" +
                         "list,在线 - 列出在线玩家\n" +
+                        "ot,在线排行榜 [页码] - 列出在线排行榜\n" +
                         "rp,修改密码 新密码 - 修改登录密码(建议私聊机器人)\n" +
                         "whois,查 玩家名/QQ - 查询信息\n" +
                         (Config.admin.contains(qqNum) ? adminT : "") +
@@ -86,19 +90,56 @@ public class Function {
                     rText = "配置文件已重载!";
                 }
             }
-            case "channel", "频道" -> {
-                rText = "[mirai:app:{\"app\"\\:\"com.tencent.qun.pro\"\\,\"config\"\\:{\"autosize\"\\:0\\,\"ctime\"\\:1668305956\\,\"extendAutoSize\"\\:1\\,\"token\"\\:\"168c25ddaf0b973c4ce9f1b748950ace\"}\\,\"meta\"\\:{\"contact\"\\:{\"appId\"\\:\"3169\"\\,\"app_ark\"\\:null\\,\"ark_type\"\\:10\\,\"audio_ark\"\\:null\\,\"biz\"\\:\"ka\"\\,\"channelId\"\\:\"57694561639284782\"\\,\"channelType\"\\:\"0\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"feed_ark\"\\:null\\,\"from\"\\:\"1\"\\,\"guild_ark\"\\:{\"common_ark\"\\:{\"app_id\"\\:\"3169\"\\,\"biz\"\\:\"ka\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"from\"\\:\"1\"\\,\"guild_cover\"\\:\"https\\://groupprocover-76483.picgzc.qpic.cn/57694561639284782?imageView2/1/w/1068/h/498&t=1639285411002\"\\,\"guild_icon\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"guild_id\"\\:57694561639284782\\,\"guild_name\"\\:\"米客Mik 服务器\"\\,\"jump_url\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"tag\"\\:\"QQ频道\"\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"}\\,\"default_msg\"\\:\"朋友，邀请你来体验QQ频道!\"}\\,\"jumpUrl\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"live_ark\"\\:null\\,\"meta_ark\"\\:null\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"schedule_ark\"\\:null\\,\"tag\"\\:\"QQ频道\"\\,\"text_ark\"\\:null\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"\\,\"youle_ark\"\\:null}}\\,\"prompt\"\\:\"\\[频道邀请\\]\"\\,\"ver\"\\:\"1.0.2.8\"\\,\"view\"\\:\"contact\"}]";
-            }
-            case "chat", "聊天" -> {
-            if (hasPermission(qqNum)) {
-                if (str.length > 1 && str[1] == "new") {
-                  ChatGPT.reload();
-                  rText = "新会话启动";
-                } else {
-                  ChatGPT.enable = !ChatGPT.enable;
-                  rText = "成功" + (ChatGPT.enable ? "启用" : "禁用") + "聊天机器人";
+            case "channel", "频道" ->
+                    rText = "[mirai:app:{\"app\"\\:\"com.tencent.qun.pro\"\\,\"config\"\\:{\"autosize\"\\:0\\,\"ctime\"\\:1668305956\\,\"extendAutoSize\"\\:1\\,\"token\"\\:\"168c25ddaf0b973c4ce9f1b748950ace\"}\\,\"meta\"\\:{\"contact\"\\:{\"appId\"\\:\"3169\"\\,\"app_ark\"\\:null\\,\"ark_type\"\\:10\\,\"audio_ark\"\\:null\\,\"biz\"\\:\"ka\"\\,\"channelId\"\\:\"57694561639284782\"\\,\"channelType\"\\:\"0\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"feed_ark\"\\:null\\,\"from\"\\:\"1\"\\,\"guild_ark\"\\:{\"common_ark\"\\:{\"app_id\"\\:\"3169\"\\,\"biz\"\\:\"ka\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"from\"\\:\"1\"\\,\"guild_cover\"\\:\"https\\://groupprocover-76483.picgzc.qpic.cn/57694561639284782?imageView2/1/w/1068/h/498&t=1639285411002\"\\,\"guild_icon\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"guild_id\"\\:57694561639284782\\,\"guild_name\"\\:\"米客Mik 服务器\"\\,\"jump_url\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"tag\"\\:\"QQ频道\"\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"}\\,\"default_msg\"\\:\"朋友，邀请你来体验QQ频道!\"}\\,\"jumpUrl\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"live_ark\"\\:null\\,\"meta_ark\"\\:null\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"schedule_ark\"\\:null\\,\"tag\"\\:\"QQ频道\"\\,\"text_ark\"\\:null\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"\\,\"youle_ark\"\\:null}}\\,\"prompt\"\\:\"\\[频道邀请\\]\"\\,\"ver\"\\:\"1.0.2.8\"\\,\"view\"\\:\"contact\"}]";
+            case "ot", "在线排行榜" -> {
+                int page;
+                try {
+                    page = (str.length > 1) ? Math.max(Integer.parseInt(str[1]), 1) : 1;
+                } catch (NumberFormatException e) {
+                    page = 1;
+                }
+                rText = TopList.get(PLAY_ONE_MINUTE, new TopList() {
+                    @Override
+                    public String unit(int num) {
+                        return Conversion.ticksToText(num);
+                    }
+                }, "在线排行榜", page);
+                UUID uuid = MiraiMC.getBind(qqNum);
+                if (uuid != null) {
+                    OfflinePlayer oPlayer = Bukkit.getPlayer(uuid);
+                    if (oPlayer != null) {
+                        String name = Objects.requireNonNull(oPlayer.getName());
+                        if (rText.contains(name)) {
+                            rText = rText.replace(name, name + "[你]");
+                        }
+                    }
                 }
             }
+            case "bt", "挖掘排行榜" -> {
+                int page;
+                try {
+                    page = (str.length > 1) ? Math.max(Integer.parseInt(str[1]), 1) : 0;
+                } catch (NumberFormatException e) {
+                    page = 1;
+                }
+                rText = TopList.get(MINE_BLOCK, new TopList() {
+                    @Override
+                    public String unit(int num) {
+                        return String.valueOf(num);
+                    }
+                }, "挖掘排行榜", page);
+            }
+            case "chat", "聊天" -> {
+                if (hasPermission(qqNum)) {
+                    if (str.length > 1 && Objects.equals(str[1], "new")) {
+                        ChatGPT.reload();
+                        rText = "新会话启动";
+                    } else {
+                        ChatGPT.enable = !ChatGPT.enable;
+                        rText = "成功" + (ChatGPT.enable ? "启用" : "禁用") + "聊天机器人";
+                    }
+                }
             }
             case "send", "发送" -> {
                 if (hasPermission(qqNum)) {
@@ -144,6 +185,7 @@ public class Function {
                     rText = "请输入新密码";
                 } else {
                     OfflinePlayer player = Bukkit.getPlayer(uuid);
+                    assert player != null;
                     if (player.hasPlayedBefore()) {
                         String name = player.getName();
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "/authme password " + name + " " + str[1]);
