@@ -18,12 +18,14 @@ repositories {
     maven {
         url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
     implementation 'io.github.dreamvoid:MiraiMC-Integration:1.7.1'
     compileOnly 'me.clip:placeholderapi:2.11.2'
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 

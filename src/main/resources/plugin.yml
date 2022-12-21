@@ -9,6 +9,8 @@ depend: [MiraiMC]
 commands:
   oc:
     description: MainCommand
+  sign:
+    description: Sign
 permissions:
   oc.admin:
     description: OnlyAdmin

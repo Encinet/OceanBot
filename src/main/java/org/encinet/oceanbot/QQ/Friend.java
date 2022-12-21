@@ -16,7 +16,7 @@ public class Friend implements Listener {
         if (MiraiBot.getBot(BotID).getGroup(MainGroup).contains(e.getSenderID())) {
             String message = e.getMessage();
 
-            command: for (String n : Config.prefix) {// 遍历前缀数组
+            command: for (String n : Config.commandPrefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message.substring(1), e.getSenderID());
                     if (!answer.equals("")) {

@@ -15,7 +15,7 @@ public class Config {
     }
 
     public static int ver;
-    public static List<String> prefix;
+    public static List<String> commandPrefix;
     public static Long BotID;
     public static String BotNick;
     public static List<Long> GroupID;
@@ -39,7 +39,7 @@ public class Config {
         plugin.reloadConfig();
 
         ver = config().getInt("ver", 3);
-        prefix = config().getStringList("prefix");
+        commandPrefix = config().getStringList("prefix");
         BotID = config().getLong("BotID");
         BotNick = config().getString("BotNick", "Bot");
         GroupID = config().getLongList("GroupID");

@@ -11,8 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+import static org.encinet.oceanbot.OceanBot.prefix;
+
 public class MCCommand implements CommandExecutor {
-    public static final String prefix = " §6Ocean§fBot §8>> §r";
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {

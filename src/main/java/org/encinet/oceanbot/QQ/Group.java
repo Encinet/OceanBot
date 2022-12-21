@@ -1,21 +1,5 @@
 package org.encinet.oceanbot.QQ;
 
-import static org.encinet.oceanbot.Config.BotID;
-import static org.encinet.oceanbot.Config.MainGroup;
-
-import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.encinet.oceanbot.ChatGPT;
-import org.encinet.oceanbot.Config;
-import org.encinet.oceanbot.execute.Function;
-
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
@@ -30,6 +14,22 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.encinet.oceanbot.ChatGPT;
+import org.encinet.oceanbot.Config;
+import org.encinet.oceanbot.execute.Function;
+import org.encinet.oceanbot.until.Process;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static org.encinet.oceanbot.Config.BotID;
+import static org.encinet.oceanbot.Config.MainGroup;
 
 public class Group implements Listener {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
@@ -78,7 +78,7 @@ public class Group implements Listener {
               }
             }
             
-            command: for (String n : Config.prefix) {// 遍历前缀数组
+            command: for (String n : Config.commandPrefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message.substring(1), senderID);
                     if (!answer.equals("")) {
@@ -120,7 +120,7 @@ public class Group implements Listener {
                 if (m.equals(n) || m.contains(n)) {
                     if (e.getBotPermission() > e.getSenderPermission()) {
                         e.recall();
-                        tAdd(senderID);
+                        Process.mapCountAdd(tiger, senderID);
                         if (tiger.get(senderID) >= Config.recallMuteValue) {
                             MiraiNormalMember mem = e.getGroup().getMember(senderID);
                             if (!mem.isMuted()) {
@@ -186,16 +186,6 @@ public class Group implements Listener {
         }
     }
 
-    // 触发关键词计数
-    protected void tAdd(long qq) {
-        if (tiger.containsKey(qq)) {
-            int now = tiger.get(qq) + 1;
-            tiger.put(qq, now);
-        } else {
-            tiger.put(qq, 1);
-        }
-    }
-
     // 群聊临时会话
     @EventHandler
     public void tempMessage(MiraiGroupTempMessageEvent e) {
@@ -204,7 +194,7 @@ public class Group implements Listener {
         }
         String message = e.getMessage();
         long senderID = e.getSenderID();
-        command: for (String n : Config.prefix) {// 遍历前缀数组
+        command: for (String n : Config.commandPrefix) {// 遍历前缀数组
             if (message.startsWith(n)) {// 如果开头符合
                 String answer = Function.on(message.substring(1), senderID);
                 if (!answer.equals("")) {
