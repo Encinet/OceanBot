@@ -35,7 +35,7 @@ public class Group implements Listener {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
     private static long yuukLastTime = 0;
     private static final Random random = new Random();
-    private static final String[] study = { "滚去学习", "火速滚去学习", "踏马的，想读职专？", "rnm, 快去学习", "建议主播火速滚去学习" };
+    private static final String[] study = {"滚去学习", "火速滚去学习", "踏马的，想读职专？", "rnm, 快去学习", "建议主播火速滚去学习"};
 
     @EventHandler
     public void join(MiraiMemberJoinEvent e) {
@@ -62,7 +62,7 @@ public class Group implements Listener {
         String message = e.getMessage();
         long senderID = e.getSenderID();
         long groupID = e.getGroupID();
-        
+
         String at = "[mirai:at:" + BotID + "]";
         int atLength = at.length();
 
@@ -71,24 +71,23 @@ public class Group implements Listener {
         }
         if (message.length() > 1) {
             if (message.startsWith(at) && message.length() > atLength) {
-              String sub = message.substring(atLength).trim();
-              if (!sub.equals("")) {
-                MiraiBot.getBot(BotID).getGroup(groupID)
-                                .sendMessage(ChatGPT.send(sub));
-              }
+                String sub = message.substring(atLength).trim();
+                if (!sub.equals("")) {
+                    MiraiBot.getBot(BotID).getGroup(groupID)
+                            .sendMessage(ChatGPT.send(sub));
+                }
             }
-            
-            command: for (String n : Config.commandPrefix) {// 遍历前缀数组
+            for (String n : Config.commandPrefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
                     String answer = Function.on(message.substring(1), senderID);
                     if (!answer.equals("")) {
                         MiraiBot.getBot(BotID).getGroup(groupID)
                                 .sendMessageMirai(answer);
                     }
-                    break command;
+                    break;
                 }
             }
-            sendMessage: for (String n : Config.chatPrefix) {
+            for (String n : Config.chatPrefix) {
                 // 群向服发送消息
                 if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
                     String text = message.substring(1);
@@ -98,23 +97,24 @@ public class Group implements Listener {
                             "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
                     final TextComponent textComponent = Component.text("")
                             .append(Component.text("§8[§cQQ§8]").hoverEvent(HoverEvent.showText(Component.text("""
-                                    §8| §b这是一条从QQ群发来的消息
-                                    §8| §b消息开头为#可互通
+                                            §8| §b这是一条从QQ群发来的消息
+                                            §8| §b消息开头为#可互通
 
-                                    §a➥ §b点击回复""")))
+                                            §a➥ §b点击回复""")))
                                     .clickEvent(ClickEvent.suggestCommand("#")))
                             .append(Component.text(e.getSenderName()).color(NamedTextColor.YELLOW)
                                     .hoverEvent(HoverEvent.showText(Component.text(hoverName)))
                                     .clickEvent(ClickEvent.runCommand("/oc !whois " + senderID)))
                             .append(Component.text(": ").color(NamedTextColor.GRAY))
-                            .append(Component.text(text));
+                            .append(Component.text(text).hoverEvent(HoverEvent.showText(Component.text(e.getTime()))));
                     Bukkit.getServer().sendMessage(textComponent);
-                    break sendMessage;
+                    break;
                 }
             }
         }
         // 关键词检测
-        recallCheck: if (Config.recallEnable) {
+        recallCheck:
+        if (Config.recallEnable) {
             String m = message.toLowerCase();
             for (String n : Config.recallText) {
                 if (m.equals(n) || m.contains(n)) {
@@ -194,7 +194,8 @@ public class Group implements Listener {
         }
         String message = e.getMessage();
         long senderID = e.getSenderID();
-        command: for (String n : Config.commandPrefix) {// 遍历前缀数组
+        command:
+        for (String n : Config.commandPrefix) {// 遍历前缀数组
             if (message.startsWith(n)) {// 如果开头符合
                 String answer = Function.on(message.substring(1), senderID);
                 if (!answer.equals("")) {

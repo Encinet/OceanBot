@@ -109,28 +109,32 @@ public class Function {
                     if (payeeUUID == null) {
                         rText = "获取对方游戏信息错误或对方没有绑定";
                     } else {
-                        try {
-                            double money = Double.parseDouble(str[2]);// 要支付的钱
-                            if (BigDecimal.valueOf(money).compareTo(BigDecimal.valueOf(0)) <= 0) {
-                                rText = "支付的米币必须大于0";
-                            } else {
-                                OfflinePlayer payer = Bukkit.getOfflinePlayer(payerUUID);
-                                if (OceanBot.econ.getBalance(payer) >= money) {
-                                    OfflinePlayer payee = Bukkit.getOfflinePlayer(payeeUUID);
-                                    EconomyResponse er = Money.change(payer, -money);
-                                    EconomyResponse ee = Money.change(payee, money);
-                                    if (er.transactionSuccess() && ee.transactionSuccess()) {
-                                        Money.qq.add(qqNum);
-                                        rText = "[mirai:at:" + qqNum + "] 成功给" + payee.getName() + " " + money + "米币";
-                                    } else {
-                                        rText = String.format("支付功能出错 请反馈管理 ER:%s EE:%s", er.errorMessage, ee.errorMessage);
-                                    }
+                        if (payerUUID.equals(payeeUUID)) {
+                            rText = "不能和自己交易";
+                        } else {
+                            try {
+                                double money = Double.parseDouble(str[2]);// 要支付的钱
+                                if (BigDecimal.valueOf(money).compareTo(BigDecimal.valueOf(0)) <= 0) {
+                                    rText = "支付的米币必须大于0";
                                 } else {
-                                    rText = "你钱不够了";
+                                    OfflinePlayer payer = Bukkit.getOfflinePlayer(payerUUID);
+                                    if (OceanBot.econ.getBalance(payer) >= money) {
+                                        OfflinePlayer payee = Bukkit.getOfflinePlayer(payeeUUID);
+                                        EconomyResponse er = Money.change(payer, -money);
+                                        EconomyResponse ee = Money.change(payee, money);
+                                        if (er.transactionSuccess() && ee.transactionSuccess()) {
+                                            Money.qq.add(qqNum);
+                                            rText = "[mirai:at:" + qqNum + "] 成功给" + payee.getName() + " " + money + "米币";
+                                        } else {
+                                            rText = String.format("支付功能出错 请反馈管理 ER:%s EE:%s", er.errorMessage, ee.errorMessage);
+                                        }
+                                    } else {
+                                        rText = "你钱不够了";
+                                    }
                                 }
+                            } catch (NumberFormatException e) {
+                                rText = "支付的米币是数字";
                             }
-                        } catch (NumberFormatException e) {
-                            rText = "支付的米币是数字";
                         }
                     }
                 }
@@ -210,7 +214,7 @@ public class Function {
                         return Process.ticksToText(num);
                     }
                 }, "在线排行榜", page);
-                // rText = TopList.get(PLAY_ONE_MINUTE, (num) -> Conversion.ticksToText(num), "在线排行榜", page);
+                // rText = TopList.get(PLAY_ONE_MINUTE, (num) -> Process.ticksToText(num), "在线排行榜", page);
                 UUID uuid = MiraiMC.getBind(qqNum);
                 if (uuid != null) {
                     OfflinePlayer oPlayer = Bukkit.getPlayer(uuid);

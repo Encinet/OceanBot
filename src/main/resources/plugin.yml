@@ -6,6 +6,7 @@ authors: [ Aeolic, ObcbO ]
 description: Minecraft with QQ
 website: https://github.com/encinet/OceanBot
 depend: [MiraiMC]
+softdepend: [Vault]
 commands:
   oc:
     description: MainCommand
