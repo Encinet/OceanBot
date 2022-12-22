@@ -47,7 +47,8 @@ public class Money {
     public static double trueMoney(OfflinePlayer player, double change) {
         double playerHave = OceanBot.econ.getBalance(player);
         // playerHave do not smaller than 0
-        return playerHave < -change ? change : -playerHave;
+        if (playerHave == 0) return 0;
+        return playerHave > -change ? change : -playerHave;
     }
 
     public static Map<String, Integer> getTodayMap() {
