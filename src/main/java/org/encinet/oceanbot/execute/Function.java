@@ -157,6 +157,7 @@ public class Function {
                         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
                         int money = (str.length > 1) ? Money.get(str[1]) : Money.get();
                         int trueMoney = (int) Money.trueMoney(player, money);
+                        trueMoney = OceanBot.econ.getBalance(player) == 0 && trueMoney < 0 ? -trueMoney : trueMoney;
                         String moneyText = (trueMoney >= 0 ? "获得" + trueMoney : "丢失" + (-trueMoney)) + "米币";
                         EconomyResponse r = Money.change(player, trueMoney);
                         if (r.transactionSuccess()) {

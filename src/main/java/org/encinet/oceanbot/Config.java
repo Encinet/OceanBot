@@ -17,7 +17,6 @@ public class Config {
     public static String BotNick;
     public static List<Long> GroupID;
     public static Long MainGroup;
-    public static String ChatToken;
 
     public static Map<Integer, List<String>> numMessage;
     public static String noWhiteKick;
@@ -41,7 +40,6 @@ public class Config {
         BotNick = config().getString("BotNick", "Bot");
         GroupID = config().getLongList("GroupID");
         MainGroup = config().getLong("MainGroup");
-        ChatToken = config().getString("ChatGPT-Token");
 
         numMessage = new HashMap<>();
         List<Map<?, ?>> nums = config().getMapList("NumMessage");

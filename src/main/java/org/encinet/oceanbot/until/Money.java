@@ -30,10 +30,8 @@ public class Money {
             int random = random();
             today.put(text, random);
             // 屏蔽词检测
-            for (String n : Config.recallText) {
-                if (text.equals(n) || text.contains(n)) {
-                    return random < 0 ? random : -random;
-                }
+            if (Config.recallEnable && Recall.is(text)) {
+                return random < 0 ? random : -random;
             }
             return random;
         }

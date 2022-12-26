@@ -1,6 +1,5 @@
 package org.encinet.oceanbot.QQ;
 
-import io.github.yizhiru.thulac4j.Segmenter;
 import kotlin.coroutines.CoroutineContext;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -20,9 +19,13 @@ import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.Whitelist;
 import org.encinet.oceanbot.execute.Function;
 import org.encinet.oceanbot.until.Process;
+import org.encinet.oceanbot.until.Recall;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.encinet.oceanbot.Config.MainGroup;
@@ -111,26 +114,18 @@ public class GroupProcess extends SimpleListenerHost {
                 }
             }
             // 关键词检测
-            recallCheck:
-            if (Config.recallEnable) {
-                String m = message.toLowerCase();
-                List<String> words = Segmenter.segment(m);
-                for (String n : Config.recallText) {
-                    if (words.contains(n)) {
-                        if (botPermission.getLevel() > memberPermission.getLevel()) {
-                            MessageSource.recall(messageChain);
-                            Process.mapCountAdd(tiger, memberID);
-                            if (tiger.get(memberID) >= Config.recallMuteValue) {
-                                if (!NormalMemberKt.isMuted(normalMember)) {
-                                    member.mute(Config.recallMuteTime);
-                                }
-                                tiger.remove(memberID);
-                            }
-                        } else {
-                            group.sendMessage(new At(memberID) + "建议撤回");
+            if (Config.recallEnable && Recall.is(message)) {
+                if (botPermission.getLevel() > memberPermission.getLevel()) {
+                    MessageSource.recall(messageChain);
+                    Process.mapCountAdd(tiger, memberID);
+                    if (tiger.get(memberID) >= Config.recallMuteValue) {
+                        if (!NormalMemberKt.isMuted(normalMember)) {
+                            member.mute(Config.recallMuteTime);
                         }
-                        break recallCheck;
+                        tiger.remove(memberID);
                     }
+                } else {
+                    group.sendMessage(new At(memberID) + "建议撤回");
                 }
             }
             // YuuK
