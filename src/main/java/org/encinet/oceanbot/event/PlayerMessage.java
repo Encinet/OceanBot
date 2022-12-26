@@ -2,15 +2,16 @@ package org.encinet.oceanbot.event;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
-import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.api.MiraiMC;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.Whitelist;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.UUID;
 
 import static org.encinet.oceanbot.Config.*;
@@ -26,8 +27,7 @@ public class PlayerMessage implements Listener {
                 String formatText = serverToQQ
                         .replace("$[player]", e.getPlayer().getName())
                         .replace("$[message]", message);
-                MiraiBot.getBot(BotID).getGroup(MainGroup)
-                        .sendMessageMirai(PlaceholderAPI.setPlaceholders(e.getPlayer(), formatText));
+                Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).sendMessage(PlaceholderAPI.setPlaceholders(e.getPlayer(), formatText));
                 return;
             }
         }
@@ -44,7 +44,7 @@ public class PlayerMessage implements Listener {
         for (Player player : players) {
             if (text.toLowerCase().contains(player.getName().toLowerCase())) {
                 UUID uuid = player.getUniqueId();
-                long qqNum = MiraiMC.getBind(uuid);
+                long qqNum = Whitelist.getBind(uuid);
 
                 text = text.replace("@" + player.getName(), "[mirai:at:" + qqNum + "]");
                 text = text.replace(player.getName(), "[mirai:at:" + qqNum + "]");

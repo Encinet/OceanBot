@@ -1,13 +1,14 @@
 package org.encinet.oceanbot.event;
 
-import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.api.MiraiMC;
-import me.dreamvoid.miraimc.api.bot.MiraiGroup;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.mamoe.mirai.contact.Group;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.command.Maintenance;
 import org.encinet.oceanbot.until.Data;
 import org.encinet.oceanbot.until.Verify;
 
@@ -15,14 +16,19 @@ import static org.encinet.oceanbot.Config.*;
 import static org.encinet.oceanbot.QQ.Bind.code;
 
 public class PlayerLogin implements Listener {
-    private MiraiGroup members;
 
     @EventHandler
     public void onPlayerJoin(AsyncPlayerPreLoginEvent e) {
+        if (Maintenance.enable) {
+            e.disallow(
+                    AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
+                    LegacyComponentSerializer.legacyAmpersand().deserialize("维护模式"));
+        }
+
         boolean allow = false;
-        long binder = MiraiMC.getBind(e.getUniqueId());
+        long binder = Whitelist.getBind(e.getUniqueId());
         if (binder != 0) {
-            members = MiraiBot.getBot(BotID).getGroup(MainGroup);
+            Group members = OceanBot.core.getBot().getGroup(MainGroup);
 
             if (members == null) {
                 e.disallow(
@@ -33,7 +39,6 @@ public class PlayerLogin implements Listener {
                 allow = true;
             }
         }
-
         if (allow) {
             e.allow();
         } else {

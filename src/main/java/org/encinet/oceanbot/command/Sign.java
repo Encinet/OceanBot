@@ -1,21 +1,24 @@
-package org.encinet.oceanbot;
+package org.encinet.oceanbot.command;
 
-import me.dreamvoid.miraimc.api.MiraiMC;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.encinet.oceanbot.Whitelist;
 import org.encinet.oceanbot.until.Money;
 import org.jetbrains.annotations.NotNull;
 
 import static org.encinet.oceanbot.OceanBot.prefix;
 
+/**
+ * 签到
+ */
 public class Sign implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player player) {
-            long qqNum = MiraiMC.getBind(player.getUniqueId());
+            long qqNum = Whitelist.getBind(player.getUniqueId());
             if (Money.qq.contains(qqNum)) {
                 sender.sendMessage(prefix + "你已经签到过了");
             } else {

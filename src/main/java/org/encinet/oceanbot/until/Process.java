@@ -1,7 +1,7 @@
 package org.encinet.oceanbot.until;
 
-import me.dreamvoid.miraimc.api.MiraiMC;
 import org.bukkit.Bukkit;
+import org.encinet.oceanbot.Whitelist;
 
 import java.text.DecimalFormat;
 import java.util.Map;
@@ -71,21 +71,21 @@ public class Process {
             if (text.startsWith("@")) {
                 // @123
                 long num = Long.parseLong(text.substring(1));
-                return MiraiMC.getBind(num) == null ? 0 : num;
-            } else if (MiraiMC.getBind(Long.parseLong(text)) != null) {
+                return Whitelist.getBind(num) == null ? 0 : num;
+            } else if (Whitelist.getBind(Long.parseLong(text)) != null) {
                 // 123
                 return Long.parseLong(text);
             } else if (text.startsWith("[mirai:at:") && text.endsWith("]")) {
                 // [mirai:at:123]
                 long num = Long.parseLong(text.substring(9, text.length() - 1));
-                return MiraiMC.getBind(num) == null ? 0 : num;
+                return Whitelist.getBind(num) == null ? 0 : num;
             } else {
                 return 0;
             }
         } catch (NumberFormatException e) {
             // 尝试为游戏ID
             UUID uuid = Bukkit.getOfflinePlayer(text).getUniqueId();
-            return MiraiMC.getBind(uuid);
+            return Whitelist.getBind(uuid);
         }
     }
 }

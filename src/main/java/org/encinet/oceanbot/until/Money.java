@@ -17,9 +17,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Money {
     public static Set<Long> qq = new CopyOnWriteArraySet<>();
-    private static Map<Long, Map<String, Integer>> num = new ConcurrentHashMap<>();
+    private static final Map<Long, Map<String, Integer>> num = new ConcurrentHashMap<>();
     // inclusive
-    private static final int start = -300;
+    private static final int start = -100;
     private static final int end = 800;
 
     public static int get(String text) {

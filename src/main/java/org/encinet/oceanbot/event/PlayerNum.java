@@ -1,13 +1,14 @@
 package org.encinet.oceanbot.event;
 
+import net.mamoe.mirai.contact.NormalMember;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.encinet.oceanbot.OceanBot;
 
-import me.dreamvoid.miraimc.api.MiraiBot;
-import me.dreamvoid.miraimc.api.bot.group.MiraiNormalMember;
+import java.util.Objects;
 
 import static org.encinet.oceanbot.Config.*;
 
@@ -29,7 +30,7 @@ public class PlayerNum implements Listener {
         int max = Bukkit.getMaxPlayers();
         String now = BotNick + " - " + online + "/" + max;
 
-        MiraiNormalMember member = MiraiBot.getBot(BotID).getGroup(MainGroup).getMember(BotID);
+        NormalMember member = Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).getBotAsMember();
         if (!now.equals(member.getNick())) {
             member.setNameCard(now);
         }

@@ -1,4 +1,6 @@
 plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.5.30' // 确保添加 Kotlin
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
     id 'java'
 }
 
@@ -7,6 +9,7 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
     maven {
         name = 'purpur'
         url = 'https://repo.purpurmc.org/snapshots'
@@ -21,12 +24,19 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+jar {
+    manifest{
+        attributes('Main-Class': 'org.encinet.oceanbot.OceanBot')
+    }
+}
+
 dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
-    implementation 'io.github.dreamvoid:MiraiMC-Integration:1.7.1'
     compileOnly 'me.clip:placeholderapi:2.11.2'
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly 'io.github.yizhiru:thulac4j:3.1.2'
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'net.mamoe:mirai-core:2.13.2'
 }
 
 def targetJavaVersion = 17

@@ -1,16 +1,17 @@
 package org.encinet.oceanbot.execute;
 
-import me.dreamvoid.miraimc.api.MiraiMC;
+import net.mamoe.mirai.message.data.At;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.encinet.oceanbot.ChatGPT;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.QQ.Bind;
+import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.command.Maintenance;
 import org.encinet.oceanbot.event.PlayerNum;
 import org.encinet.oceanbot.until.Money;
 import org.encinet.oceanbot.until.Process;
@@ -38,16 +39,18 @@ public class Function {
             case "help", "帮助" -> {
                 String adminT = """
                         c,执行 - 执行命令(仅管理可用)
-                        chat,聊天 - 开关聊天机器人(仅管理可用)
+                        mt,维护 - 维护模式 (仅管理可用)
                         reload,重载 - 重载配置 (仅管理可用)
                         send,发送 - 复读, 支持miraicode (仅管理可用)
                         """;
                 rText = ("消息前加#可发送到服务器或QQ群\n" +
-                        "当前可用指令前缀 " + Arrays.toString(Config.commandPrefix.toArray()) + "\n" +
+                        "可用指令前缀 " + Arrays.toString(Config.commandPrefix.toArray()) + "\n" +
+                        "-----\n" +
+                        "bal,米币 - 查询米币\n" +
                         "banlist,封禁列表 - 列出封禁玩家\n" +
-                        "bind,绑定 验证码 - 绑定账号\n" +
+                        "bind,绑定 <验证码> - 绑定账号\n" +
                         "channel,频道 - 获取频道邀请\n" +
-                        "coin,抛硬币 <正/反> <赌注> - 对了得错了扣\n" +
+                        "coin,抛硬币 <正/反> <赌注> - 赌\n" +
                         "help,帮助 - 查看帮助\n" +
                         "info,状态 - 查看服务器信息\n" +
                         "list,在线 - 列出在线玩家\n" +
@@ -56,7 +59,7 @@ public class Function {
                         "sign,签到 [口令] - 签到\n" +
                         "whois,查 <玩家名/QQ> - 查询信息\n" +
                         (Config.admin.contains(qqNum) ? adminT : "") +
-                        "当前版本:" + Config.ver + "\n" +
+                        "-----\n" +
                         "Made By Encinet");
             }
             case "list", "在线" -> {
@@ -98,14 +101,18 @@ public class Function {
                     rText = "配置文件已重载!";
                 }
             }
+            case "mt", "维护" -> {
+                Maintenance.enable = !Maintenance.enable;
+                rText = "维护模式" + (Maintenance.enable? "启用" : "禁用");
+            }
             case "py", "支付" -> {
-                UUID payerUUID = MiraiMC.getBind(qqNum);
+                UUID payerUUID = Whitelist.getBind(qqNum);
                 if (payerUUID == null) {
                     rText = "你还没有绑定游戏账号呢";
                 } else if (str.length < 3) {
                     rText = "缺少参数";
                 } else {
-                    UUID payeeUUID = MiraiMC.getBind(Process.stringToQBind(str[1]));
+                    UUID payeeUUID = Whitelist.getBind(Process.stringToQBind(str[1]));
                     if (payeeUUID == null) {
                         rText = "获取对方游戏信息错误或对方没有绑定";
                     } else {
@@ -141,7 +148,7 @@ public class Function {
             }
             case "sign", "签到" -> {
                 if (OceanBot.vaultSupportEnabled) {
-                    UUID uuid = MiraiMC.getBind(qqNum);
+                    UUID uuid = Whitelist.getBind(qqNum);
                     if (uuid == null) {
                         rText = "你还没有绑定游戏账号呢";
                     } else if (Money.qq.contains(qqNum)) {
@@ -164,13 +171,13 @@ public class Function {
                 }
             }
             case "coin", "抛硬币" -> {
-                UUID uuid = MiraiMC.getBind(qqNum);
+                UUID uuid = Whitelist.getBind(qqNum);
                 if (uuid == null) {
                     rText = "你还没有绑定游戏账号呢";
                 } else if (str.length < 3) {
                     rText = "缺少参数";
                 } else {
-                    if (Process.mapCountGet(gamble, qqNum) <= 5) {
+                    if (Process.mapCountGet(gamble, qqNum) <= 5 + 1) {
                         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
                         boolean fb = "正".equals(str[1]);
                         try {
@@ -199,8 +206,8 @@ public class Function {
                     }
                 }
             }
-            case "channel", "频道" ->
-                    rText = "[mirai:app:{\"app\"\\:\"com.tencent.qun.pro\"\\,\"config\"\\:{\"autosize\"\\:0\\,\"ctime\"\\:1668305956\\,\"extendAutoSize\"\\:1\\,\"token\"\\:\"168c25ddaf0b973c4ce9f1b748950ace\"}\\,\"meta\"\\:{\"contact\"\\:{\"appId\"\\:\"3169\"\\,\"app_ark\"\\:null\\,\"ark_type\"\\:10\\,\"audio_ark\"\\:null\\,\"biz\"\\:\"ka\"\\,\"channelId\"\\:\"57694561639284782\"\\,\"channelType\"\\:\"0\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"feed_ark\"\\:null\\,\"from\"\\:\"1\"\\,\"guild_ark\"\\:{\"common_ark\"\\:{\"app_id\"\\:\"3169\"\\,\"biz\"\\:\"ka\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"from\"\\:\"1\"\\,\"guild_cover\"\\:\"https\\://groupprocover-76483.picgzc.qpic.cn/57694561639284782?imageView2/1/w/1068/h/498&t=1639285411002\"\\,\"guild_icon\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"guild_id\"\\:57694561639284782\\,\"guild_name\"\\:\"米客Mik 服务器\"\\,\"jump_url\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"tag\"\\:\"QQ频道\"\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"}\\,\"default_msg\"\\:\"朋友，邀请你来体验QQ频道!\"}\\,\"jumpUrl\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"live_ark\"\\:null\\,\"meta_ark\"\\:null\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"schedule_ark\"\\:null\\,\"tag\"\\:\"QQ频道\"\\,\"text_ark\"\\:null\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"\\,\"youle_ark\"\\:null}}\\,\"prompt\"\\:\"\\[频道邀请\\]\"\\,\"ver\"\\:\"1.0.2.8\"\\,\"view\"\\:\"contact\"}]";
+            case "bal", "米币" -> rText = new At(qqNum) + "当前拥有 " + OceanBot.econ.getBalance(Bukkit.getOfflinePlayer(Objects.requireNonNull(Whitelist.getBind(qqNum)))) + " 米币";
+            case "channel", "频道" -> rText = "[mirai:app:{\"app\"\\:\"com.tencent.qun.pro\"\\,\"config\"\\:{\"autosize\"\\:0\\,\"ctime\"\\:1668305956\\,\"extendAutoSize\"\\:1\\,\"token\"\\:\"168c25ddaf0b973c4ce9f1b748950ace\"}\\,\"meta\"\\:{\"contact\"\\:{\"appId\"\\:\"3169\"\\,\"app_ark\"\\:null\\,\"ark_type\"\\:10\\,\"audio_ark\"\\:null\\,\"biz\"\\:\"ka\"\\,\"channelId\"\\:\"57694561639284782\"\\,\"channelType\"\\:\"0\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"feed_ark\"\\:null\\,\"from\"\\:\"1\"\\,\"guild_ark\"\\:{\"common_ark\"\\:{\"app_id\"\\:\"3169\"\\,\"biz\"\\:\"ka\"\\,\"desc\"\\:\"一个Minecraft服务器频道\"\\,\"from\"\\:\"1\"\\,\"guild_cover\"\\:\"https\\://groupprocover-76483.picgzc.qpic.cn/57694561639284782?imageView2/1/w/1068/h/498&t=1639285411002\"\\,\"guild_icon\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"guild_id\"\\:57694561639284782\\,\"guild_name\"\\:\"米客Mik 服务器\"\\,\"jump_url\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"tag\"\\:\"QQ频道\"\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"}\\,\"default_msg\"\\:\"朋友，邀请你来体验QQ频道!\"}\\,\"jumpUrl\"\\:\"https\\://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=1XgWql7RMay&from=246610&biz=ka\"\\,\"live_ark\"\\:null\\,\"meta_ark\"\\:null\\,\"preview\"\\:\"https\\://groupprohead-76292.picgzc.qpic.cn/57694561639284782/100?t=1649046881610\"\\,\"schedule_ark\"\\:null\\,\"tag\"\\:\"QQ频道\"\\,\"text_ark\"\\:null\\,\"title\"\\:\"邀请你加入频道：米客Mik 服务器\"\\,\"youle_ark\"\\:null}}\\,\"prompt\"\\:\"\\[频道邀请\\]\"\\,\"ver\"\\:\"1.0.2.8\"\\,\"view\"\\:\"contact\"}]";
             case "ot", "在线排行榜" -> {
                 int page;
                 try {
@@ -215,7 +222,7 @@ public class Function {
                     }
                 }, "在线排行榜", page);
                 // rText = TopList.get(PLAY_ONE_MINUTE, (num) -> Process.ticksToText(num), "在线排行榜", page);
-                UUID uuid = MiraiMC.getBind(qqNum);
+                UUID uuid = Whitelist.getBind(qqNum);
                 if (uuid != null) {
                     OfflinePlayer oPlayer = Bukkit.getPlayer(uuid);
                     if (oPlayer != null) {
@@ -239,17 +246,6 @@ public class Function {
                         return String.valueOf(num);
                     }
                 }, "挖掘排行榜", page);
-            }
-            case "chat", "聊天" -> {
-                if (hasPermission(qqNum)) {
-                    if (str.length > 1 && Objects.equals(str[1], "new")) {
-                        ChatGPT.reload();
-                        rText = "新会话启动";
-                    } else {
-                        ChatGPT.enable = !ChatGPT.enable;
-                        rText = "成功" + (ChatGPT.enable ? "启用" : "禁用") + "聊天机器人";
-                    }
-                }
             }
             case "send", "发送" -> {
                 if (hasPermission(qqNum)) {

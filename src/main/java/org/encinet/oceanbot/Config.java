@@ -1,17 +1,14 @@
 package org.encinet.oceanbot;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Config {
-    static final Plugin plugin = JavaPlugin.getProvidingPlugin(OceanBot.class);
-    
     public static FileConfiguration config() {
-        return plugin.getConfig();
+        return OceanBot.plugin.getConfig();
     }
 
     public static int ver;
@@ -36,7 +33,7 @@ public class Config {
     public static List<String> recallText;
     
     public static void load() {
-        plugin.reloadConfig();
+        OceanBot.plugin.reloadConfig();
 
         ver = config().getInt("ver", 3);
         commandPrefix = config().getStringList("prefix");
