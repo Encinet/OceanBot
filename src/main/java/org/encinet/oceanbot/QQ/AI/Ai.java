@@ -61,7 +61,7 @@ public class Ai {
     private static boolean isMention(String msg) {
         String lower = msg.trim().toLowerCase();
         for (String text : mentions) {
-            if (msg.contains(lower)) {
+            if (lower.contains(text)) {
                 return true;
             }
         }
