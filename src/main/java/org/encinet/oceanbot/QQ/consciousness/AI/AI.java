@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.QQ.AI;
+package org.encinet.oceanbot.QQ.consciousness.AI;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.encinet.oceanbot.Config.BotID;
 
-public class Ai {
+public class AI {
     // the key is qq number, value is System.currentTimeMillis()
     static Map<Long, Long> dialogue = new ConcurrentHashMap<>();
     // 提及文本
@@ -55,6 +55,8 @@ public class Ai {
         if (dialogue.containsKey(qq)) {
             long waitTimeLimit = dialogue.get(qq) + WAITING_TIME;
             if (waitTimeLimit > System.currentTimeMillis()) {
+                // 删除记忆
+                Memory.texts.remove(qq);
                 dialogue.remove(qq);
                 return false;
             } else return true;

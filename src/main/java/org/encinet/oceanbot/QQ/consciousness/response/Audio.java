@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.QQ.AI.Consciousness;
+package org.encinet.oceanbot.QQ.consciousness.response;
 
 import org.encinet.oceanbot.OceanBot;
 
