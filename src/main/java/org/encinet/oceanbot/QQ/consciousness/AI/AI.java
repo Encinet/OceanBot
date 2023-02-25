@@ -2,13 +2,9 @@ package org.encinet.oceanbot.QQ.consciousness.AI;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import org.encinet.oceanbot.until.HttpUnit;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -80,23 +76,9 @@ public class AI {
 
     private static void answer(String msg) {
         new Thread(() -> {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    // 执行请求的URL
-                    .uri(URI.create("https://api.pawan.krd/chat/gpt?text=" + msg + "&lang=zh-CN"))
-                    // 指定请求超时的时长
-                    .timeout(Duration.ofMinutes(1))
-                    // 指定请求头
-                    .header("Content-Type", "text/html")
-                    // 创建GET请求
-                    .GET()
-                    .build();
-            // HttpResponse.BodyHandlers.ofString()指定将服务器响应转化成字符串
-            HttpResponse.BodyHandler<String> bh = HttpResponse.BodyHandlers.ofString();
-            // 发送请求，获取服务器响应
             try {
-                HttpResponse<String> response = client.send(request,bh);
-                JSONObject data = JSON.parseObject(response.body());
+                String body = HttpUnit.get("https://api.pawan.krd/chat/gpt?text=" + msg + "&lang=zh-CN");
+                JSONObject data = JSON.parseObject(body);
                 data.getString("reply");
             } catch (IOException | InterruptedException e) {
                 // 向工作群发送错误信息

@@ -1,5 +1,7 @@
 package org.encinet.oceanbot.QQ;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import kotlin.coroutines.CoroutineContext;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -18,10 +20,12 @@ import org.bukkit.Bukkit;
 import org.encinet.oceanbot.Config;
 import org.encinet.oceanbot.Whitelist;
 import org.encinet.oceanbot.execute.Function;
+import org.encinet.oceanbot.until.HttpUnit;
 import org.encinet.oceanbot.until.Process;
 import org.encinet.oceanbot.until.Recall;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -40,6 +44,7 @@ public class GroupProcess extends SimpleListenerHost {
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         // 处理事件处理时抛出的异常
+        // 向工作群发送报错
     }
 
     @EventHandler
@@ -224,6 +229,19 @@ public class GroupProcess extends SimpleListenerHost {
                     group.sendMessage(answer);
                 }
             }
+        }
+    }
+
+    // 申请加入群事件
+    @EventHandler
+    public void memberJoinRequest(MemberJoinRequestEvent e) throws IOException, InterruptedException {
+        long qq = e.getFromId();
+        // 黑名单
+        String body = HttpUnit.get("https://blacklist.baoziwl.com/api.php?qq=" + qq);
+        JSONObject data = JSON.parseObject(body);
+        int status = data.getInteger("status");
+        if (status == 1) {
+            e.reject();
         }
     }
 }
