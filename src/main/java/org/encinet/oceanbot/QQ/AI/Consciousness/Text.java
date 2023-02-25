@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.Consciousness;
+package org.encinet.oceanbot.QQ.AI.Consciousness;
 
 import org.encinet.oceanbot.command.Maintenance;
 
