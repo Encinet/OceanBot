@@ -47,13 +47,20 @@ public final class OceanBot extends JavaPlugin {
         Whitelist.load();
 
         // mirai
-        GlobalEventChannel.INSTANCE.registerListenerHost(new GroupProcess());
-        GlobalEventChannel.INSTANCE.registerListenerHost(new FriendProcess());
         qq = () -> {
+            logger.info("启动Bot中");
+
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            Thread.currentThread().setContextClassLoader(GlobalEventChannel.class.getClassLoader());
+
+            GlobalEventChannel.INSTANCE.registerListenerHost(new GroupProcess());
+            GlobalEventChannel.INSTANCE.registerListenerHost(new FriendProcess());
             core = new Core(1802732019, "5CMg66JcKSZydi");
             core.getBot().join();
+
+            Thread.currentThread().setContextClassLoader(loader);
         };
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, qq);
+        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, qq, 10000);
 
         // 依赖
         logger.info("加载依赖");
