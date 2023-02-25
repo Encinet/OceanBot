@@ -236,12 +236,13 @@ public class GroupProcess extends SimpleListenerHost {
     @EventHandler
     public void memberJoinRequest(MemberJoinRequestEvent e) throws IOException, InterruptedException {
         long qq = e.getFromId();
-        // 黑名单
+        // 联合封禁
         String body = HttpUnit.get("https://blacklist.baoziwl.com/api.php?qq=" + qq);
         JSONObject data = JSON.parseObject(body);
         int status = data.getInteger("status");
         if (status == 1) {
-            e.reject();
+            String reason = data.getString("text_lite");
+            e.reject(true, "联合封禁" + (reason == null ? "" : ":" + reason));
         }
     }
 }
