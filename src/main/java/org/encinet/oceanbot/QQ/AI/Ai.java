@@ -4,11 +4,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static org.encinet.oceanbot.Config.*;
+
 public class Ai {
     // the key is qq number, value is System.currentTimeMillis()
     static Map<Long, Long> dialogue = new ConcurrentHashMap<>();
     // 提及文本
-    static final String[] mentions = {"机器人", ""};
+    static final String[] mentions = {"机器人", String.valueOf(BotID), "@" + BotID, "oceanbot", "ocean bot"};
     // 等待用户回复时间 (millis)
     static final long WAITING_TIME = 30000;
     // 回复的概率 (1-100)
@@ -57,6 +59,12 @@ public class Ai {
      * @return 是否提及
      */
     private static boolean isMention(String msg) {
-
+        String lower = msg.trim().toLowerCase();
+        for (String text : mentions) {
+            if (msg.contains(lower)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
