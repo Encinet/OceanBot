@@ -17,8 +17,8 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageSource;
 import net.mamoe.mirai.message.data.QuoteReply;
 import org.bukkit.Bukkit;
-import org.encinet.oceanbot.Config;
-import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.file.Config;
+import org.encinet.oceanbot.file.Whitelist;
 import org.encinet.oceanbot.execute.Function;
 import org.encinet.oceanbot.until.HttpUnit;
 import org.encinet.oceanbot.until.Process;
@@ -32,7 +32,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.encinet.oceanbot.Config.MainGroup;
+import static org.encinet.oceanbot.file.Config.MainGroup;
 
 public class Group extends SimpleListenerHost {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全

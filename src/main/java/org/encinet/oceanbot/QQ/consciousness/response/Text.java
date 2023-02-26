@@ -4,7 +4,7 @@ import org.encinet.oceanbot.command.Maintenance;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.encinet.oceanbot.Config.BotID;
+import static org.encinet.oceanbot.file.Config.BotID;
 
 public class Text {
     private static final String at = "[mirai:at:" + BotID.toString() + "]";

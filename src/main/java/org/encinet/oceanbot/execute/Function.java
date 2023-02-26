@@ -7,10 +7,10 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.encinet.oceanbot.Config;
+import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.QQ.Bind;
-import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.file.Whitelist;
 import org.encinet.oceanbot.command.Maintenance;
 import org.encinet.oceanbot.event.PlayerNum;
 import org.encinet.oceanbot.until.Money;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 import static org.bukkit.Statistic.MINE_BLOCK;
 import static org.bukkit.Statistic.PLAY_ONE_MINUTE;
-import static org.encinet.oceanbot.Config.admin;
+import static org.encinet.oceanbot.file.Config.admin;
 
 public class Function {
     private static final Random random = new Random();

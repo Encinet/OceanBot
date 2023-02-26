@@ -1,7 +1,7 @@
 package org.encinet.oceanbot.until;
 
 import org.bukkit.Bukkit;
-import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.file.Whitelist;
 
 import java.text.DecimalFormat;
 import java.util.Map;

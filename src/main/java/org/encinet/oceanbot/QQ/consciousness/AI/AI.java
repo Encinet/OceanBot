@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.encinet.oceanbot.Config.BotID;
+import static org.encinet.oceanbot.file.Config.BotID;
 
 public class AI {
     // the key is qq number, value is System.currentTimeMillis()

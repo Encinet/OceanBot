@@ -1,6 +1,50 @@
+#name: OceanBot
+#version: '${version}'
+#main: top.iseason.bukkittemplate.BukkitTemplate
+#api-version: 1.19
+#authors: [ Aeolic, ObcbO ]
+#description: Minecraft with QQ
+#website: https://github.com/encinet/OceanBot
+#softdepend: [Vault]
+#commands:
+#  oc:
+#    description: MainCommand
+#  sign:
+#    description: Sign
+#  mt:
+#    description: maintenance
+#permissions:
+#  oc.admin:
+#    description: OnlyAdmin
+#    default: op
+## 依赖管理
+#runtime-libraries:
+#  # 依赖的存放路径
+#  # 如果以@Plugin开头则将以插件配置文件夹为起点
+#  libraries-folder: 'libraries'
+#  # 远程仓库，按顺序检索可用的包
+#  repositories:
+#    - https://maven.aliyun.com/repository/public/
+#    - https://jitpack.io/
+#    - https://repo.maven.apache.org/maven2/
+#  # 并行下载
+#  parallel: true
+#  # 依赖 group:artifact:version 格式,默认添加了Kotlin的运行依赖
+#  # ${kotlinVersion}为编译时替换的占位符，等于kotlin的版本，在gradle.properties 中修改
+#  libraries:
+#    - org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+##    - org.jetbrains.kotlin:kotlin-serialization:1.8.10
+##    - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2
+#    - net.mamoe:mirai-core:2.14.0,3
+#    - net.mamoe:mirai-core-jvm:2.14.0
+#    - com.alibaba.fastjson2:fastjson2:2.0.24
+#    - com.github.MilkBowl:VaultAPI:1.7,1
+#  assembly:
+#    - org.apache.logging.log4j:log4j-api
+#    - com.github.MilkBowl:VaultAPI
 name: OceanBot
 version: '${version}'
-main: org.encinet.oceanbot.OceanBot
+main: top.iseason.bukkittemplate.BukkitTemplate
 api-version: 1.19
 authors: [ Aeolic, ObcbO ]
 description: Minecraft with QQ
@@ -17,3 +61,27 @@ permissions:
   oc.admin:
     description: OnlyAdmin
     default: op
+# 依赖管理
+runtime-libraries:
+  # 依赖的存放路径
+  # 如果以@Plugin开头则将以插件配置文件夹为起点
+  libraries-folder: 'libraries'
+  # 远程仓库，按顺序检索可用的包
+  repositories:
+    - https://maven.aliyun.com/repository/public/
+    - https://jitpack.io/
+    - https://repo.maven.apache.org/maven2/
+  # 并行下载
+  parallel: true
+  # 依赖 group:artifact:version 格式,默认添加了Kotlin的运行依赖
+  # ${kotlinVersion}为编译时替换的占位符，等于kotlin的版本，在gradle.properties 中修改
+  libraries:
+    - org.jetbrains.kotlin:kotlin-stdlib:1.8.10
+    -
+    - net.mamoe:mirai-core:2.14.0,3
+    - net.mamoe:mirai-core-jvm:2.14.0
+    - com.alibaba.fastjson2:fastjson2:2.0.24
+    - com.github.MilkBowl:VaultAPI:1.7,1
+  assembly:
+    - org.apache.logging.log4j:log4j-api
+    - com.github.MilkBowl:VaultAPI

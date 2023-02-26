@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.file.Whitelist;
 import org.encinet.oceanbot.until.Process;
 
 import java.text.SimpleDateFormat;

@@ -7,12 +7,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.file.Whitelist;
 import org.encinet.oceanbot.command.Maintenance;
 import org.encinet.oceanbot.until.Data;
 import org.encinet.oceanbot.until.Verify;
 
-import static org.encinet.oceanbot.Config.*;
+import static org.encinet.oceanbot.file.Config.*;
 import static org.encinet.oceanbot.QQ.Bind.code;
 
 public class PlayerLogin implements Listener {

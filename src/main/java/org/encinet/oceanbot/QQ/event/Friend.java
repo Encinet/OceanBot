@@ -3,13 +3,13 @@ package org.encinet.oceanbot.QQ.event;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
-import org.encinet.oceanbot.Config;
+import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.execute.Function;
 
 import java.util.Objects;
 
-import static org.encinet.oceanbot.Config.MainGroup;
+import static org.encinet.oceanbot.file.Config.MainGroup;
 
 public class Friend extends SimpleListenerHost {
 

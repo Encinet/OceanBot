@@ -1,6 +1,7 @@
-package org.encinet.oceanbot;
+package org.encinet.oceanbot.file;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.encinet.oceanbot.OceanBot;
 
 import java.util.HashMap;
 import java.util.List;

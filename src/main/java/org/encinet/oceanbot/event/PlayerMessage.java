@@ -8,13 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.file.Whitelist;
 
 import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
-import static org.encinet.oceanbot.Config.*;
+import static org.encinet.oceanbot.file.Config.*;
 
 public class PlayerMessage implements Listener {
 

@@ -1,35 +1,45 @@
 package org.encinet.oceanbot;
 
-import net.mamoe.mirai.event.GlobalEventChannel;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.encinet.oceanbot.QQ.Core;
 import org.encinet.oceanbot.command.MCCommand;
 import org.encinet.oceanbot.command.Maintenance;
 import org.encinet.oceanbot.command.Sign;
 import org.encinet.oceanbot.event.PlayerLogin;
 import org.encinet.oceanbot.event.PlayerMessage;
 import org.encinet.oceanbot.event.PlayerNum;
-import org.encinet.oceanbot.QQ.Core;
-import org.encinet.oceanbot.QQ.event.Friend;
-import org.encinet.oceanbot.QQ.event.Group;
+import org.encinet.oceanbot.file.Config;
+import org.encinet.oceanbot.file.Whitelist;
+import top.iseason.bukkittemplate.BukkitPlugin;
+import top.iseason.bukkittemplate.BukkitTemplate;
+import top.iseason.bukkittemplate.DisableHook;
 
 import java.io.File;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public final class OceanBot extends JavaPlugin {
+public final class OceanBot implements BukkitPlugin {
+    public static final OceanBot INSTANCE = new OceanBot();
     public static final Logger logger = Logger.getLogger("OceanBot");
     public static final String prefix = " §6Ocean§fBot §8>> §r";
     public static Economy econ;
     public static boolean vaultSupportEnabled = false;
-    public static final ClassLoader loader = OceanBot.class.getClassLoader();
-    static Plugin plugin;
+    public static OceanBot instance;
+    //插件主类
+    public static Plugin plugin = BukkitTemplate.getPlugin();
     public static Core core;
     public static Runnable qq;
+
+    /**
+     * 构造方法，负责下载/添加依赖，并启动插件
+     */
+    public OceanBot() {
+        instance = this;
+    }
 
     @Override // 加载插件
     public void onLoad() {
@@ -39,38 +49,25 @@ public final class OceanBot extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        plugin = JavaPlugin.getProvidingPlugin(OceanBot.class);
-
         logger.info("加载配置文件");
-        saveDefaultConfig();
-        reloadConfig();
+        plugin.saveDefaultConfig();
+        plugin.reloadConfig();
         Config.load();
         Whitelist.load();
 
         // mirai
-        qq = () -> {
-            logger.info("启动Bot中");
-            ClassLoader old = Thread.currentThread().getContextClassLoader();
-            try {
-                System.out.println(OceanBot.loader);
-                Thread.currentThread().setContextClassLoader(OceanBot.loader);
-                GlobalEventChannel.INSTANCE.registerListenerHost(new Group());
-                GlobalEventChannel.INSTANCE.registerListenerHost(new Friend());
-            } finally {
-                Thread.currentThread().setContextClassLoader(old);
-            }
-
-            core = new Core(1802732019, "5CMg66JcKSZydi");
-            core.getBot().join();
-        };
+//        qq = () -> {
+//            logger.info("启动Bot中");
+//            core = new Core(1802732019, "5CMg66JcKSZydi");
+//            core.getBot().join();
+//        };
 //        qq.run();
-//        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, qq, 20);
+
 
         // 依赖
         logger.info("加载依赖");
-        if (getServer().getPluginManager().getPlugin("Vault") != null && Objects.requireNonNull(getServer().getPluginManager().getPlugin("Vault")).isEnabled()) {
-            RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        if (Bukkit.getPluginManager().getPlugin("Vault") != null && Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Vault")).isEnabled()) {
+            RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
             if (rsp == null) {
                 logger.warning("无法找到经济插件");
                 vaultSupportEnabled = false;
@@ -85,9 +82,9 @@ public final class OceanBot extends JavaPlugin {
 
         logger.info("注册监听");
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new PlayerLogin(), this);
-        pm.registerEvents(new PlayerMessage(), this);
-        pm.registerEvents(new PlayerNum(), this);
+        pm.registerEvents(new PlayerLogin(), plugin);
+        pm.registerEvents(new PlayerMessage(), plugin);
+        pm.registerEvents(new PlayerNum(), plugin);
 
         logger.info("注册Minecraft指令");
         if (Bukkit.getPluginCommand("oc") != null) {
@@ -110,5 +107,24 @@ public final class OceanBot extends JavaPlugin {
 
     public static File getFile(String fileName) {
         return new File(System.getProperty("user.dir") + "/plugins/OceanBot/" + fileName);
+    }
+
+    /**
+     * 一部启动
+     */
+    @Override
+    public void onAsyncEnable() {
+        ClassLoader old = Thread.currentThread().getContextClassLoader();
+        Thread.currentThread().setContextClassLoader(BukkitTemplate.isolatedClassLoader);
+        logger.info("启动Bot中");
+        try {
+            core = new Core(1802732019, "5CMg66JcKSZydi");
+            core.getBot().join();
+        } finally {
+            Thread.currentThread().setContextClassLoader(old);
+        }
+        DisableHook.addTask(()->{
+            core.getBot().close();
+        });
     }
 }

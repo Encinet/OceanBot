@@ -1,6 +1,7 @@
-package org.encinet.oceanbot;
+package org.encinet.oceanbot.file;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.encinet.oceanbot.OceanBot;
 
 import java.io.File;
 import java.io.IOException;

@@ -10,7 +10,7 @@ import org.encinet.oceanbot.OceanBot;
 
 import java.util.Objects;
 
-import static org.encinet.oceanbot.Config.*;
+import static org.encinet.oceanbot.file.Config.*;
 
 public class PlayerNum implements Listener {
     @EventHandler

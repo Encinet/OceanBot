@@ -3,14 +3,14 @@ package org.encinet.oceanbot.QQ;
 import net.mamoe.mirai.contact.NormalMember;
 import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.Whitelist;
+import org.encinet.oceanbot.file.Whitelist;
 import org.encinet.oceanbot.until.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.encinet.oceanbot.Config.MainGroup;
+import static org.encinet.oceanbot.file.Config.MainGroup;
 
 public class Bind {
     public static final Map<String, Data> code = new HashMap<>();

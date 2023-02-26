@@ -34,10 +34,16 @@ dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.11.2'
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+
     compileOnly 'io.github.yizhiru:thulac4j:3.1.2'
-    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.24'
-    implementation 'net.mamoe:mirai-core:2.14.0'
+
+    // mirai
+    api platform("net.mamoe:mirai-bom:2.14.0")
+    api "net.mamoe:mirai-core-api"     // 编译代码使用
+    runtimeOnly "net.mamoe:mirai-core" // 运行时使用
+
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 def targetJavaVersion = 17
@@ -57,10 +63,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 processResources {
-    def props = [version: version]
-    inputs.properties props
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
-        expand props
     }
 }

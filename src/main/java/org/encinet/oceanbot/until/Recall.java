@@ -1,7 +1,7 @@
 package org.encinet.oceanbot.until;
 
 import io.github.yizhiru.thulac4j.Segmenter;
-import org.encinet.oceanbot.Config;
+import org.encinet.oceanbot.file.Config;
 
 import java.util.List;
 
