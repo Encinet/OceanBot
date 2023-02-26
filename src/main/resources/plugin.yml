@@ -1,0 +1,19 @@
+name: OceanBot
+version: '${version}'
+main: org.encinet.oceanbot.OceanBot
+api-version: 1.19
+authors: [ Aeolic, ObcbO ]
+description: Minecraft with QQ
+website: https://github.com/encinet/OceanBot
+softdepend: [Vault]
+commands:
+  oc:
+    description: MainCommand
+  sign:
+    description: Sign
+  mt:
+    description: maintenance
+permissions:
+  oc.admin:
+    description: OnlyAdmin
+    default: op
