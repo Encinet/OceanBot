@@ -2,21 +2,23 @@ package org.encinet.oceanbot
 
 import net.milkbowl.vault.economy.Economy
 import org.bukkit.plugin.Plugin
-import org.bukkit.plugin.RegisteredServiceProvider
 import org.bukkit.plugin.java.JavaPlugin
 import org.encinet.oceanbot.file.Config
 import org.encinet.oceanbot.file.Whitelist
 import org.encinet.oceanbot.qq.Core
 import java.io.File
-import java.util.*
 import java.util.logging.Logger
 
 class OceanBot : JavaPlugin() {
-    // 加载插件
-    override fun onLoad() {
-//        Thread.currentThread().setContextClassLoader(this.getClassLoader());
-    }
 
+    /**
+     * 在其他线程加载，比onEnable先调用,结束了才调用onEnable
+     */
+    override fun onLoad() {}
+
+    /**
+     * 在插件启用后运行
+     */
     override fun onEnable() {
         // Plugin startup logic
         plugin = getProvidingPlugin(OceanBot::class.java)
@@ -42,6 +44,7 @@ class OceanBot : JavaPlugin() {
         } else {
             Companion.logger.warning("Vault 未启用")
         }
+
 //        Companion.logger.info("注册监听")
 //        val pm: PluginManager = Bukkit.getPluginManager()
 //        pm.registerEvents(PlayerLogin(), this)
@@ -58,8 +61,12 @@ class OceanBot : JavaPlugin() {
         Companion.logger.info("插件成功开启")
     }
 
+    /**
+     * 在插件停用时运行
+     */
     override fun onDisable() {
         // Plugin shutdown logic
+        Companion.logger.info("Goodbye")
     }
 
     companion object {

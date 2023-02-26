@@ -25,6 +25,12 @@ dependencies {
     compileOnly("me.clip", "placeholderapi", "2.11.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.24")
+
+    // 数据库
+    implementation("org.jetbrains.exposed", "exposed-core", "0.40.1")
+    implementation("org.jetbrains.exposed", "exposed-dao", "0.40.1")
+    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.40.1")
+
     testImplementation(kotlin("test"))
 }
 
