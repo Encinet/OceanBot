@@ -7,14 +7,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.encinet.oceanbot.QQ.FriendProcess;
-import org.encinet.oceanbot.QQ.GroupProcess;
 import org.encinet.oceanbot.command.MCCommand;
 import org.encinet.oceanbot.command.Maintenance;
 import org.encinet.oceanbot.command.Sign;
 import org.encinet.oceanbot.event.PlayerLogin;
 import org.encinet.oceanbot.event.PlayerMessage;
 import org.encinet.oceanbot.event.PlayerNum;
+import org.encinet.oceanbot.QQ.Core;
+import org.encinet.oceanbot.QQ.event.Friend;
+import org.encinet.oceanbot.QQ.event.Group;
 
 import java.io.File;
 import java.util.Objects;
@@ -25,13 +26,14 @@ public final class OceanBot extends JavaPlugin {
     public static final String prefix = " §6Ocean§fBot §8>> §r";
     public static Economy econ;
     public static boolean vaultSupportEnabled = false;
+    public static final ClassLoader loader = OceanBot.class.getClassLoader();
     static Plugin plugin;
     public static Core core;
     public static Runnable qq;
 
     @Override // 加载插件
     public void onLoad() {
-        Thread.currentThread().setContextClassLoader(this.getClassLoader());
+//        Thread.currentThread().setContextClassLoader(this.getClassLoader());
         // Service loading.
     }
 
@@ -49,18 +51,21 @@ public final class OceanBot extends JavaPlugin {
         // mirai
         qq = () -> {
             logger.info("启动Bot中");
+            ClassLoader old = Thread.currentThread().getContextClassLoader();
+            try {
+                System.out.println(OceanBot.loader);
+                Thread.currentThread().setContextClassLoader(OceanBot.loader);
+                GlobalEventChannel.INSTANCE.registerListenerHost(new Group());
+                GlobalEventChannel.INSTANCE.registerListenerHost(new Friend());
+            } finally {
+                Thread.currentThread().setContextClassLoader(old);
+            }
 
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            Thread.currentThread().setContextClassLoader(GlobalEventChannel.class.getClassLoader());
-
-            GlobalEventChannel.INSTANCE.registerListenerHost(new GroupProcess());
-            GlobalEventChannel.INSTANCE.registerListenerHost(new FriendProcess());
             core = new Core(1802732019, "5CMg66JcKSZydi");
             core.getBot().join();
-
-            Thread.currentThread().setContextClassLoader(loader);
         };
-        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, qq, 10000);
+//        qq.run();
+//        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, qq, 20);
 
         // 依赖
         logger.info("加载依赖");

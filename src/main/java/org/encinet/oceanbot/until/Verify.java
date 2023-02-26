@@ -2,6 +2,9 @@ package org.encinet.oceanbot.until;
 
 import java.util.Random;
 
+/**
+ * 验证码生成
+ */
 public class Verify {
     private static final Random r = new Random();
     private static final int max = 9999999;

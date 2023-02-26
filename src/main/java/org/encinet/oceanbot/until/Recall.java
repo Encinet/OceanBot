@@ -5,6 +5,9 @@ import org.encinet.oceanbot.Config;
 
 import java.util.List;
 
+/**
+ * 违禁关键词检测
+ */
 public class Recall {
     public static boolean is(String text) {
         String m = text.toLowerCase();

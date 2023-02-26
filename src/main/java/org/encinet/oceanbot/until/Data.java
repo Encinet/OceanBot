@@ -4,6 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * 玩家记录时间存储
+ * 目前仅用于绑定检测是否超时功能
+ */
 public class Data {
     private final UUID uuid;// 添加时间
     private final String name;// 玩家名

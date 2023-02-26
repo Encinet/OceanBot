@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.QQ;
+package org.encinet.oceanbot.QQ.event;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -34,10 +34,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static org.encinet.oceanbot.Config.MainGroup;
 
-public class GroupProcess extends SimpleListenerHost {
+public class Group extends SimpleListenerHost {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
     private static long yuukLastTime = 0;
     private static final Random random = new Random();
+    // 给一个要中考的朋友加的（ 忽略就好
     private static final String[] study = {"滚去学习", "火速滚去学习", "踏马的，想读职专？", "rnm, 快去学习", "建议主播火速滚去学习"};
 
 
@@ -54,7 +55,7 @@ public class GroupProcess extends SimpleListenerHost {
         String message = messageChain.contentToString();
         String miraiMessage = messageChain.toString();
 
-        Group group = event.getGroup();
+        net.mamoe.mirai.contact.Group group = event.getGroup();
         long groupID = group.getId();
 
         Member member = event.getSender();
@@ -148,7 +149,7 @@ public class GroupProcess extends SimpleListenerHost {
 
     @EventHandler
     public void join(@NotNull MemberJoinEvent e) {
-        Group group = e.getGroup();
+        net.mamoe.mirai.contact.Group group = e.getGroup();
         if (!Objects.equals(group.getId(), MainGroup)) {
             return;
         }
@@ -157,7 +158,7 @@ public class GroupProcess extends SimpleListenerHost {
 
     @EventHandler
     public void leave(@NotNull MemberLeaveEvent e) {
-        Group group = e.getGroup();
+        net.mamoe.mirai.contact.Group group = e.getGroup();
         if (!Objects.equals(group.getId(), MainGroup)) {
             return;
         }
@@ -169,7 +170,7 @@ public class GroupProcess extends SimpleListenerHost {
 
     @EventHandler
     public void cardChange(MemberCardChangeEvent e) {
-        Group group = e.getGroup();
+        net.mamoe.mirai.contact.Group group = e.getGroup();
         long groupID = group.getId();
 
         NormalMember member = e.getMember();
@@ -214,7 +215,7 @@ public class GroupProcess extends SimpleListenerHost {
     // 群聊临时会话
     @EventHandler
     public void tempMessage(GroupTempMessageEvent e) {
-        Group group = e.getGroup();
+        net.mamoe.mirai.contact.Group group = e.getGroup();
         NormalMember member = e.getSender();
         String message = e.getMessage().contentToString();
         long memberID = member.getId();

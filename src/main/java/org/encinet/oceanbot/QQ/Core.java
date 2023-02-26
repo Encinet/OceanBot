@@ -1,4 +1,4 @@
-package org.encinet.oceanbot;
+package org.encinet.oceanbot.QQ;
 
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
@@ -16,6 +16,7 @@ public class Core {
             if (new File("mirai/" + qq + ".json").exists()) {
                 loadDeviceInfoJson("mirai/" + qq + ".json");
             }
+
             // 登录协议
             setProtocol(MiraiProtocol.ANDROID_PHONE);
             // 切换心跳策略

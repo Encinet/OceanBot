@@ -1,6 +1,5 @@
-package org.encinet.oceanbot.QQ;
+package org.encinet.oceanbot.QQ.event;
 
-import net.mamoe.mirai.contact.Friend;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
@@ -12,11 +11,11 @@ import java.util.Objects;
 
 import static org.encinet.oceanbot.Config.MainGroup;
 
-public class FriendProcess extends SimpleListenerHost {
+public class Friend extends SimpleListenerHost {
 
     @EventHandler
     public void Players(FriendMessageEvent e) {
-        Friend friend = e.getFriend();
+        net.mamoe.mirai.contact.Friend friend = e.getFriend();
         long friendId = friend.getId();
         if (Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).contains(friendId)) {
             String message = e.getMessage().contentToString();
