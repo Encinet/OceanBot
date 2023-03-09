@@ -18,10 +18,7 @@ public class Core {
         bot = BotFactory.INSTANCE.newBot(qq, password, new BotConfiguration() {{
             // 配置
             String deviceInfo = "mirai/" + qq + ".json";
-            fileBasedDeviceInfo(deviceInfo);
-            if (new File(deviceInfo).exists()) {
-                loadDeviceInfoJson(deviceInfo);
-            }
+            // fileBasedDeviceInfo(deviceInfo);
 
             // 登录协议
             setProtocol(MiraiProtocol.ANDROID_PHONE);

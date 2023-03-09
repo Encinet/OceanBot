@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.execute;
+package org.encinet.oceanbot.common;
 
 import net.mamoe.mirai.message.data.At;
 import net.milkbowl.vault.economy.EconomyResponse;

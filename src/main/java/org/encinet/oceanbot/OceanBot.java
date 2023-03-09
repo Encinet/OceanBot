@@ -55,15 +55,6 @@ public final class OceanBot implements BukkitPlugin {
         Config.load();
         Whitelist.load();
 
-        // mirai
-//        qq = () -> {
-//            logger.info("启动Bot中");
-//            core = new Core(1802732019, "5CMg66JcKSZydi");
-//            core.getBot().join();
-//        };
-//        qq.run();
-
-
         // 依赖
         logger.info("加载依赖");
         if (Bukkit.getPluginManager().getPlugin("Vault") != null && Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Vault")).isEnabled()) {
@@ -110,7 +101,7 @@ public final class OceanBot implements BukkitPlugin {
     }
 
     /**
-     * 一部启动
+     * sync启动
      */
     @Override
     public void onAsyncEnable() {

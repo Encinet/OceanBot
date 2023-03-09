@@ -27,7 +27,7 @@ public class PlayerMessage implements Listener {
                 String formatText = serverToQQ
                         .replace("$[player]", e.getPlayer().getName())
                         .replace("$[message]", message);
-                Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).sendMessage(PlaceholderAPI.setPlaceholders(e.getPlayer(), formatText));
+                OceanBot.core.getBot().getGroup(MainGroup).sendMessage(PlaceholderAPI.setPlaceholders(e.getPlayer(), formatText));
                 return;
             }
         }

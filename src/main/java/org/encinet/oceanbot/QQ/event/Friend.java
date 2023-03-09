@@ -5,7 +5,7 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.execute.Function;
+import org.encinet.oceanbot.common.Function;
 
 import java.util.Objects;
 

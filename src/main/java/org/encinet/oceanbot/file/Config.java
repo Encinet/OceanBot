@@ -16,8 +16,10 @@ public class Config {
     public static List<String> commandPrefix;
     public static Long BotID;
     public static String BotNick;
+    
     public static List<Long> GroupID;
     public static Long MainGroup;
+    public static Long LogGroup;
 
     public static Map<Integer, List<String>> numMessage;
     public static String noWhiteKick;
@@ -39,8 +41,10 @@ public class Config {
         commandPrefix = config().getStringList("prefix");
         BotID = config().getLong("BotID");
         BotNick = config().getString("BotNick", "Bot");
+        
         GroupID = config().getLongList("GroupID");
         MainGroup = config().getLong("MainGroup");
+        LogGroup = config().getLong("LogGroup");
 
         numMessage = new HashMap<>();
         List<Map<?, ?>> nums = config().getMapList("NumMessage");

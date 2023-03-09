@@ -17,9 +17,10 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageSource;
 import net.mamoe.mirai.message.data.QuoteReply;
 import org.bukkit.Bukkit;
+import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.file.Whitelist;
-import org.encinet.oceanbot.execute.Function;
+import org.encinet.oceanbot.common.Function;
 import org.encinet.oceanbot.until.HttpUnit;
 import org.encinet.oceanbot.until.Process;
 import org.encinet.oceanbot.until.Recall;
@@ -32,10 +33,11 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.encinet.oceanbot.file.Config.MainGroup;
+import static org.encinet.oceanbot.file.Config.*;
 
 public class Group extends SimpleListenerHost {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
+    
     private static long yuukLastTime = 0;
     private static final Random random = new Random();
     // 给一个要中考的朋友加的（ 忽略就好
@@ -46,17 +48,23 @@ public class Group extends SimpleListenerHost {
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         // 处理事件处理时抛出的异常
         // 向工作群发送报错
+        OceanBot.core.getBot().getGroup(LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception.toString());
+        throw new RuntimeException(exception);
     }
 
     @EventHandler
     public void onMessage(@NotNull GroupMessageEvent event) { // 可以抛出任何异常, 将在 handleException 处理
+        net.mamoe.mirai.contact.Group group = event.getGroup();
+        long groupID = group.getId();
+        if (!inGroup(groupID)) {
+            // is not enanle group
+            return;
+        }
+        
         MessageChain messageChain = event.getMessage();
 
         String message = messageChain.contentToString();
         String miraiMessage = messageChain.toString();
-
-        net.mamoe.mirai.contact.Group group = event.getGroup();
-        long groupID = group.getId();
 
         Member member = event.getSender();
         long memberID = member.getId();
@@ -65,26 +73,23 @@ public class Group extends SimpleListenerHost {
             MemberPermission botPermission = group.getBotPermission();
             MemberPermission memberPermission = member.getPermission();
 
-            if (!inGroup(groupID)) {
-                return;
-            }
             if (message.length() > 1) {
-//            File consciousnessAudio = Audio.get(miraiMessage);
-//            if (consciousnessAudio != null) {
-//                MiraiBot.getBot(BotID).getGroup(groupID)
-//                        .sendAudio(consciousnessAudio);
-//                Audio audio;
-//                try (ExternalResource resource = ExternalResource.create(consciousnessAudio)) {
-//
-//                }
-//                group.sendMessage(audio); // 发送语音消息
-//                contact.sendMessage(ExternalResource.uploadAsAudio(/*...*/));
-//            }
-//            String consciousnessText = Text.get(miraiMessage);
-//            if (consciousnessText != null) {
-//                group.sendMessage(consciousnessText);
-//            }
-
+            // 关键词检测
+            if (Config.recallEnable && Recall.is(message)) {
+                if (botPermission.getLevel() > memberPermission.getLevel()) {
+                    MessageSource.recall(messageChain);
+                    Process.mapCountAdd(tiger, memberID);
+                    if (tiger.get(memberID) >= Config.recallMuteValue) {
+                        if (!NormalMemberKt.isMuted(normalMember)) {
+                            member.mute(Config.recallMuteTime);
+                        }
+                        tiger.remove(memberID);
+                    }
+                } else {
+                    group.sendMessage(new At(memberID) + "建议撤回");
+                }
+            }
+                // qq command
                 for (String n : Config.commandPrefix) {// 遍历前缀数组
                     if (message.startsWith(n)) {// 如果开头符合
                         String answer = Function.on(message.substring(1), memberID);
@@ -94,6 +99,7 @@ public class Group extends SimpleListenerHost {
                         break;
                     }
                 }
+                // message send each other
                 for (String n : Config.chatPrefix) {
                     // 群向服发送消息
                     if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
@@ -117,21 +123,6 @@ public class Group extends SimpleListenerHost {
                         Bukkit.getServer().sendMessage(textComponent);
                         break;
                     }
-                }
-            }
-            // 关键词检测
-            if (Config.recallEnable && Recall.is(message)) {
-                if (botPermission.getLevel() > memberPermission.getLevel()) {
-                    MessageSource.recall(messageChain);
-                    Process.mapCountAdd(tiger, memberID);
-                    if (tiger.get(memberID) >= Config.recallMuteValue) {
-                        if (!NormalMemberKt.isMuted(normalMember)) {
-                            member.mute(Config.recallMuteTime);
-                        }
-                        tiger.remove(memberID);
-                    }
-                } else {
-                    group.sendMessage(new At(memberID) + "建议撤回");
                 }
             }
             // YuuK
@@ -244,6 +235,7 @@ public class Group extends SimpleListenerHost {
         if (status == 1) {
             String reason = data.getString("text_lite");
             e.reject(true, "联合封禁" + (reason == null ? "" : ":" + reason));
+            Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).sendMessage("拒绝 " + qq + " 的入群申请\n云黑名单: " + reason);
         }
     }
 }

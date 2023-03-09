@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.execute;
+package org.encinet.oceanbot.common;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
