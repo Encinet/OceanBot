@@ -29,10 +29,6 @@ public class Money {
         } else {
             int random = random();
             today.put(text, random);
-            // 屏蔽词检测
-            if (Config.recallEnable && Recall.is(text)) {
-                return random < 0 ? random : -random;
-            }
             return random;
         }
     }

@@ -9,6 +9,7 @@ import org.encinet.oceanbot.QQ.Core;
 import org.encinet.oceanbot.command.MCCommand;
 import org.encinet.oceanbot.command.Maintenance;
 import org.encinet.oceanbot.command.Sign;
+import org.encinet.oceanbot.common.occommand.OcCommand;
 import org.encinet.oceanbot.event.PlayerLogin;
 import org.encinet.oceanbot.event.PlayerMessage;
 import org.encinet.oceanbot.event.PlayerNum;
@@ -29,6 +30,7 @@ public final class OceanBot implements BukkitPlugin {
     public static Economy econ;
     public static boolean vaultSupportEnabled = false;
     public static OceanBot instance;
+    public static OcCommand occommand;
     //插件主类
     public static Plugin plugin = BukkitTemplate.getPlugin();
     public static Core core;
@@ -77,6 +79,8 @@ public final class OceanBot implements BukkitPlugin {
         pm.registerEvents(new PlayerMessage(), plugin);
         pm.registerEvents(new PlayerNum(), plugin);
 
+                logger.info("注册Ocean指令");
+        occommand = new OcCommand();
         logger.info("注册Minecraft指令");
         if (Bukkit.getPluginCommand("oc") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("oc")).setExecutor(new MCCommand());

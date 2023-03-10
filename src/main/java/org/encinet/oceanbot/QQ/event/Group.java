@@ -23,7 +23,7 @@ import org.encinet.oceanbot.file.Whitelist;
 import org.encinet.oceanbot.common.Function;
 import org.encinet.oceanbot.until.HttpUnit;
 import org.encinet.oceanbot.until.Process;
-import org.encinet.oceanbot.until.Recall;
+import org.encinet.oceanbot.until.QQUntil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class Group extends SimpleListenerHost {
 
             if (message.length() > 1) {
             // 关键词检测
-            if (Config.recallEnable && Recall.is(message)) {
+            if (Config.recallEnable && QQUntil.shouldRecall(message)) {
                 if (botPermission.getLevel() > memberPermission.getLevel()) {
                     MessageSource.recall(messageChain);
                     Process.mapCountAdd(tiger, memberID);
@@ -92,8 +92,8 @@ public class Group extends SimpleListenerHost {
                 // qq command
                 for (String n : Config.commandPrefix) {// 遍历前缀数组
                     if (message.startsWith(n)) {// 如果开头符合
-                        String answer = Function.on(message.substring(1), memberID);
-                        if (!answer.equals("")) {
+                        String answer = OceanBot.occommand.execute(message.substring(1), memberID, false);
+                        if (answer != null) {
                             group.sendMessage(answer);
                         }
                         break;
