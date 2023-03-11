@@ -4,17 +4,47 @@
       "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/exec.java",
       "selection": {
         "end": {
-          "column": 23,
+          "column": 0,
           "index": -1,
-          "line": 65
+          "line": 68
         },
         "start": {
-          "column": 23,
+          "column": 0,
           "index": -1,
-          "line": 65
+          "line": 68
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/info.java",
+      "selection": {
+        "end": {
+          "column": 2,
+          "index": -1,
+          "line": 61
+        },
+        "start": {
+          "column": 2,
+          "index": -1,
+          "line": 61
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/list.java",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": -1,
+          "line": 59
+        },
+        "start": {
+          "column": 0,
+          "index": -1,
+          "line": 59
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/exec.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/list.java"
 }

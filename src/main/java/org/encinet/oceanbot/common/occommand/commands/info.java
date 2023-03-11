@@ -59,6 +59,7 @@ public class info extends BasicCommand {
     return sb.toString();
   }
 
+  @Override
   public String onTab(String[] args, long qq) {
     return null;
   }

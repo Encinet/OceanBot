@@ -46,6 +46,7 @@ public class exec extends BasicCommand implements CommandSender {
     }
   }
 
+  @Override
   public String onTab(String[] args, long qq) {
     return null;
   }

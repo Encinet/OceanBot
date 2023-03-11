@@ -52,6 +52,7 @@ public class list extends BasicCommand {
     }
   }
 
+  @Override
   public String onTab(String[] args, long qq) {
     return null;
   }
