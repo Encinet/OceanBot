@@ -18,7 +18,7 @@ public class list extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq, boolean color) {
+  public String onCommand(String label, long qq) {
     StringBuilder sb = new StringBuilder();
     // 更新群昵称
     PlayerNum.chance();

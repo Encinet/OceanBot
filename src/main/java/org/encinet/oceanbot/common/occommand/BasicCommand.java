@@ -1,31 +1,32 @@
 package org.encinet.oceanbot.common.occommand;
 
 public abstract class BasicCommand {
-  String name;
-  String[] alias;
-  String description;
-  boolean admin;
+  // 命令头
+  final String head;
+  // 命令头别名
+  final String[] alias;
+  // 介绍
+  final String description;
+  // 是否需要管理员权限
+  final boolean admin;
 
-  public BasicCommand(String name, String alias, String description, boolean admin) {
-    this.name = name;
-    this.alias = new String[] {alias};
-    this.description = description;
-    this.admin = admin;
-  }
-
-  public BasicCommand(String name, String[] alias, String description, boolean admin) {
-    this.name = name;
+  public BasicCommand(String head, String[] alias, String description, boolean admin) {
+    this.head = head;
     this.alias = alias;
     this.description = description;
     this.admin = admin;
   }
 
-  public abstract String onCommand(String label, long qq, boolean color);
+  public BasicCommand(String head, String alias, String description, boolean admin) {
+    this(head, new String[] {alias}, description, admin);
+  }
+
+  public abstract String onCommand(String label, long qq);
 
   public abstract String onTab(String[] args, long qq);
 
-  public String getName() {
-    return this.name;
+  public final String getHead() {
+    return this.head;
   }
 
   public final String[] getAlias() {

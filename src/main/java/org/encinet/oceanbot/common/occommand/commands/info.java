@@ -13,7 +13,7 @@ public class info extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq, boolean color) {
+  public String onCommand(String label, long qq) {
     StringBuilder sb = new StringBuilder();
     sb.append("服务器版本: ")
         .append(Bukkit.getVersion())

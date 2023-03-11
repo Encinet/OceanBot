@@ -14,7 +14,7 @@ public class help extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq, boolean color) {
+  public String onCommand(String label, long qq) {
     StringBuilder sb = new StringBuilder();
     List<BasicCommand> commands = OceanBot.occommand.commands;
     String[] args = label.split(" ");
@@ -26,7 +26,7 @@ public class help extends BasicCommand {
       for (BasicCommand command : commands) {
         if (QQUntil.canEnter(super.getAdmin(), qq)) {
         List<String> commandHeads = new ArrayList<>();
-        commandHeads.add(command.getName());
+        commandHeads.add(command.getHead());
         commandHeads.addAll(Arrays.asList(command.getAlias()));
         sb.append(commandHeads.toString()).append(" - ").append(command.getDescription()).append(super.getAdmin() ? "(仅管理可用)\n" : "\n");
         }
@@ -35,7 +35,7 @@ public class help extends BasicCommand {
       sb.append("OceanBot Beta\n");
       sb.append("Made by Encinet");
     } else {
-      sb.append("主命令: ").append(choose.getName()).append("\n");
+      sb.append("主命令: ").append(choose.getHead()).append("\n");
       sb.append("别名: ").append(Arrays.asList(choose.getAlias())).append("\n");
       sb.append("介绍: ").append(choose.getDescription());
     }
