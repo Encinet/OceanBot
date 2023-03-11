@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/exec.java",
+      "selection": {
+        "end": {
+          "column": 23,
+          "index": -1,
+          "line": 65
+        },
+        "start": {
+          "column": 23,
+          "index": -1,
+          "line": 65
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/exec.java"
+}

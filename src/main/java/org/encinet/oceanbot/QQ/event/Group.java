@@ -14,6 +14,7 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.*;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.MessageSource;
 import net.mamoe.mirai.message.data.QuoteReply;
 import org.bukkit.Bukkit;
@@ -72,8 +73,7 @@ public class Group extends SimpleListenerHost {
         if (member instanceof NormalMember normalMember) {
             MemberPermission botPermission = group.getBotPermission();
             MemberPermission memberPermission = member.getPermission();
-
-            if (message.length() > 1) {
+            
             // 关键词检测
             if (Config.recallEnable && QQUntil.shouldRecall(message)) {
                 if (botPermission.getLevel() > memberPermission.getLevel()) {
@@ -86,9 +86,24 @@ public class Group extends SimpleListenerHost {
                         tiger.remove(memberID);
                     }
                 } else {
-                    group.sendMessage(new At(memberID) + "建议撤回");
+                    group.sendMessage(new MessageChainBuilder()
+                        .append(new At(memberID))
+                        .append("建议撤回")
+                        .build());
                 }
             }
+            // YuuK
+            if (Objects.equals(memberID, 2704804982L)) {
+                long nowTime = System.currentTimeMillis();
+                if ((nowTime - yuukLastTime) >= 60000L) {
+                    yuukLastTime = nowTime;
+                    group.sendMessage(new MessageChainBuilder()
+                        .append(new QuoteReply(messageChain))
+                        .append(study[random.nextInt(study.length)])
+                        .build());
+                }
+            }
+            if (message.length() > 1) {
                 // qq command
                 for (String n : Config.commandPrefix) {// 遍历前缀数组
                     if (message.startsWith(n)) {// 如果开头符合
@@ -125,16 +140,8 @@ public class Group extends SimpleListenerHost {
                     }
                 }
             }
-            // YuuK
-            if (Objects.equals(memberID, 2704804982L)) {
-                long nowTime = System.currentTimeMillis();
-                if ((nowTime - yuukLastTime) >= 60000L) {
-                    yuukLastTime = nowTime;
-                    group.sendMessage(new QuoteReply(messageChain) + study[random.nextInt(study.length)]);
-                }
-            }
         } else {
-            group.sendMessage("匿名个der啊");
+            // 匿名
         }
     }
 
@@ -144,7 +151,11 @@ public class Group extends SimpleListenerHost {
         if (!Objects.equals(group.getId(), MainGroup)) {
             return;
         }
-        group.sendMessage(new At(e.getMember().getId()) + "\n" + Config.join);
+        MessageChain msg = new MessageChainBuilder()
+            .append(new At(e.getMember().getId()))
+            .append("\n" + Config.join)
+            .build();
+        group.sendMessage(msg);
     }
 
     @EventHandler
@@ -235,7 +246,7 @@ public class Group extends SimpleListenerHost {
         if (status == 1) {
             String reason = data.getString("text_lite");
             e.reject(true, "联合封禁" + (reason == null ? "" : ":" + reason));
-            Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).sendMessage("拒绝 " + qq + " 的入群申请\n云黑名单: " + reason);
+            OceanBot.core.getBot().getGroup(MainGroup).sendMessage("拒绝 " + qq + " 的入群申请\n云黑名单: " + reason);
         }
     }
 }

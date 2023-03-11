@@ -36,7 +36,10 @@ public class exec extends BasicCommand implements CommandSender {
             Thread.sleep(5000);
           } catch (InterruptedException e) {
           }
-          OceanBot.core.getBot().getGroup(Config.LogGroup).sendMessage("来自 " + qq + "\n的命令 " + cmd + "---\n" + print.toString().trim());
+          OceanBot.core
+              .getBot()
+              .getGroup(Config.LogGroup)
+              .sendMessage("来自 " + qq + "\n的命令 " + cmd + "---\n" + print.toString().trim());
         }
       }.runTask(OceanBot.plugin);
       return "指令发送完成";
@@ -58,4 +61,7 @@ public class exec extends BasicCommand implements CommandSender {
       print.append(message).append("\n");
     }
   }
+
+  @Override
+  public void name() {}
 }
