@@ -35,7 +35,7 @@ public class help extends BasicCommand {
         commandHeads.addAll(Arrays.asList(command.getAlias()));
                     
         // 命令头 包含别名 用,连接 例:help,帮助
-        sb.append(String.join(",", commandHeads.toString()));
+        sb.append(String.join(",", commandHeads));
         // 命令参数 空一格添加在命令头后面
         String commandArgs = command.getArgs();
         if (commandArgs != null) {

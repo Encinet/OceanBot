@@ -4,14 +4,14 @@
       "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/event/Group.java",
       "selection": {
         "end": {
-          "column": 40,
+          "column": 17,
           "index": -1,
-          "line": 3
+          "line": 151
         },
         "start": {
-          "column": 0,
+          "column": 17,
           "index": -1,
-          "line": 1
+          "line": 151
         }
       }
     },
@@ -19,29 +19,14 @@
       "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/group.java",
       "selection": {
         "end": {
-          "column": 25,
+          "column": 21,
           "index": -1,
-          "line": 31
+          "line": 46
         },
         "start": {
-          "column": 25,
+          "column": 21,
           "index": -1,
-          "line": 31
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/help.java",
-      "selection": {
-        "end": {
-          "column": 24,
-          "index": -1,
-          "line": 38
-        },
-        "start": {
-          "column": 24,
-          "index": -1,
-          "line": 38
+          "line": 46
         }
       }
     },
@@ -61,20 +46,20 @@
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/until/QQUntil.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/Function.java.old",
       "selection": {
         "end": {
-          "column": 23,
+          "column": 0,
           "index": -1,
-          "line": 41
+          "line": 0
         },
         "start": {
-          "column": 23,
+          "column": 0,
           "index": -1,
-          "line": 41
+          "line": 0
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/until/QQUntil.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/event/Group.java"
 }
