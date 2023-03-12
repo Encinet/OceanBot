@@ -9,68 +9,53 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Whitelist {
-    // UUID: QQ
-    private static File whitelist;
 
     public static void load() {
-        whitelist = new File(OceanBot.plugin.getDataFolder(), "whitelist.yml");
-        if (!whitelist.exists()) {
-            try {
-                whitelist.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
-    public static void write(UUID uuid, long qq) {
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(whitelist);
-//
-//        List<String> uuids = yaml.getStringList("uuid");
-//        try {
-//            uuids.add(String.valueOf(uuid));
-//            yaml.set("uuid", uuids);
-//            yaml.save(whitelist);
-//        } catch (IOException ex) {
-//            throw new RuntimeException(ex);
-//        }
+    public static void write(UUID uuid, String name, long qq) {
     }
 
-    public static long getBind(UUID uuid) {
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(whitelist);
-        return yaml.getLong(uuid.toString(), 0);
-    }
-
-    public static UUID getBind(long qq) {
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(whitelist);
-        Map<String, Object> values = yaml.getValues(false);
+    public static UUID getBindUUID(String name) {
         return null;
     }
+    public static UUID getBindUUID(long qq) {
+        return null;
+    }
+    public static String getBindName(UUID uuid) {
+        return null;
+    }
+    public static String getBindName(long qq) {
+        return null;
+    }
+    public static long getBindQQ(UUID uuid) {
+        return 0;
+    }
+    public static long getBindQQ(String name) {
+        return 0;
+    }
+    
+    public static boolean contains(UUID uuid) {
+        return true;
+    }
+    public static boolean contains(String name) {
+        return true;
+    }
+    public static boolean contains(long qq) {
+        return true;
+    }
+    
+    public static void remove(UUID uuid) {
+        if (contains(uuid)) {
+            
+        }
+    }
+    public static void remove(String name) {
+        UUID uuid = getBindUUID(name);
+        remove(uuid);
+    }
     public static void remove(long qq) {
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(whitelist);
-    }
-}
-
-class uuid {
-    private final long qq;
-
-    public uuid(long qq) {
-        this.qq = qq;
-    }
-
-    public long getQQ() {
-        return qq;
-    }
-}
-
-class qq {
-    private final UUID uuid;
-
-    public qq(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public UUID getUUID() {
-        return uuid;
+        UUID uuid = getBindUUID(qq);
+        remove(uuid);
     }
 }

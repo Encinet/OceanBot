@@ -18,7 +18,7 @@ public class Sign implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player player) {
-            long qqNum = Whitelist.getBind(player.getUniqueId());
+            long qqNum = Whitelist.getBindQQ(player.getUniqueId());
             if (Money.qq.contains(qqNum)) {
                 sender.sendMessage(prefix + "你已经签到过了");
             } else {

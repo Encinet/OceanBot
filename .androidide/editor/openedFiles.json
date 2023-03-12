@@ -1,50 +1,80 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/exec.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/event/Group.java",
       "selection": {
         "end": {
-          "column": 0,
+          "column": 40,
           "index": -1,
-          "line": 68
+          "line": 3
         },
         "start": {
           "column": 0,
           "index": -1,
-          "line": 68
+          "line": 1
         }
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/info.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/group.java",
       "selection": {
         "end": {
-          "column": 2,
+          "column": 25,
           "index": -1,
-          "line": 61
+          "line": 31
         },
         "start": {
-          "column": 2,
+          "column": 25,
           "index": -1,
-          "line": 61
+          "line": 31
         }
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/list.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/help.java",
       "selection": {
         "end": {
-          "column": 0,
+          "column": 24,
           "index": -1,
-          "line": 59
+          "line": 38
         },
         "start": {
-          "column": 0,
+          "column": 24,
           "index": -1,
-          "line": 59
+          "line": 38
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/event/Friend.java",
+      "selection": {
+        "end": {
+          "column": 32,
+          "index": -1,
+          "line": 23
+        },
+        "start": {
+          "column": 32,
+          "index": -1,
+          "line": 23
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/until/QQUntil.java",
+      "selection": {
+        "end": {
+          "column": 23,
+          "index": -1,
+          "line": 41
+        },
+        "start": {
+          "column": 23,
+          "index": -1,
+          "line": 41
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/list.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/until/QQUntil.java"
 }

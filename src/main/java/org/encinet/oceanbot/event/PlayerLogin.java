@@ -26,7 +26,7 @@ public class PlayerLogin implements Listener {
         }
 
         boolean allow = false;
-        long binder = Whitelist.getBind(e.getUniqueId());
+        long binder = Whitelist.getBindQQ(e.getUniqueId());
         if (binder != 0) {
             Group members = OceanBot.core.getBot().getGroup(MainGroup);
 

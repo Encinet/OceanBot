@@ -3,6 +3,7 @@ package org.encinet.oceanbot.common.occommand;
 import org.encinet.oceanbot.common.occommand.commands.*;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.until.QQUntil;
+import org.encinet.oceanbot.until.TextUntil;
 
 import java.io.IOException;
 import java.util.*;
@@ -11,7 +12,9 @@ public class OcCommand {
   public static List<BasicCommand> commands = new ArrayList<>();
 
   public OcCommand() {
+    register(new banlist());
     register(new exec());
+    register(new group());
     register(new help());
     register(new info());
     register(new list());
@@ -33,7 +36,8 @@ public class OcCommand {
     String commandHead = label.split(" ", 2)[0];
     BasicCommand command = getFromHead(commandHead);
     if (command != null && QQUntil.canEnter(command.getAdmin(), qq)) {
-      return command.onCommand(label, qq);
+      String rt = command.onCommand(label, qq);
+      return color ? TextUntil.removeColorCodes(rt) : rt;
     } else {
       return null;
     }

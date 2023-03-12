@@ -14,12 +14,12 @@ public class Text {
     private static final String[] Repetition = {"awa", "qwq", "好耶", "离谱"};
     private static final String[] sigh = {"!", "！", "啊", "哇"};
     // 以下是回复类
-    private static final String[] aTed = {"?", "啊?", "ヾ(≧▽≦*)o", "(❁´◡`❁)", "(*/ω＼*)", "(oﾟvﾟ)ノ", "ヾ(^▽^*)))", "(。・ω・。)"};
+    private static final String[] aTed = {"?", "啊?", "ヾ(≧▽≦*)o", "(❁´◡`❁)", "(*/ω＼*)", "(oﾟvﾟ)ノ", "ヾ(^▽^*)))", "(。・ω・。)", "qwq?", "awa"};
 
     public static String get(String text) {
         String trim = text.trim();
         // at
-        if (trim.contains(at)) return randomArray(aTed);
+        if (trim.contains(at)) return actCute();
         // 疑问词检测
         if (arrayContains(Interrogative, trim)) return query(trim);
         // 复读 去除感叹词检测
@@ -30,7 +30,12 @@ public class Text {
         }
         return null;
     }
-
+    
+    // 萌点
+    public static String actCute() {
+        return randomArray(aTed);
+    }
+    
     /**
      * 文本里是否有包含数组内某一个
      *

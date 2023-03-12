@@ -147,6 +147,7 @@ public class Function {
                 }
             }
             case "sign", "签到" -> {
+                // 改成hash值来储存
                 if (OceanBot.vaultSupportEnabled) {
                     UUID uuid = Whitelist.getBind(qqNum);
                     if (uuid == null) {

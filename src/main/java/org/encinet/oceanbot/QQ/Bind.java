@@ -16,7 +16,7 @@ public class Bind {
     public static final Map<String, Data> code = new HashMap<>();
 
     public static String qqGroup(String text, Long qq) {
-        if (Whitelist.getBind(qq) != null) {
+        if (Whitelist.contains(qq)) {
             code.remove(text);
             return "你已经绑定过了";
         } else if ((System.currentTimeMillis() - code.get(text).getTime()) >= 600000) {// 10分钟
@@ -24,12 +24,10 @@ public class Bind {
             return "验证码已过期";
         }
         NormalMember member  = Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).getMembers().get(qq);
-        Whitelist.write(code.get(text).getUUID(), qq);
-        Bukkit.getServer().getWhitelistedPlayers();
-
         assert member != null;
         String nick = member.getNick();
         String name = code.get(text).getName();
+        Whitelist.write(code.get(text).getUUID(), name, qq);
         if (!Objects.equals(name, nick) && !nick.endsWith("(" + name + ")")) {
             member.setNameCard(nick + "(" + name + ")");
         }

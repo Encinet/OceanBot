@@ -29,19 +29,11 @@ public final class OceanBot implements BukkitPlugin {
     public static final String prefix = " §6Ocean§fBot §8>> §r";
     public static Economy econ;
     public static boolean vaultSupportEnabled = false;
-    public static OceanBot instance;
     public static OcCommand occommand;
     //插件主类
     public static Plugin plugin = BukkitTemplate.getPlugin();
     public static Core core;
     public static Runnable qq;
-
-    /**
-     * 构造方法，负责下载/添加依赖，并启动插件
-     */
-    public OceanBot() {
-        instance = this;
-    }
 
     @Override // 加载插件
     public void onLoad() {
@@ -79,8 +71,9 @@ public final class OceanBot implements BukkitPlugin {
         pm.registerEvents(new PlayerMessage(), plugin);
         pm.registerEvents(new PlayerNum(), plugin);
 
-                logger.info("注册Ocean指令");
+        logger.info("注册Ocean指令");
         occommand = new OcCommand();
+        
         logger.info("注册Minecraft指令");
         if (Bukkit.getPluginCommand("oc") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("oc")).setExecutor(new MCCommand());
@@ -88,7 +81,7 @@ public final class OceanBot implements BukkitPlugin {
         if (Bukkit.getPluginCommand("sign") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("sign")).setExecutor(new Sign());
         }
-        if (Bukkit.getPluginCommand("oc") != null) {
+        if (Bukkit.getPluginCommand("mt") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("mt")).setExecutor(new Maintenance());
         }
 

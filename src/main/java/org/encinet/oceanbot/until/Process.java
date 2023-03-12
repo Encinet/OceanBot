@@ -71,21 +71,21 @@ public class Process {
             if (text.startsWith("@")) {
                 // @123
                 long num = Long.parseLong(text.substring(1));
-                return Whitelist.getBind(num) == null ? 0 : num;
-            } else if (Whitelist.getBind(Long.parseLong(text)) != null) {
+                return Whitelist.contains(num) ? num : 0;
+            } else if (Whitelist.contains(Long.parseLong(text))) {
                 // 123
                 return Long.parseLong(text);
             } else if (text.startsWith("[mirai:at:") && text.endsWith("]")) {
                 // [mirai:at:123]
                 long num = Long.parseLong(text.substring(9, text.length() - 1));
-                return Whitelist.getBind(num) == null ? 0 : num;
+                return Whitelist.contains(num) ? num : 0;
             } else {
                 return 0;
             }
         } catch (NumberFormatException e) {
             // 尝试为游戏ID
             UUID uuid = Bukkit.getOfflinePlayer(text).getUniqueId();
-            return Whitelist.getBind(uuid);
+            return Whitelist.getBindQQ(uuid);
         }
     }
 }

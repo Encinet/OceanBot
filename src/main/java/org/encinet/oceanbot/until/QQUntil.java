@@ -5,6 +5,7 @@ import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.until.HttpUnit;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class QQUntil {
@@ -16,17 +17,16 @@ public class QQUntil {
    */
   public static boolean shouldRecall(String text) {
     try {
-      String m = text.toLowerCase().trim();
-      m = m.replace("\n", "").replace("\r", "").replace("\t", "").replace(" ", "");
+      String m = URLEncoder.encode(text.trim());
       // 分词api
       String words =
-          HttpUnit.get("http://api.pullword.com/get.php?source=" + m + "&param1=0.8&param2=0");
+          HttpUnit.get("http://api.pullword.com/get.php?source=" + m + "&param1=0.8&param2=0").toLowerCase();
       for (String n : Config.recallText) {
         if (words.contains(n)) {
           return true;
         }
       }
-    } catch (IOException | IllegalArgumentException | InterruptedException e) {
+    } catch (IOException | InterruptedException e) {
       OceanBot.core
           .getBot()
           .getGroup(Config.LogGroup)
@@ -51,10 +51,7 @@ public class QQUntil {
   }
 
   /**
-   * 判断是否可以继续执行 
-   * 需要验证管理 且 qq不是管理 阻止 
-   * 需要验证管理 且 qq是管理 允许 
-   * 不需要验证管理 允许
+   * 判断是否可以继续执行 需要验证管理 且 qq不是管理 阻止 需要验证管理 且 qq是管理 允许 不需要验证管理 允许
    *
    * @param shouldAdmin 是否需要验证管理员
    * @param qq QQ号

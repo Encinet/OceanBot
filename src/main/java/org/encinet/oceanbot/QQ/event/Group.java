@@ -21,7 +21,7 @@ import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.file.Whitelist;
-import org.encinet.oceanbot.common.Function;
+import org.encinet.oceanbot.QQ.consciousness.CS;
 import org.encinet.oceanbot.until.HttpUnit;
 import org.encinet.oceanbot.until.Process;
 import org.encinet.oceanbot.until.QQUntil;
@@ -88,9 +88,10 @@ public class Group extends SimpleListenerHost {
                 } else {
                     group.sendMessage(new MessageChainBuilder()
                         .append(new At(memberID))
-                        .append("建议撤回")
+                        .append(" 发现危险词汇，建议撤回")
                         .build());
                 }
+                return;
             }
             // YuuK
             if (Objects.equals(memberID, 2704804982L)) {
@@ -120,7 +121,7 @@ public class Group extends SimpleListenerHost {
                     if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
                         String text = message.substring(1);
 
-                        UUID bind = Whitelist.getBind(memberID);
+                        UUID bind = Whitelist.getBindUUID(memberID);
                         String hoverName = "§7QQ: §3" + memberID + "\n" +
                                 "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
                         final TextComponent textComponent = Component.text("")
@@ -140,9 +141,12 @@ public class Group extends SimpleListenerHost {
                     }
                 }
             }
-        } else {
-            // 匿名
-        }
+            // consciousness
+            MessageChain cs = CS.enter(message);
+            if (cs != null) {
+                group.sendMessage(cs);
+            }
+        }// else匿名
     }
 
     @EventHandler
@@ -165,9 +169,8 @@ public class Group extends SimpleListenerHost {
             return;
         }
         long id = e.getMember().getId();
-        if (Whitelist.getBind(id) != null) {
-            Whitelist.remove(id);
-        }
+        // 自带是否存在判断
+        Whitelist.remove(id);
     }
 
     @EventHandler
@@ -179,11 +182,11 @@ public class Group extends SimpleListenerHost {
         long memberID = member.getId();
         String nick = e.getNew();
 
-        if (!Objects.equals(groupID, MainGroup) || Whitelist.getBind(memberID) == null) {
+        if (!Objects.equals(groupID, MainGroup) || !Whitelist.contains(memberID)) {
             return;
         }
 
-        String name = Bukkit.getOfflinePlayer(Objects.requireNonNull(Whitelist.getBind(memberID))).getName();
+        String name = Bukkit.getOfflinePlayer(Objects.requireNonNull(Whitelist.getBindUUID(memberID))).getName();
         if (name == null) {
             return;
         }
@@ -221,13 +224,13 @@ public class Group extends SimpleListenerHost {
         NormalMember member = e.getSender();
         String message = e.getMessage().contentToString();
         long memberID = member.getId();
-        if (group.getId() != Config.MainGroup && group.getMembers().contains(memberID)) {
+        if (group.getId() != Config.MainGroup && group.contains(memberID)) {
             return;
         }
 
         for (String n : Config.commandPrefix) {// 遍历前缀数组
             if (message.startsWith(n)) {// 如果开头符合
-                String answer = Function.on(message.substring(1), memberID);
+                String answer = OceanBot.occommand.execute(message.substring(1), memberID, false);
                 if (!answer.equals("")) {
                     group.sendMessage(answer);
                 }

@@ -12,15 +12,16 @@ import java.util.UUID;
 
 public class Whois {
     public static String core(String on, Long SenderID) {
-        if (on == null) {// 查自己
-            if (Whitelist.getBind(SenderID) != null) {
-                return search(Whitelist.getBind(SenderID));
+        if (on == null) {// 无参即查自己
+            if (Whitelist.contains(SenderID)) {
+                return search(Whitelist.getBindUUID(SenderID));
             } else {
                 return "你还没有绑定游戏ID呢";
             }
+        } else {
+            long qqNum = Process.stringToQBind(on);
+            return qqNum == 0 ? "查无此人" : search(Whitelist.getBindUUID(qqNum));
         }
-        long qqNum = Process.stringToQBind(on);
-        return qqNum == 0 ? "查无此人" : search(Whitelist.getBind(qqNum));
     }
 
     private static String search(UUID uuid) {
@@ -41,7 +42,7 @@ public class Whois {
             }
             return "ID: " + Bukkit.getOfflinePlayer(uuid).getName() + " " + f + "\n" +
                     "UUID: " + uuid + "\n" +
-                    "QQ: " + Whitelist.getBind(uuid) + "\n" +
+                    "QQ: " + Whitelist.getBindQQ(uuid) + "\n" +
                     "经济: " + OceanBot.econ.getBalance(player) + "米币\n" +
                     "加入时间: " + dateFormat.format(player.getFirstPlayed()) + "\n" +
                     "最近游玩: " + dateFormat.format(player.getLastSeen());

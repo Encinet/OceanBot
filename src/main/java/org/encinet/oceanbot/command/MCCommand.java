@@ -5,8 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.file.Whitelist;
-import org.encinet.oceanbot.common.Function;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -19,13 +20,18 @@ import static org.encinet.oceanbot.OceanBot.prefix;
 public class MCCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(prefix + "你不是玩家");
-            return true;
+        long qq;
+        if (sender instanceof Player) {
+            UUID uuid = Bukkit.getOfflinePlayer(sender.getName()).getUniqueId();
+            qq = Whitelist.getBindQQ(uuid);
+        } else {
+            // 不是玩家就从管理员表中获取一个
+            qq = Config.admin.get(0);
         }
-        UUID uuid = Bukkit.getOfflinePlayer(sender.getName()).getUniqueId();
-        if (args.length < 1 || "help".equals(args[0])) {
-            sender.sendMessage(prefix + Function.on("help", Whitelist.getBind(uuid)));
+        
+        if (args.length < 1) {
+            // 没参数就返回帮助
+            sender.sendMessage(prefix + OceanBot.occommand.execute("help", qq, true));
         } else {
             StringBuilder c = new StringBuilder();
             for (int i = 0; i < args.length; i++) {
@@ -34,7 +40,15 @@ public class MCCommand implements CommandExecutor {
                     c.append(" ");
                 }
             }
-            sender.sendMessage(prefix + Function.on(c.toString(), Whitelist.getBind(uuid)));
+            String rt = OceanBot.occommand.execute(c.toString(), qq, true);
+            if (rt.contains("\n")) {
+                // 多行
+                rt = prefix + " --------\n" + rt + "\n------------";
+            } else {
+                // 单行
+                rt = prefix + rt;
+            }
+            sender.sendMessage(rt);
         }
         return true;
     }

@@ -4,8 +4,7 @@ import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.utils.BotConfiguration;
-import org.encinet.oceanbot.QQ.event.Friend;
-import org.encinet.oceanbot.QQ.event.Group;
+import org.encinet.oceanbot.QQ.event.*;
 
 import java.io.File;
 
@@ -13,12 +12,13 @@ public class Core {
     static Bot bot;
 
     public Core(long qq, String password) {
-        GlobalEventChannel.INSTANCE.registerListenerHost(new Group());
         GlobalEventChannel.INSTANCE.registerListenerHost(new Friend());
+        GlobalEventChannel.INSTANCE.registerListenerHost(new Group());
+        GlobalEventChannel.INSTANCE.registerListenerHost(new Other());
         bot = BotFactory.INSTANCE.newBot(qq, password, new BotConfiguration() {{
             // 配置
             String deviceInfo = "mirai/" + qq + ".json";
-            // fileBasedDeviceInfo(deviceInfo);
+            fileBasedDeviceInfo(deviceInfo);
 
             // 登录协议
             setProtocol(MiraiProtocol.ANDROID_PHONE);
