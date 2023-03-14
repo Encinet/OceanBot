@@ -4,8 +4,8 @@
 
 event 为游戏事件
 
-execute 为游戏QQ公用功能
+common 为游戏QQ公用功能
 
-QQ 为QQ专用(比如QQ事件 QQ绑定)
+QQ 为QQ专用(比如QQ事件 QQ自动对话)
 
 until 为工具

@@ -7,9 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.file.Whitelist;
 import org.encinet.oceanbot.command.Maintenance;
-import org.encinet.oceanbot.until.Data;
+import org.encinet.oceanbot.until.record.BindData;
+import org.encinet.oceanbot.until.record.Data;
 import org.encinet.oceanbot.until.Verify;
 
 import static org.encinet.oceanbot.file.Config.*;
@@ -26,16 +26,17 @@ public class PlayerLogin implements Listener {
         }
 
         boolean allow = false;
-        long binder = Whitelist.getBindQQ(e.getUniqueId());
-        if (binder != 0) {
-            Group members = OceanBot.core.getBot().getGroup(MainGroup);
+        
+        BindData bindData = OceanBot.whitelist.getBind(e.getUniqueId());
+        if (bindData != null) {
+            Group group = OceanBot.core.getBot().getGroup(MainGroup);
 
-            if (members == null) {
+            if (group == null) {
                 e.disallow(
                         AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                         LegacyComponentSerializer.legacyAmpersand().deserialize("服务器启动中, 请稍后再尝试进入"));
                 return;
-            } else if (members.contains(binder)) {
+            } else if (group.contains(bindData.qq())) {
                 allow = true;
             }
         }

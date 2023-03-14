@@ -44,7 +44,7 @@ public class PlayerMessage implements Listener {
         for (Player player : players) {
             if (text.toLowerCase().contains(player.getName().toLowerCase())) {
                 UUID uuid = player.getUniqueId();
-                long qqNum = Whitelist.getBindQQ(uuid);
+                long qqNum = OceanBot.whitelist.getBind(uuid).qq();
 
                 text = text.replace("@" + player.getName(), "[mirai:at:" + qqNum + "]");
                 text = text.replace(player.getName(), "[mirai:at:" + qqNum + "]");

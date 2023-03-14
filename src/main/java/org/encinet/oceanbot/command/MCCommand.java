@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.file.Whitelist;
+import org.encinet.oceanbot.until.record.BindData;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -23,7 +23,13 @@ public class MCCommand implements CommandExecutor {
         long qq;
         if (sender instanceof Player) {
             UUID uuid = Bukkit.getOfflinePlayer(sender.getName()).getUniqueId();
-            qq = Whitelist.getBindQQ(uuid);
+            BindData data = OceanBot.whitelist.getBind(uuid);
+            if (data == null) {
+                sender.sendMessage(prefix + "数据库异常，请联系管理员");
+                return true;
+            } else {
+                qq = data.qq();
+            }
         } else {
             // 不是玩家就从管理员表中获取一个
             qq = Config.admin.get(0);

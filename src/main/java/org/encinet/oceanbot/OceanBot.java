@@ -20,25 +20,28 @@ import top.iseason.bukkittemplate.BukkitTemplate;
 import top.iseason.bukkittemplate.DisableHook;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 public final class OceanBot implements BukkitPlugin {
+    // 插件主类
+    public static Plugin plugin = BukkitTemplate.getPlugin();
     public static final OceanBot INSTANCE = new OceanBot();
     public static final Logger logger = Logger.getLogger("OceanBot");
     public static final String prefix = " §6Ocean§fBot §8>> §r";
+    // 经济
     public static Economy econ;
     public static boolean vaultSupportEnabled = false;
-    public static OcCommand occommand;
-    //插件主类
-    public static Plugin plugin = BukkitTemplate.getPlugin();
+    // mirai
     public static Core core;
-    public static Runnable qq;
+    // 机器人命令
+    public static OcCommand occommand;
+    // 白名单
+    public static Whitelist whitelist;
 
     @Override // 加载插件
     public void onLoad() {
-//        Thread.currentThread().setContextClassLoader(this.getClassLoader());
-        // Service loading.
     }
 
     @Override
@@ -47,7 +50,11 @@ public final class OceanBot implements BukkitPlugin {
         plugin.saveDefaultConfig();
         plugin.reloadConfig();
         Config.load();
-        Whitelist.load();
+        try {
+            whitelist = new Whitelist();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // 依赖
         logger.info("加载依赖");

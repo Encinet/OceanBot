@@ -19,9 +19,9 @@ import net.mamoe.mirai.message.data.MessageSource;
 import net.mamoe.mirai.message.data.QuoteReply;
 import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.file.Whitelist;
+import org.encinet.oceanbot.file.Config;;
 import org.encinet.oceanbot.QQ.consciousness.CS;
+import org.encinet.oceanbot.until.record.BindData;
 import org.encinet.oceanbot.until.HttpUnit;
 import org.encinet.oceanbot.until.Process;
 import org.encinet.oceanbot.until.QQUntil;
@@ -121,7 +121,7 @@ public class Group extends SimpleListenerHost {
                     if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
                         String text = message.substring(1);
 
-                        UUID bind = Whitelist.getBindUUID(memberID);
+                        UUID bind = OceanBot.whitelist.getBind(memberID).uuid();
                         String hoverName = "§7QQ: §3" + memberID + "\n" +
                                 "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
                         final TextComponent textComponent = Component.text("")
@@ -170,7 +170,7 @@ public class Group extends SimpleListenerHost {
         }
         long id = e.getMember().getId();
         // 自带是否存在判断
-        Whitelist.remove(id);
+        OceanBot.whitelist.remove(id);
     }
 
     @EventHandler
@@ -182,11 +182,12 @@ public class Group extends SimpleListenerHost {
         long memberID = member.getId();
         String nick = e.getNew();
 
-        if (!Objects.equals(groupID, MainGroup) || !Whitelist.contains(memberID)) {
+        BindData bindData = OceanBot.whitelist.getBind(memberID);
+        if (!Objects.equals(groupID, MainGroup) || bindData != null) {
             return;
         }
 
-        String name = Bukkit.getOfflinePlayer(Objects.requireNonNull(Whitelist.getBindUUID(memberID))).getName();
+        String name = bindData.name();
         if (name == null) {
             return;
         }

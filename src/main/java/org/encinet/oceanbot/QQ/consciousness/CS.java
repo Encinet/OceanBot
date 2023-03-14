@@ -27,6 +27,6 @@ public class CS {
       have = true;
       builder.append(consciousnessText);
     }
-    return have ? builder.build() : null;
+    return builder.build();
   }
 }

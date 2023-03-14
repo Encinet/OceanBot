@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.until;
+package org.encinet.oceanbot.until.record;
 
 import org.jetbrains.annotations.NotNull;
 
