@@ -43,7 +43,7 @@ public class list extends BasicCommand {
     return sb.toString();
   }
 
-  public static void replaceAll(StringBuilder builder, String from, String to) {
+  private void replaceAll(StringBuilder builder, String from, String to) {
     int index = builder.indexOf(from);
     while (index != -1) {
       builder.replace(index, index + from.length(), to);

@@ -1,0 +1,80 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/Function.java.old",
+      "selection": {
+        "end": {
+          "column": 40,
+          "index": -1,
+          "line": 9
+        },
+        "start": {
+          "column": 43,
+          "index": -1,
+          "line": 8
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/bind.java",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": -1,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": -1,
+          "line": 0
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/Core.java",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": -1,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": -1,
+          "line": 0
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/event/PlayerLogin.java",
+      "selection": {
+        "end": {
+          "column": 19,
+          "index": -1,
+          "line": 46
+        },
+        "start": {
+          "column": 19,
+          "index": -1,
+          "line": 46
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/whois.java",
+      "selection": {
+        "end": {
+          "column": 34,
+          "index": -1,
+          "line": 31
+        },
+        "start": {
+          "column": 34,
+          "index": -1,
+          "line": 31
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/Function.java.old"
+}

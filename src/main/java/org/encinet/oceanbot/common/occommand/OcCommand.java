@@ -13,11 +13,13 @@ public class OcCommand {
 
   public OcCommand() {
     register(new banlist());
+    register(new bind());
     register(new exec());
     register(new group());
     register(new help());
     register(new info());
     register(new list());
+    register(new whois());
   }
 
   private void register(BasicCommand command) {

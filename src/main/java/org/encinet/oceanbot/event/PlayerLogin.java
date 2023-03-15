@@ -12,8 +12,8 @@ import org.encinet.oceanbot.until.record.BindData;
 import org.encinet.oceanbot.until.record.Data;
 import org.encinet.oceanbot.until.Verify;
 
+import static org.encinet.oceanbot.common.occommand.commands.bind.codes;
 import static org.encinet.oceanbot.file.Config.*;
-import static org.encinet.oceanbot.QQ.Bind.code;
 
 public class PlayerLogin implements Listener {
 
@@ -44,10 +44,11 @@ public class PlayerLogin implements Listener {
             e.allow();
         } else {
             String verify;
+            // 防止重复
             do {
                 verify = Verify.get();
-            } while (code.containsKey(verify));
-            code.put(verify, new Data(e.getUniqueId(), e.getName()));
+            } while (codes.containsKey(verify));
+            codes.put(verify, new Data(e.getUniqueId(), e.getName()));
 
             String message = noWhiteKick.replace("%verify%", verify);
             e.disallow(
