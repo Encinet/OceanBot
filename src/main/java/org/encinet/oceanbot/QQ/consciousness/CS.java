@@ -7,8 +7,8 @@ import org.encinet.oceanbot.QQ.consciousness.response.*;
 
 public class CS {
   public static MessageChain enter(String msg) {
-        // builder是否有内容
-        boolean have = false;
+    // builder是否有内容
+    boolean have = false;
     MessageChainBuilder builder = new MessageChainBuilder();
     //            File consciousnessAudio = Audio.get(miraiMessage);
     //            if (consciousnessAudio != null) {
@@ -27,6 +27,7 @@ public class CS {
       have = true;
       builder.append(consciousnessText);
     }
-    return builder.build();
+    MessageChain mChain = builder.build();
+    return mChain.toString().trim() == "" ? null : mChain;
   }
 }

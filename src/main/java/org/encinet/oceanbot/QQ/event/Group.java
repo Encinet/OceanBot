@@ -50,7 +50,7 @@ public class Group extends SimpleListenerHost {
         // 处理事件处理时抛出的异常
         // 向工作群发送报错
         OceanBot.core.getBot().getGroup(LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception.toString());
-        throw new RuntimeException(exception);
+        exception.printStackTrace();
     }
 
     @EventHandler

@@ -4,14 +4,14 @@
       "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/Function.java.old",
       "selection": {
         "end": {
-          "column": 40,
+          "column": 44,
           "index": -1,
-          "line": 9
+          "line": 53
         },
         "start": {
-          "column": 43,
+          "column": 44,
           "index": -1,
-          "line": 8
+          "line": 53
         }
       }
     },
@@ -64,17 +64,77 @@
       "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/whois.java",
       "selection": {
         "end": {
-          "column": 34,
+          "column": 40,
           "index": -1,
-          "line": 31
+          "line": 36
         },
         "start": {
-          "column": 34,
+          "column": 40,
           "index": -1,
-          "line": 31
+          "line": 36
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/consciousness/CS.java",
+      "selection": {
+        "end": {
+          "column": 40,
+          "index": -1,
+          "line": 30
+        },
+        "start": {
+          "column": 40,
+          "index": -1,
+          "line": 30
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/event/Group.java",
+      "selection": {
+        "end": {
+          "column": 36,
+          "index": -1,
+          "line": 52
+        },
+        "start": {
+          "column": 36,
+          "index": -1,
+          "line": 52
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/event/PlayerMessage.java",
+      "selection": {
+        "end": {
+          "column": 73,
+          "index": -1,
+          "line": 35
+        },
+        "start": {
+          "column": 73,
+          "index": -1,
+          "line": 35
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/consciousness/response/Text.java",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": -1,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": -1,
+          "line": 0
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/Function.java.old"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/consciousness/response/Text.java"
 }

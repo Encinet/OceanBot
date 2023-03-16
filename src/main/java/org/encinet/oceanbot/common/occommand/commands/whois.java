@@ -33,11 +33,13 @@ public class whois extends BasicCommand {
                 sb.append("查无此人");
             } else if (datas.size() == 1 ) {
                 sb.append(search(datas.get(0)));
+            } else if (datas.size() >= 5) {
+                sb.append("结果过多，请缩小范围再试吧");
             } else {
                 // datas.size() > 1
-                sb.append("共找到").append(datas.size()).append("条数据\n-----");
+                sb.append("共找到").append(datas.size()).append("条数据");
                 for (BindData data : datas) {
-                    sb.append(search(data));
+                    sb.append("\n-----").append(search(data));
                 }
             }
             return sb.toString();
