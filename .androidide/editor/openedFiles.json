@@ -1,140 +1,35 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/Function.java.old",
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/exec.java",
       "selection": {
         "end": {
-          "column": 44,
+          "column": 27,
           "index": -1,
-          "line": 53
+          "line": 33
         },
         "start": {
-          "column": 44,
+          "column": 27,
           "index": -1,
-          "line": 53
+          "line": 33
         }
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/bind.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/until/QQUntil.java",
       "selection": {
         "end": {
-          "column": 0,
+          "column": 28,
           "index": -1,
-          "line": 0
+          "line": 3
         },
         "start": {
-          "column": 0,
+          "column": 28,
           "index": -1,
-          "line": 0
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/Core.java",
-      "selection": {
-        "end": {
-          "column": 0,
-          "index": -1,
-          "line": 0
-        },
-        "start": {
-          "column": 0,
-          "index": -1,
-          "line": 0
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/event/PlayerLogin.java",
-      "selection": {
-        "end": {
-          "column": 19,
-          "index": -1,
-          "line": 46
-        },
-        "start": {
-          "column": 19,
-          "index": -1,
-          "line": 46
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/whois.java",
-      "selection": {
-        "end": {
-          "column": 40,
-          "index": -1,
-          "line": 36
-        },
-        "start": {
-          "column": 40,
-          "index": -1,
-          "line": 36
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/consciousness/CS.java",
-      "selection": {
-        "end": {
-          "column": 40,
-          "index": -1,
-          "line": 30
-        },
-        "start": {
-          "column": 40,
-          "index": -1,
-          "line": 30
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/event/Group.java",
-      "selection": {
-        "end": {
-          "column": 36,
-          "index": -1,
-          "line": 52
-        },
-        "start": {
-          "column": 36,
-          "index": -1,
-          "line": 52
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/event/PlayerMessage.java",
-      "selection": {
-        "end": {
-          "column": 73,
-          "index": -1,
-          "line": 35
-        },
-        "start": {
-          "column": 73,
-          "index": -1,
-          "line": 35
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/consciousness/response/Text.java",
-      "selection": {
-        "end": {
-          "column": 0,
-          "index": -1,
-          "line": 0
-        },
-        "start": {
-          "column": 0,
-          "index": -1,
-          "line": 0
+          "line": 3
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/consciousness/response/Text.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/until/QQUntil.java"
 }
