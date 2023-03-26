@@ -14,7 +14,7 @@ public class Audio {
     /**
      * 将某段文本重复
      * @param text 原始文本
-     * @param count 重复次数
+     * @param count 重复次数 最小0
      * @return 重复后
      */
     private static String repeat(String text, int count) {

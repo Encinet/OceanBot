@@ -110,7 +110,10 @@ public class Group extends SimpleListenerHost {
                     if (message.startsWith(n)) {// 如果开头符合
                         String answer = OceanBot.occommand.execute(message.substring(1), memberID, false);
                         if (answer != null) {
-                            group.sendMessage(answer);
+                            group.sendMessage(new MessageChainBuilder()
+                                .append(new QuoteReply(messageChain))
+                                .append(answer)
+                                .build());
                         }
                         break;
                     }
