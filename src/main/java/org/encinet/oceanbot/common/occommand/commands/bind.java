@@ -3,6 +3,7 @@ package org.encinet.oceanbot.common.occommand.commands;
 import net.mamoe.mirai.contact.NormalMember;
 import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.until.record.Data;
@@ -19,21 +20,27 @@ public class bind extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq) {
+  public void onCommand(BasicSender sender, String label) {
     String[] args = label.split(" ", 2);
     if (args.length < 2) {
-      return "你还没有输入验证码";
+      sender.sendMessage("你还没有输入验证码");
+      return;
     } else if (!codes.containsKey(args[1])) {
-      return "无效验证码";
+      sender.sendMessage("无效验证码");
+      return;
     } else {
+      long qq = sender.getQQ();
+
       String code = args[1];
       Data data = codes.get(code);
       codes.remove(code);
 
       if (OceanBot.whitelist.contains(qq)) {
-        return "你已经绑定过了";
+        sender.sendMessage("你已经绑定过了");
+        return;
       } else if ((System.currentTimeMillis() - data.getTime()) >= 600000) { // 10分钟
-        return "验证码已过期";
+        sender.sendMessage("验证码已过期");
+        return;
       }
 
       NormalMember member =
@@ -47,18 +54,13 @@ public class bind extends BasicCommand {
       boolean suc = OceanBot.whitelist.add(data.getUUID(), playerName, qq);
 
       if (!suc) {
-        return "数据库出现异常，请联系管理员或稍后再试";
+        sender.sendMessage("数据库出现异常，请联系管理员或稍后再试");
       } else {
         if (!Objects.equals(playerName, nick) && !nick.endsWith("(" + playerName + ")")) {
           member.setNameCard(nick + "(" + playerName + ")");
         }
-        return "绑定成功, 你现在可以进服游玩啦";
+        sender.sendMessage("绑定成功, 你现在可以进服游玩啦");
       }
     }
-  }
-
-  @Override
-  public String onTab(String[] args, long qq) {
-    return null;
   }
 }

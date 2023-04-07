@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.file.Config;
+import org.encinet.oceanbot.common.occommand.sender.MinecraftSender;
 import org.encinet.oceanbot.until.record.BindData;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,13 +31,13 @@ public class MCCommand implements CommandExecutor {
                 qq = data.qq();
             }
         } else {
-            // 不是玩家就从管理员表中获取一个
-            qq = Config.admin.get(0);
+            // 不是玩家QQ=0, 0 is admin
+            qq = 0;
         }
         
         if (args.length < 1) {
             // 没参数就返回帮助
-            sender.sendMessage(prefix + OceanBot.occommand.execute("help", qq, true));
+            OceanBot.occommand.execute(new MinecraftSender(qq, sender), "help");
         } else {
             StringBuilder c = new StringBuilder();
             for (int i = 0; i < args.length; i++) {
@@ -46,15 +46,7 @@ public class MCCommand implements CommandExecutor {
                     c.append(" ");
                 }
             }
-            String rt = OceanBot.occommand.execute(c.toString(), qq, true);
-            if (rt.contains("\n")) {
-                // 多行
-                rt = prefix + " --------\n" + rt + "\n------------";
-            } else {
-                // 单行
-                rt = prefix + rt;
-            }
-            sender.sendMessage(rt);
+            OceanBot.occommand.execute(new MinecraftSender(qq, sender), c.toString());
         }
         return true;
     }

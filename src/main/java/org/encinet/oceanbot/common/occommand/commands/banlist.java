@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ public class banlist extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq) {
+  public void onCommand(BasicSender sender, String label) {
     List<String> banedPlayers = new ArrayList<>();
     for (OfflinePlayer n : Bukkit.getServer().getBannedPlayers()) {
       banedPlayers.add(n.getName());
@@ -24,11 +25,6 @@ public class banlist extends BasicCommand {
     // 统计
     int num = banedPlayers.size();
 
-    return "当前被封禁 " + num + " 人\n" + String.join(", ", banedPlayers);
-  }
-
-  @Override
-  public String onTab(String[] args, long qq) {
-    return null;
+    sender.sendMessage("当前被封禁 " + num + " 人\n" + String.join(", ", banedPlayers));
   }
 }

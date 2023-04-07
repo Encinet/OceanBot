@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.event.PlayerNum;
 import org.encinet.oceanbot.file.Config;
 
@@ -18,7 +19,7 @@ public class list extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq) {
+  public void onCommand(BasicSender sender, String label) {
     StringBuilder sb = new StringBuilder();
     // 更新群昵称
     PlayerNum.chance();
@@ -40,7 +41,7 @@ public class list extends BasicCommand {
     } else {
       sb.append("当前 ").append(num).append(" 人在线\n").append(String.join("\n", onlinePlayers));
     }
-    return sb.toString();
+    sender.sendMessage(sb.toString());
   }
 
   private void replaceAll(StringBuilder builder, String from, String to) {
@@ -50,10 +51,5 @@ public class list extends BasicCommand {
       index += to.length(); // Move to the end of the replacement
       index = builder.indexOf(from, index);
     }
-  }
-
-  @Override
-  public String onTab(String[] args, long qq) {
-    return null;
   }
 }

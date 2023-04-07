@@ -19,7 +19,8 @@ import net.mamoe.mirai.message.data.MessageSource;
 import net.mamoe.mirai.message.data.QuoteReply;
 import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.file.Config;;
+import org.encinet.oceanbot.common.occommand.sender.QQGroupSender;
+import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.QQ.consciousness.CS;
 import org.encinet.oceanbot.until.record.BindData;
 import org.encinet.oceanbot.until.HttpUnit;
@@ -49,7 +50,7 @@ public class Group extends SimpleListenerHost {
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         // 处理事件处理时抛出的异常
         // 向工作群发送报错
-        OceanBot.core.getBot().getGroup(LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception.toString());
+        OceanBot.core.getBot().getGroup(LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception);
         exception.printStackTrace();
     }
 
@@ -57,7 +58,7 @@ public class Group extends SimpleListenerHost {
     public void onMessage(@NotNull GroupMessageEvent event) { // 可以抛出任何异常, 将在 handleException 处理
         net.mamoe.mirai.contact.Group group = event.getGroup();
         long groupID = group.getId();
-        if (!inGroup(groupID)) {
+        if (!isEnableGroup(groupID)) {
             // is not enanle group
             return;
         }
@@ -108,13 +109,7 @@ public class Group extends SimpleListenerHost {
                 // qq command
                 for (String n : Config.commandPrefix) {// 遍历前缀数组
                     if (message.startsWith(n)) {// 如果开头符合
-                        String answer = OceanBot.occommand.execute(message.substring(1), memberID, false);
-                        if (answer != null) {
-                            group.sendMessage(new MessageChainBuilder()
-                                .append(new QuoteReply(messageChain))
-                                .append(answer)
-                                .build());
-                        }
+                        OceanBot.occommand.execute(new QQGroupSender(memberID, group, messageChain), message.substring(1));
                         break;
                     }
                 }
@@ -160,7 +155,8 @@ public class Group extends SimpleListenerHost {
         }
         MessageChain msg = new MessageChainBuilder()
             .append(new At(e.getMember().getId()))
-            .append("\n" + Config.join)
+            .append("\n")
+                .append(Config.join)
             .build();
         group.sendMessage(msg);
     }
@@ -186,7 +182,7 @@ public class Group extends SimpleListenerHost {
         String nick = e.getNew();
 
         BindData bindData = OceanBot.whitelist.getBind(memberID);
-        if (!Objects.equals(groupID, MainGroup) || bindData != null) {
+        if (!Objects.equals(groupID, MainGroup) || bindData == null) {
             return;
         }
 
@@ -201,8 +197,8 @@ public class Group extends SimpleListenerHost {
         }
     }
 
-    protected boolean inGroup(Long qq) {
-        for (Long num : Config.GroupID) {
+    protected boolean isEnableGroup(Long qq) {
+        for (Long num : Config.EnableGroup) {
             if (qq.equals(num)) {
                 return true;
             }
@@ -217,27 +213,6 @@ public class Group extends SimpleListenerHost {
             if (Objects.equals(n, e.getInvitorId())) {
                 e.accept();
                 return;
-            }
-        }
-    }
-
-    // 群聊临时会话
-    @EventHandler
-    public void tempMessage(GroupTempMessageEvent e) {
-        net.mamoe.mirai.contact.Group group = e.getGroup();
-        NormalMember member = e.getSender();
-        String message = e.getMessage().contentToString();
-        long memberID = member.getId();
-        if (group.getId() != Config.MainGroup && group.contains(memberID)) {
-            return;
-        }
-
-        for (String n : Config.commandPrefix) {// 遍历前缀数组
-            if (message.startsWith(n)) {// 如果开头符合
-                String answer = OceanBot.occommand.execute(message.substring(1), memberID, false);
-                if (!answer.equals("")) {
-                    group.sendMessage(answer);
-                }
             }
         }
     }

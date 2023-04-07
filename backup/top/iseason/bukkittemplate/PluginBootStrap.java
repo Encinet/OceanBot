@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * 插件启动代理类，由自定义 ClassLoader加载
  */
-public final class PluginBootStrap {
+public class PluginBootStrap {
     private BukkitPlugin bukkitPlugin;
     private JavaPlugin javaPlugin;
 
@@ -15,13 +15,14 @@ public final class PluginBootStrap {
     }
 
     private void onLoad(Float ignore) {
-//        ReflectionUtil.enable();
+        ReflectionUtil.enable();
         // 加载阶段如果报错直接中断加载
         bukkitPlugin.onLoad();
     }
 
     private void onEnable(Boolean ignore) {
         //启动阶段允许报错
+
         try {
             bukkitPlugin.onEnable();
         } catch (Throwable e) {

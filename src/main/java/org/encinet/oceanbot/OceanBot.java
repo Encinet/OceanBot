@@ -42,11 +42,7 @@ public final class OceanBot implements BukkitPlugin {
 
     @Override // 加载插件
     public void onLoad() {
-    }
-
-    @Override
-    public void onEnable() {
-        logger.info("加载配置文件");
+        logger.info("Loading Config.yml");
         plugin.saveDefaultConfig();
         plugin.reloadConfig();
         Config.load();
@@ -55,33 +51,36 @@ public final class OceanBot implements BukkitPlugin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void onEnable() {
         // 依赖
-        logger.info("加载依赖");
+        logger.info("Loading Dependencies");
         if (Bukkit.getPluginManager().getPlugin("Vault") != null && Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Vault")).isEnabled()) {
             RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
             if (rsp == null) {
-                logger.warning("无法找到经济插件");
+                logger.warning("Unable To Find The Economy Plugin");
                 vaultSupportEnabled = false;
             } else {
                 econ = rsp.getProvider();
-                logger.info("Vault Hook成功");
+                logger.info("Vault Hook Successfully");
                 vaultSupportEnabled = true;
             }
         } else {
-            logger.warning("Vault 未启用");
+            logger.warning("Vault Feature Disable");
         }
 
-        logger.info("注册监听");
+        logger.info("Registering Event Listeners");
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new PlayerLogin(), plugin);
         pm.registerEvents(new PlayerMessage(), plugin);
         pm.registerEvents(new PlayerNum(), plugin);
 
-        logger.info("注册Ocean指令");
+        logger.info("Registering Ocean Command");
         occommand = new OcCommand();
         
-        logger.info("注册Minecraft指令");
+        logger.info("Registering Minecraft Command");
         if (Bukkit.getPluginCommand("oc") != null) {
             Objects.requireNonNull(Bukkit.getPluginCommand("oc")).setExecutor(new MCCommand());
         }
@@ -92,7 +91,7 @@ public final class OceanBot implements BukkitPlugin {
             Objects.requireNonNull(Bukkit.getPluginCommand("mt")).setExecutor(new Maintenance());
         }
 
-        logger.info("插件成功开启");
+        logger.info("Plugin Loaded Successfully");
     }
 
     @Override
@@ -111,9 +110,9 @@ public final class OceanBot implements BukkitPlugin {
     public void onAsyncEnable() {
         ClassLoader old = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(BukkitTemplate.isolatedClassLoader);
-        logger.info("启动Bot中");
+        logger.info("Starting Mirai");
         try {
-            core = new Core(1802732019, "5CMg66JcKSZydi");
+            core = new Core(Config.BotID, Config.BotPassword);
             core.getBot().join();
         } finally {
             Thread.currentThread().setContextClassLoader(old);

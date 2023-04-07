@@ -5,6 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.until.Process;
 import org.encinet.oceanbot.until.record.BindData;
 
@@ -17,14 +18,14 @@ public class whois extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq) {
+  public void onCommand(BasicSender sender, String label) {
         String[] args = label.split(" ", 2);
-        // TODO 模糊查询
+        long qq = sender.getQQ();
         if (args.length == 1) {// 无参即查自己
             if (OceanBot.whitelist.contains(qq)) {
-                return search(OceanBot.whitelist.getBind(qq));
+                sender.sendMessage(search(OceanBot.whitelist.getBind(qq)));
             } else {
-                return "你还没有绑定游戏ID呢";
+                sender.sendMessage("你还没有绑定游戏ID呢");
             }
         } else {// 有参 支持模糊查询
             StringBuilder sb = new StringBuilder();
@@ -42,13 +43,8 @@ public class whois extends BasicCommand {
                     sb.append("\n-----").append(search(data));
                 }
             }
-            return sb.toString();
+            sender.sendMessage(sb.toString());
         }
-  }
-
-  @Override
-  public String onTab(String[] args, long qq) {
-    return null;
   }
     
     private List<BindData> getFromText(String text) {

@@ -3,6 +3,7 @@ package org.encinet.oceanbot.QQ.event;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
+import org.encinet.oceanbot.common.occommand.sender.QQFriendSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.OceanBot;
 
@@ -21,10 +22,7 @@ public class Friend extends SimpleListenerHost {
 
             for (String n : Config.commandPrefix) {// 遍历前缀数组
                 if (message.startsWith(n)) {// 如果开头符合
-                    String answer = OceanBot.occommand.execute(message.substring(1), friendId, false);
-                    if (!answer.equals("")) {
-                        friend.sendMessage(answer);
-                    }
+                    OceanBot.occommand.execute(new QQFriendSender(friend), message.substring(1));
                     break;
                 }
             }

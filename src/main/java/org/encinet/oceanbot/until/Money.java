@@ -2,7 +2,6 @@ package org.encinet.oceanbot.until;
 
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.OfflinePlayer;
-import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.OceanBot;
 
 import java.math.BigDecimal;

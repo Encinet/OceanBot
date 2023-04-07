@@ -1,6 +1,7 @@
 package org.encinet.oceanbot.common.occommand;
 
 import org.encinet.oceanbot.common.occommand.commands.*;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.until.QQUntil;
 import org.encinet.oceanbot.until.TextUntil;
@@ -15,6 +16,7 @@ public class OcCommand {
     register(new banlist());
     register(new bind());
     register(new exec());
+    register(new gpt());
     register(new group());
     register(new help());
     register(new info());
@@ -34,14 +36,12 @@ public class OcCommand {
    * @param color 是否显示颜色 一般mc显示 qq不显示
    * @return 命令输出
    */
-  public String execute(String label, long qq, boolean color) {
+  public void execute(BasicSender sender, String label) {
     String commandHead = label.split(" ", 2)[0];
+    long qq = sender.getQQ();
     BasicCommand command = getFromHead(commandHead);
     if (command != null && QQUntil.canEnter(command.getAdmin(), qq)) {
-      String rt = command.onCommand(label, qq);
-      return color ? TextUntil.removeColorCodes(rt) : rt;
-    } else {
-      return null;
+      command.onCommand(sender, label);
     }
   }
 

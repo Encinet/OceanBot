@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.until.HttpUnit;
 
@@ -20,12 +21,9 @@ public class group extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq) {
+  public void onCommand(BasicSender sender, String label) {
     StringBuilder sb = new StringBuilder();
-    String[] args = label.split(" ");
-        if (args.length < 1) {
-            return null;
-        }
+    String[] args = label.split(" ", 2);
         net.mamoe.mirai.contact.Group group = OceanBot.core.getBot().getGroup(Config.MainGroup);
         switch (args[1]) {
             case "check" -> {
@@ -33,27 +31,22 @@ public class group extends BasicCommand {
                 sb.append("开始检查");
                 ContactList<NormalMember> members = group.getMembers();
                 for (NormalMember member : members) {
-                    try {
                     long memberQQ = member.getId();
-                    String body = HttpUnit.get("https://blacklist.baoziwl.com/api.php?qq=" + memberQQ);
-                    JSONObject data = JSON.parseObject(body);
-                    int status = data.getInteger("status");
-                    if (status == 1) {
-                        String reason = data.getString("text_lite");
-                        sb.append(memberQQ).append(": ").append(reason).append("\n");
-                    }
+                    try {
+                        String body = HttpUnit.get("https://blacklist.baoziwl.com/api.php?qq=" + memberQQ);
+                        JSONObject data = JSON.parseObject(body);
+                        int status = data.getInteger("status");
+                        if (status == 1) {
+                            String reason = data.getString("text_lite");
+                            sb.append(memberQQ).append(": ").append(reason).append("\n");
+                        }
                     } catch (IOException | IllegalArgumentException | InterruptedException e) {
-                        sb.append(qq).append("查询失败\n");
+                        sb.append(memberQQ).append("查询失败\n");
                     }
                 }
                 sb.append("检查完毕");
             }
         }
-    return sb.toString();
-  }
-
-  @Override
-  public String onTab(String[] args, long qq) {
-    return null;
+    sender.sendMessage(sb.toString());
   }
 }

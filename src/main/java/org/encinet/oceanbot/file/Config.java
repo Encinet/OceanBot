@@ -15,9 +15,10 @@ public class Config {
     public static int ver;
     public static List<String> commandPrefix;
     public static Long BotID;
+    public static String BotPassword;
     public static String BotNick;
     
-    public static List<Long> GroupID;
+    public static List<Long> EnableGroup;
     public static Long MainGroup;
     public static Long LogGroup;
 
@@ -33,18 +34,21 @@ public class Config {
     public static int recallMuteValue;
     public static int recallMuteTime;
     public static List<String> recallText;
+    public static boolean ChatGPT_Enable;
+    public static List<String> ChatGPT_Tokens;
     
     public static void load() {
         OceanBot.plugin.reloadConfig();
 
         ver = config().getInt("ver", 3);
         commandPrefix = config().getStringList("prefix");
-        BotID = config().getLong("BotID");
+        BotID = config().getLong("bot.id");
+        BotPassword = config().getString("bot.password", "");
         BotNick = config().getString("BotNick", "Bot");
         
-        GroupID = config().getLongList("GroupID");
-        MainGroup = config().getLong("MainGroup");
-        LogGroup = config().getLong("LogGroup");
+        EnableGroup = config().getLongList("group.enable");
+        MainGroup = config().getLong("group.main");
+        LogGroup = config().getLong("group.log");
 
         numMessage = new HashMap<>();
         List<Map<?, ?>> nums = config().getMapList("NumMessage");
@@ -61,10 +65,15 @@ public class Config {
         serverToQQ = config().getString("chat.format.server-to-qq");
 
         admin = config().getLongList("admin");
-        
-        recallEnable = config().getBoolean("recall.enable", true);
+        // 0 is admin, Minecraft Console is 0
+        admin.add(0L);
+
+        recallEnable = config().getBoolean("recall.enable", false);
         recallMuteValue = config().getInt("recall.mute.value", 3);
         recallMuteTime = config().getInt("recall.mute.time", 120);
         recallText = config().getStringList("recall.text");
+
+        ChatGPT_Enable = config().getBoolean("ChatGPT.enable", false);
+        ChatGPT_Tokens = config().getStringList("ChatGPT.tokens");
     }
 }

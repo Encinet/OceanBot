@@ -5,13 +5,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import top.iseason.bukkittemplate.BukkitTemplate;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+
+import static java.util.Objects.requireNonNull;
 
 public class PluginDependency {
 
@@ -19,18 +17,7 @@ public class PluginDependency {
      * 解析下载plugin.yml中的依赖
      */
     public static boolean parsePluginYml() {
-        YamlConfiguration yml = null;
-        // 为什么不用 classloader 的 getResource呢，因为某些sb系统或者服务端会乱改
-        // 导致 getResource 的内容错误, 已测试 Debian + CatServer
-        String location = PluginDependency.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        try (JarFile jarFile = new JarFile(URLDecoder.decode(location, "UTF-8"), false)) {
-            JarEntry entry = jarFile.getJarEntry("plugin.yml");
-            InputStream resource = jarFile.getInputStream(entry);
-            yml = YamlConfiguration.loadConfiguration(new InputStreamReader(resource));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (yml == null) return true;
+        YamlConfiguration yml = YamlConfiguration.loadConfiguration(new InputStreamReader(requireNonNull(BukkitTemplate.class.getClassLoader().getResourceAsStream("plugin.yml"), "Jar does not contain plugin.yml")));
         ConfigurationSection libConfigs = yml.getConfigurationSection("runtime-libraries");
         if (libConfigs == null) return true;
         DependencyDownloader dd = new DependencyDownloader();
@@ -64,7 +51,6 @@ public class PluginDependency {
         }
         dd.dependencies = map;
         DependencyDownloader.assembly.addAll(libConfigs.getStringList("assembly"));
-        DependencyDownloader.exists.addAll(libConfigs.getStringList("excludes"));
         return dd.start(libConfigs.getBoolean("parallel", false));
     }
 }

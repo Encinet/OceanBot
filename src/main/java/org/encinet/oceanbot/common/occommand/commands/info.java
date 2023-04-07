@@ -6,6 +6,7 @@ import java.util.*;
 import java.text.DecimalFormat;
 
 import org.encinet.oceanbot.common.occommand.BasicCommand;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 
 public class info extends BasicCommand {
   public info() {
@@ -13,7 +14,7 @@ public class info extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq) {
+  public void onCommand(BasicSender sender, String label) {
     StringBuilder sb = new StringBuilder();
     sb.append("服务器版本: ")
         .append(Bukkit.getVersion())
@@ -56,12 +57,7 @@ public class info extends BasicCommand {
         .append("=")
         .append(unitByte(du));
 
-    return sb.toString();
-  }
-
-  @Override
-  public String onTab(String[] args, long qq) {
-    return null;
+    sender.sendMessage(sb.toString());
   }
 
   private static String unitByte(long enter) {

@@ -1,5 +1,9 @@
 package org.encinet.oceanbot.common.occommand;
 
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
+
+import java.util.List;
+
 public abstract class BasicCommand {
   // 命令头
   final String head;
@@ -33,9 +37,11 @@ public abstract class BasicCommand {
     this(head, new String[] {alias}, description, admin);
   }
 
-  public abstract String onCommand(String label, long qq);
+  public abstract void onCommand(BasicSender sender, String label);
 
-  public abstract String onTab(String[] args, long qq);
+  public List<String> onTab(String[] args, long qq) {
+    return null;
+  }
 
   public final String getHead() {
     return this.head;

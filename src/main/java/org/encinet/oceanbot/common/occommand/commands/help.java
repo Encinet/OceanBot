@@ -3,6 +3,7 @@ package org.encinet.oceanbot.common.occommand.commands;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.OcCommand;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.until.QQUntil;
 
@@ -14,14 +15,14 @@ public class help extends BasicCommand {
   }
 
   @Override
-  public String onCommand(String label, long qq) {
+  public void onCommand(BasicSender sender, String label) {
     StringBuilder sb = new StringBuilder();
         
     String[] args = label.split(" ");
     // 第二参数是否存在可用命令头
     BasicCommand choose = args.length == 2 ? OceanBot.occommand.getFromHead(args[1]) : null;
     // 是否拥有权限
-    choose = choose != null && QQUntil.canEnter(choose.getAdmin(), qq) ? choose : null;
+    choose = choose != null && QQUntil.canEnter(choose.getAdmin(), sender.getQQ()) ? choose : null;
         
     if (choose == null) {
       List<BasicCommand> commands = OceanBot.occommand.commands;
@@ -29,7 +30,7 @@ public class help extends BasicCommand {
       sb.append("可用指令前缀 ").append(Config.commandPrefix).append("\n");
       sb.append("-----\n");
       for (BasicCommand command : commands) {
-        if (QQUntil.canEnter(command.getAdmin(), qq)) {
+        if (QQUntil.canEnter(command.getAdmin(), sender.getQQ())) {
         List<String> commandHeads = new ArrayList<>();
         commandHeads.add(command.getHead());
         commandHeads.addAll(Arrays.asList(command.getAlias()));
@@ -59,11 +60,6 @@ public class help extends BasicCommand {
       }
       sb.append("介绍: ").append(choose.getDescription());
     }
-    return sb.toString();
-  }
-
-  @Override
-  public String onTab(String[] args, long qq) {
-    return null;
+    sender.sendMessage(sb.toString());
   }
 }
