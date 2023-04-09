@@ -1,6 +1,9 @@
 package org.encinet.oceanbot.common.occommand.commands;
 
 import com.plexpt.chatgpt.ChatGPT;
+import com.plexpt.chatgpt.entity.chat.ChatCompletion;
+import com.plexpt.chatgpt.entity.chat.ChatCompletionResponse;
+import com.plexpt.chatgpt.entity.chat.Message;
 
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.MessageReceipt;
@@ -33,10 +36,11 @@ public class gpt extends BasicCommand {
   public synchronized void onCommand(BasicSender sender, String label) {
     if (Config.ChatGPT_Enable) {
       String[] split = label.split(" ", 2);
+            long senderQQ = sender.getQQ();
       if (split.length == 1) {
         sender.sendMessage("你似乎什么都没说");
-      } else if (isRunning()) {
-        sender.sendMessage("已有一个ChatGPT在运行中");
+      } else if (isRunning(senderQQ)) {
+        sender.sendMessage("已有一个ChatGPT在运行中或全局ChatGPT大于5");
       } else {
         long now = System.currentTimeMillis();
         if (now >= lastTime + 5000) {
@@ -51,15 +55,16 @@ public class gpt extends BasicCommand {
           lastTime = now;
           new Thread(() -> {
                             try {
-            sender.sendMessage(chatGPT.chat(split[1]));
-                    } catch () {
-                        
+            sender.sendMessage(chat(split[1]));
+                    } catch (RuntimeException e) {
+                        sender.sendMessage("出现异常 请稍后再试");
+                        e.getStackTrace();
                     } finally {
             if (mr != null) {
                 mr.recall();
             }
                                 }
-          }, "OceanBot-ChatGPT").start();
+          }, "OceanBot-ChatGPT-" + senderQQ).start();
         } else {
           sender.sendMessage("全局信息发送过快");
         }
@@ -69,14 +74,32 @@ public class gpt extends BasicCommand {
     }
   }
 
-  private boolean isRunning() {
-    Map<Thread, StackTraceElement[]> threadMap = Thread.getAllStackTraces();
+  private boolean isRunning(long qq) {
+        int num = 0;
+        String head = "OceanBot-ChatGPT-";
+        Map<Thread, StackTraceElement[]> threadMap = Thread.getAllStackTraces();
     // 遍历所有线程查找是否有线程名为"OceanBot-ChatGPT"的线程
-    for (Thread thread : threadMap.keySet()) {
-      if ("OceanBot-ChatGPT".equals(thread.getName())) {
-        return true;
-      }
-    }
+        for (Thread thread : threadMap.keySet()) {
+            String name = thread.getName();
+            if (name.startsWith(head)) {
+                num++;
+                if (num > 5) {
+                    return true;
+                }
+                if ((head + qq).equals(name)) {
+                    return true;
+                }
+            }
+        }
     return false;
   }
+    
+    private String chat(String message) {
+        ChatCompletion chatCompletion = ChatCompletion.builder()
+                .model(ChatCompletion.Model.GPT_3_5_TURBO.getName())
+                .messages(Arrays.asList(Message.of(message)))
+                .build();
+        ChatCompletionResponse response = chatGPT.chatCompletion(chatCompletion);
+        return response.getChoices().get(0).getMessage().getContent();
+    }
 }

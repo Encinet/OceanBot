@@ -12,11 +12,7 @@ import net.mamoe.mirai.contact.*;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.*;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.MessageChain;
-import net.mamoe.mirai.message.data.MessageChainBuilder;
-import net.mamoe.mirai.message.data.MessageSource;
-import net.mamoe.mirai.message.data.QuoteReply;
+import net.mamoe.mirai.message.data.*;
 import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.sender.QQGroupSender;
@@ -106,6 +102,14 @@ public class Group extends SimpleListenerHost {
                 }
             }
             if (message.length() > 1) {
+                // Get quote
+                QuoteReply quote = messageChain.get(QuoteReply.Key);
+                        if (quote != null) {
+                            MessageSource source = quote.getSource();
+                            if ("撤回".equals(message) && source.getFromId() == memberID) {
+                                MessageSource.recall(source);
+                            }
+                        }
                 // qq command
                 for (String n : Config.commandPrefix) {// 遍历前缀数组
                     if (message.startsWith(n)) {// 如果开头符合

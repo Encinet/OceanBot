@@ -1,5 +1,7 @@
 package org.encinet.oceanbot.file;
 
+import net.mamoe.mirai.utils.BotConfiguration.MiraiProtocol;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.encinet.oceanbot.OceanBot;
 
@@ -16,6 +18,7 @@ public class Config {
     public static List<String> commandPrefix;
     public static Long BotID;
     public static String BotPassword;
+    public static MiraiProtocol BotProtocol;
     public static String BotNick;
     
     public static List<Long> EnableGroup;
@@ -44,6 +47,13 @@ public class Config {
         commandPrefix = config().getStringList("prefix");
         BotID = config().getLong("bot.id");
         BotPassword = config().getString("bot.password", "");
+        BotProtocol = switch (config().getString("bot.protocol", "").toLowerCase()) {
+            case "android_pad" -> MiraiProtocol.ANDROID_PAD;
+            case "android_watch" -> MiraiProtocol.ANDROID_WATCH;
+            case "ipad" -> MiraiProtocol.IPAD;
+            case "macos" -> MiraiProtocol.MACOS;
+            default -> MiraiProtocol.ANDROID_PHONE;
+        };
         BotNick = config().getString("BotNick", "Bot");
         
         EnableGroup = config().getLongList("group.enable");

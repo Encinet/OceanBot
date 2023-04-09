@@ -21,6 +21,7 @@ public class OcCommand {
     register(new help());
     register(new info());
     register(new list());
+    register(new reload());
     register(new whois());
   }
 

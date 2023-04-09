@@ -27,10 +27,11 @@ public class Whitelist {
         this.con = DriverManager.getConnection("jdbc:sqlite:whitelist.db");
         // setup
         try (Statement st = con.createStatement()) {
+            // 无绑Q时 QQ为0为管理 1为普通用户
             st.executeUpdate("create table if not exists bind("
                 + "UUID VARCHAR(40) PRIMARY KEY NOT NULL,"
                 + "Name VARCHAR(20) NOT NULL UNIQUE,"
-                + "QQ INT8 NOT NULL UNIQUE DEFAULT 0);");
+                + "QQ INT8 NOT NULL UNIQUE DEFAULT 1);");
         }
     }
 

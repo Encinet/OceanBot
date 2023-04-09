@@ -42,19 +42,41 @@ public final class OceanBot implements BukkitPlugin {
 
     @Override // 加载插件
     public void onLoad() {
+        loadPluginFiles();
+    }
+    
+    @Override
+    public void onEnable() {
+        basicLoad();
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+    }
+
+    /**
+     * sync启动
+     */
+    @Override
+    public void onAsyncEnable() {
+        startMirai();
+    }
+    
+    public static void loadPluginFiles() {
         logger.info("Loading Config.yml");
         plugin.saveDefaultConfig();
         plugin.reloadConfig();
         Config.load();
         try {
+            logger.info("Loading Whitelist");
             whitelist = new Whitelist();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void onEnable() {
+    
+    public static void basicLoad() {
         // 依赖
         logger.info("Loading Dependencies");
         if (Bukkit.getPluginManager().getPlugin("Vault") != null && Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("Vault")).isEnabled()) {
@@ -93,21 +115,8 @@ public final class OceanBot implements BukkitPlugin {
 
         logger.info("Plugin Loaded Successfully");
     }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
-
-    public static File getFile(String fileName) {
-        return new File(System.getProperty("user.dir") + "/plugins/OceanBot/" + fileName);
-    }
-
-    /**
-     * sync启动
-     */
-    @Override
-    public void onAsyncEnable() {
+    
+    public static void startMirai() {
         ClassLoader old = Thread.currentThread().getContextClassLoader();
         Thread.currentThread().setContextClassLoader(BukkitTemplate.isolatedClassLoader);
         logger.info("Starting Mirai");
@@ -120,5 +129,9 @@ public final class OceanBot implements BukkitPlugin {
         DisableHook.addTask(()->{
             core.getBot().close();
         });
+    }
+    
+    public static File getFile(String fileName) {
+        return new File(System.getProperty("user.dir") + "/plugins/OceanBot/" + fileName);
     }
 }

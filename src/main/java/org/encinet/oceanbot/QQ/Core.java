@@ -29,7 +29,7 @@ public class Core {
             // 配置
             fileBasedDeviceInfo(new File(dataFolder, "device.json").toString());
             // 登录协议
-            setProtocol(MiraiProtocol.MACOS);
+            setProtocol(Config.BotProtocol);
             // 切换心跳策略
             // https://github.com/mamoe/mirai/blob/dev/docs/Bots.md#%E5%88%87%E6%8D%A2%E5%BF%83%E8%B7%B3%E7%AD%96%E7%95%A5
             // setHeartbeatStrategy(BotConfiguration.HeartbeatStrategy.REGISTER);

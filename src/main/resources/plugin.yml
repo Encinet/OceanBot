@@ -35,11 +35,12 @@ runtime-libraries:
     - org.jetbrains.kotlin:kotlin-stdlib:1.8.10
     - org.jetbrains.kotlin:kotlin-serialization:1.8.10
     - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2
+    - net.kyori:adventure-platform-bukkit:4.3.0
     - net.mamoe:mirai-core:2.14.0,3
     - net.mamoe:mirai-core-jvm:2.14.0
-    - com.alibaba.fastjson2:fastjson2:2.0.26
+    - com.alibaba.fastjson2:fastjson2:2.0.27
     - com.github.MilkBowl:VaultAPI:1.7,1
-    - org.xerial:sqlite-jdbc:3.41.0.0
+    - org.xerial:sqlite-jdbc:3.41.2.1
     # com.github.plexpt:chatgpt和他的依赖们 起
     - com.github.plexpt:chatgpt:4.0.6,3
     - com.squareup.okio:okio:3.3.0

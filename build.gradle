@@ -36,11 +36,12 @@ jar {
 
 dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
-    compileOnly 'me.clip:placeholderapi:2.11.2'
+    compileOnly "net.kyori:adventure-platform-bukkit:4.3.0"
+    compileOnly 'me.clip:placeholderapi:2.11.3'
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
 
-    implementation "org.xerial:sqlite-jdbc:3.41.0.0"
-    implementation 'com.alibaba.fastjson2:fastjson2:2.0.26'
+    implementation "org.xerial:sqlite-jdbc:3.41.2.1"
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.27'
 
     // chatgpt
     implementation 'com.github.plexpt:chatgpt:4.0.6'
@@ -72,5 +73,9 @@ tasks.withType(JavaCompile).configureEach {
 processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
+            // 删除注释,你可以返回null以删除整行，但是IDEA有bug会报错，故而返回了""
+            filter {
+                if (it.trim().startsWith("#")) null else it
+            }
     }
 }
