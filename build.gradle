@@ -38,7 +38,7 @@ dependencies {
     compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
     compileOnly "net.kyori:adventure-platform-bukkit:4.3.0"
     compileOnly 'me.clip:placeholderapi:2.11.3'
-    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7.1"
 
     implementation "org.xerial:sqlite-jdbc:3.41.2.1"
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.27'
