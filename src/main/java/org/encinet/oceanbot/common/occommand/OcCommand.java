@@ -13,11 +13,11 @@ public class OcCommand {
   public static List<BasicCommand> commands = new ArrayList<>();
 
   public OcCommand() {
+    register(new admin());
     register(new banlist());
     register(new bind());
     register(new exec());
     register(new gpt());
-    register(new group());
     register(new help());
     register(new info());
     register(new list());

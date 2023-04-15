@@ -47,7 +47,9 @@ public class bind extends BasicCommand {
           Objects.requireNonNull(OceanBot.core.getBot().getGroup(Config.MainGroup))
               .getMembers()
               .get(qq);
-      assert member != null;
+      if (member == null) {
+        sender.sendMessage("群成员数据出现异常，请联系管理员或稍后再试");
+      }
 
       String nick = member.getNick();
       String playerName = data.getName();

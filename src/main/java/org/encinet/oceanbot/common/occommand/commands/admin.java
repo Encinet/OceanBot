@@ -15,15 +15,15 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class group extends BasicCommand {
-  public group() {
-    super("group", new String[] {"g", "群"}, "...", "群管工具", true);
+public class admin extends BasicCommand {
+  public admin() {
+    super("admin", "管理", "...", "管理工具", true);
   }
 
   @Override
   public void onCommand(BasicSender sender, String label) {
     StringBuilder sb = new StringBuilder();
-    String[] args = label.split(" ", 2);
+    String[] args = label.split(" ");
         net.mamoe.mirai.contact.Group group = OceanBot.core.getBot().getGroup(Config.MainGroup);
         switch (args[1]) {
             case "check" -> {
@@ -46,6 +46,39 @@ public class group extends BasicCommand {
                 }
                 sb.append("检查完毕");
             }
+            case "bind" -> {
+                // .admin bind <uuid> <qq>
+                UUID uuid = UUID.fromString(args[2]);
+                long qq = Long.parseLong(args[3]);
+                
+                if (args.length == 4) {
+                NormalMember member =
+          Objects.requireNonNull(group)
+              .getMembers()
+              .get(qq);
+      if (member == null) {
+        sender.sendMessage("在主群中找不到此QQ号");
+      }
+
+      OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+                
+      String nick = member.getNick();
+      String playerName = player.getName();
+      boolean suc = OceanBot.whitelist.add(uuid, playerName, qq);
+
+      if (!suc) {
+        sender.sendMessage("数据库出现异常");
+      } else {
+        if (!Objects.equals(playerName, nick) && !nick.endsWith("(" + playerName + ")")) {
+          member.setNameCard(nick + "(" + playerName + ")");
+        }
+        sender.sendMessage("绑定成功 " + playerName + "(" + uuid + ")-" + 11);
+      }
+                
+            } else {
+                sender.sendMessage("缺少参数");
+            }
+                }
         }
     sender.sendMessage(sb.toString());
   }

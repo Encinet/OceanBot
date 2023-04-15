@@ -1,110 +1,20 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/build.gradle",
-      "selection": {
-        "end": {
-          "column": 32,
-          "index": -1,
-          "line": 53
-        },
-        "start": {
-          "column": 32,
-          "index": -1,
-          "line": 53
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/resources/plugin.yml",
-      "selection": {
-        "end": {
-          "column": 44,
-          "index": -1,
-          "line": 40
-        },
-        "start": {
-          "column": 44,
-          "index": -1,
-          "line": 40
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/resources/config.yml",
-      "selection": {
-        "end": {
-          "column": 8,
-          "index": -1,
-          "line": 0
-        },
-        "start": {
-          "column": 8,
-          "index": -1,
-          "line": 0
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/common/occommand/commands/reload.java",
-      "selection": {
-        "end": {
-          "column": 25,
-          "index": -1,
-          "line": 15
-        },
-        "start": {
-          "column": 25,
-          "index": -1,
-          "line": 15
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/OceanBot.java",
-      "selection": {
-        "end": {
-          "column": 68,
-          "index": -1,
-          "line": 30
-        },
-        "start": {
-          "column": 68,
-          "index": -1,
-          "line": 30
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/QQ/Core.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/OceanBot/src/main/java/org/encinet/oceanbot/common/occommand/commands/admin.java",
       "selection": {
         "end": {
           "column": 0,
           "index": -1,
-          "line": 0
+          "line": 85
         },
         "start": {
           "column": 0,
           "index": -1,
-          "line": 0
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/java/org/encinet/oceanbot/file/Whitelist.java",
-      "selection": {
-        "end": {
-          "column": 34,
-          "index": -1,
-          "line": 29
-        },
-        "start": {
-          "column": 34,
-          "index": -1,
-          "line": 29
+          "line": 85
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/oceanbot/src/main/resources/plugin.yml"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/OceanBot/src/main/java/org/encinet/oceanbot/common/occommand/commands/admin.java"
 }
