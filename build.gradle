@@ -41,7 +41,7 @@ dependencies {
     compileOnly "com.github.MilkBowl:VaultAPI:1.7.1"
 
     implementation "org.xerial:sqlite-jdbc:3.41.2.1"
-    implementation 'com.alibaba.fastjson2:fastjson2:2.0.27'
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.28'
 
     // chatgpt
     implementation 'com.github.plexpt:chatgpt:4.0.6'
