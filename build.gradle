@@ -1,12 +1,17 @@
-plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.8.20' // 确保添加 Kotlin
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
-    id 'java'
+subprojects {
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+
+version = project.version
+group = project.group
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
 }
-
-group = 'org.encinet'
-version = '1.0-SNAPSHOT'
-
+    
 repositories {
     maven {
         name = "aliyun"
@@ -14,68 +19,5 @@ repositories {
     }
     mavenCentral()
     jcenter()
-    maven {
-        name = 'purpur'
-        url = 'https://repo.purpurmc.org/snapshots'
-    }
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
-    maven {
-        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
-    }
-    maven { url 'https://jitpack.io' }
 }
-
-jar {
-    manifest{
-        attributes('Main-Class': 'org.encinet.oceanbot.OceanBot')
-    }
-}
-
-dependencies {
-    compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
-    compileOnly "net.kyori:adventure-platform-bukkit:4.3.0"
-    compileOnly 'me.clip:placeholderapi:2.11.3'
-    compileOnly "com.github.MilkBowl:VaultAPI:1.7.1"
-
-    implementation "org.xerial:sqlite-jdbc:3.41.2.1"
-    implementation 'com.alibaba.fastjson2:fastjson2:2.0.27'
-
-    // chatgpt
-    implementation 'com.github.plexpt:chatgpt:4.0.6'
-    
-    // mirai
-    api platform("net.mamoe:mirai-bom:2.14.0")
-    api "net.mamoe:mirai-core-api"     // 编译代码使用
-    runtimeOnly "net.mamoe:mirai-core" // 运行时使用
-
-    implementation fileTree(dir: 'lib', include: ['*.jar'])
-}
-
-def targetJavaVersion = 17
-java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
-    }
-}
-
-processResources {
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
-            // 删除注释,你可以返回null以删除整行，但是IDEA有bug会报错，故而返回了""
-            filter {
-                if (it.trim().startsWith("#")) null else it
-            }
-    }
 }

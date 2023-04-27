@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "modid",
+  "version": "${version}",
+
+  "name": "OceanBot",
+  "description": "Connect QQ",
+  "authors": [
+    "ObcbO"
+  ],
+  "contact": {
+    "homepage": "https://jq.qq.com/?_wv=1027&k=XyYlZUQu",
+    "sources": "https://github.com/encinet/OceanBot"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.encinet.oceanbot.FabricBootstrap"
+    ]
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.17",
+    "fabric-api": "*",
+    "minecraft": "~1.19.2",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

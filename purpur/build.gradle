@@ -1,0 +1,29 @@
+repositories {
+    maven {
+        name = 'purpur'
+        url = 'https://repo.purpurmc.org/snapshots'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+    maven { url 'https://jitpack.io' }
+}
+
+jar {
+    manifest{
+        attributes('Main-Class': 'org.encinet.oceanbot.OceanBot')
+    }
+}
+
+dependencies {
+    compileOnly 'org.purpurmc.purpur:purpur-api:1.19.2-R0.1-SNAPSHOT'
+    compileOnly "net.kyori:adventure-platform-bukkit:4.3.0"
+    compileOnly 'me.clip:placeholderapi:2.11.3'
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7.1"
+    
+    implementation project(':common')
+}
