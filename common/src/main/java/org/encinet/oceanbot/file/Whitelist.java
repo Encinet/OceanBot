@@ -1,29 +1,30 @@
-package org.encinet.kitebot.file;
+package org.encinet.oceanbot.file;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.encinet.KiteBot.OceanBot;
-import org.encinet.KiteBot.until.record.BindData;
+import org.encinet.oceanbot.OceanBot;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
+import org.encinet.oceanbot.until.record.BindData;
 
 public final class Whitelist {
+    String file;
     Connection con;
     
     // 记得测试sql注入
-    public Whitelist() throws SQLException {
+    public Whitelist(String file) throws SQLException {
+        this.file = file;
         load();
     }
 
-    public void load(String file) throws SQLException {
+    public void load() throws SQLException {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException("Failed to load SQLite JDBC class", e);
         }
-        KiteBot.logger.warning("SQLite driver loaded");
+        OceanBot.logger.warning("SQLite driver loaded");
         this.con = DriverManager.getConnection("jdbc:sqlite:" + file);
         // setup
         try (Statement st = con.createStatement()) {

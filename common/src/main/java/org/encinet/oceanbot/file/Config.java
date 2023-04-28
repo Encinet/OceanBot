@@ -1,4 +1,4 @@
-package org.encinet.kitebot.file;
+package org.encinet.oceanbot.file;
 
 import net.mamoe.mirai.utils.BotConfiguration.MiraiProtocol;
 
@@ -88,10 +88,17 @@ public final class Config {
             ChatGPT_Enable = (boolean) chatGPT.get("enable");
             ChatGPT_Tokens = (List<String>) chatGPT.get("tokens");
             
-            List<Map<String, Object>> numMessage = (List<Map<String, Object>>) data.get("NumMessage");
+            numMessage = new HashMap<>();
+            List<Map<?, ?>> nums = (List<Map<?, ?>>) data.get("NumMessage");
+            for (final Map<?, ?> map : nums) {
+                int num = (int) map.get("num");
+                List<String> messages = (List<String>) map.get("text");
+
+                numMessage.put(num, messages);
+            }
             
             noWhiteKick = (String) data.get("noWhiteKick");
-            
+            join = (String) data.get("join");
         } catch (IOException e) {
             e.printStackTrace();
         }

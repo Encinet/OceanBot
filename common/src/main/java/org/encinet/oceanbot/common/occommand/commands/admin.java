@@ -3,9 +3,8 @@ package org.encinet.oceanbot.common.occommand.commands;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import net.mamoe.mirai.contact.*;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
@@ -24,7 +23,7 @@ public class admin extends BasicCommand {
   public void onCommand(BasicSender sender, String label) {
     StringBuilder sb = new StringBuilder();
     String[] args = label.split(" ");
-        net.mamoe.mirai.contact.Group group = OceanBot.core.getBot().getGroup(Config.MainGroup);
+        net.mamoe.mirai.contact.Group group = OceanBot.core.getBot().getGroup(OceanBot.config.MainGroup);
         switch (args[1]) {
             case "check" -> {
                 // 云黑名单查询
@@ -60,19 +59,18 @@ public class admin extends BasicCommand {
         sender.sendMessage("在主群中找不到此QQ号");
       }
 
-      OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+      Adapter.Player player = this.adapter.Server.getPlayer(uuid);
                 
       String nick = member.getNick();
-      String playerName = player.getName();
-      boolean suc = OceanBot.whitelist.add(uuid, playerName, qq);
+      boolean suc = OceanBot.whitelist.add(uuid, player.name, qq);
 
       if (!suc) {
         sender.sendMessage("数据库出现异常");
       } else {
-        if (!Objects.equals(playerName, nick) && !nick.endsWith("(" + playerName + ")")) {
-          member.setNameCard(nick + "(" + playerName + ")");
+        if (!Objects.equals(player.name, nick) && !nick.endsWith("(" + player.name + ")")) {
+          member.setNameCard(nick + "(" + player.name + ")");
         }
-        sender.sendMessage("绑定成功 " + playerName + "(" + uuid + ")-" + 11);
+        sender.sendMessage("绑定成功 " + player.name + "(" + uuid + ")-" + 11);
       }
                 
             } else {

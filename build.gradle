@@ -22,5 +22,12 @@ repositories {
     maven {
         url "https://oss.sonatype.org/content/repositories/releases/"
     }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 }

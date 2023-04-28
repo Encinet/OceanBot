@@ -1,13 +1,10 @@
 package org.encinet.kitebot.mirai.consciousness.response;
 
-import org.encinet.oceanbot.command.Maintenance;
-
 import java.util.concurrent.ThreadLocalRandom;
-
-import static org.encinet.oceanbot.file.Config.BotID;
+import org.encinet.oceanbot.OceanBot;
 
 public class Text {
-    private static final String at = "[mirai:at:" + BotID.toString() + "]";
+    private static final String at = "[mirai:at:" + OceanBot.config.BotID + "]";
 
     // 以下是检测类
     private static final String[] Interrogative = {"?", "？", "如何", "怎么", "为什么", "为啥", "咋"};
@@ -95,11 +92,11 @@ public class Text {
      */
     private static String query(String text) {
         // 服务器维护
-        if (Maintenance.enable) {
-            if (text.contains("进不去") || text.contains("人呢") || text.contains("没人")) {
-                return "服务器维护中哦";
-            }
-        }
+        //if (Maintenance.enable) {
+        //    if (text.contains("进不去") || text.contains("人呢") || text.contains("没人")) {
+        //        return "服务器维护中哦";
+        //    }
+        //}
         // 一般
         if (text.contains("白名单")) {
             return "看公告啊魂淡";

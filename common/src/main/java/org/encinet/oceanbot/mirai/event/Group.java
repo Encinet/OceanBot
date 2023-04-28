@@ -13,8 +13,8 @@ import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.*;
 import net.mamoe.mirai.message.data.*;
-import org.encinet.oceanbot.KiteBot;
-import org.encinet.oceanbot.common.command.sender.QQGroupSender;
+import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.common.occommand.sender.QQGroupSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.mirai.consciousness.CS;
 import org.encinet.oceanbot.until.record.BindData;
@@ -38,7 +38,7 @@ public class Group extends SimpleListenerHost {
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         // 处理事件处理时抛出的异常
         // 向工作群发送报错
-        KiteBot.core.getBot().getGroup(Config.LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception);
+        OceanBot.core.getBot().getGroup(OceanBot.config.LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception);
         exception.printStackTrace();
     }
 
@@ -64,13 +64,13 @@ public class Group extends SimpleListenerHost {
             MemberPermission memberPermission = member.getPermission();
             
             // 关键词检测
-            if (Config.recallEnable && QQUntil.shouldRecall(message)) {
+            if (OceanBot.config.recallEnable && QQUntil.shouldRecall(message)) {
                 if (botPermission.getLevel() > memberPermission.getLevel()) {
                     MessageSource.recall(messageChain);
                     Process.mapCountAdd(tiger, memberID);
-                    if (tiger.get(memberID) >= Config.recallMuteValue) {
+                    if (tiger.get(memberID) >= OceanBot.config.recallMuteValue) {
                         if (!NormalMemberKt.isMuted(normalMember)) {
-                            member.mute(Config.recallMuteTime);
+                            member.mute(OceanBon.config.recallMuteTime);
                         }
                         tiger.remove(memberID);
                     }
@@ -92,16 +92,16 @@ public class Group extends SimpleListenerHost {
                             }
                         }
                 // qq command
-                for (String n : Config.commandPrefix) {// 遍历前缀数组
+                for (String n : OceanBot.config.commandPrefix) {// 遍历前缀数组
                     if (message.startsWith(n)) {// 如果开头符合
-                        KiteBot.occommand.execute(new QQGroupSender(memberID, group, messageChain), message.substring(1));
+                        OceanBot.occommand.execute(new QQGroupSender(memberID, group, messageChain), message.substring(1));
                         break;
                     }
                 }
                 // message send each other
-                for (String n : Config.chatPrefix) {
+                for (String n : OceanBot.config.chatPrefix) {
                     // 群向服发送消息
-                    if (message.startsWith(n) && Objects.equals(groupID, MainGroup)) {
+                    if (message.startsWith(n) && Objects.equals(groupID, OceanBot.config.MainGroup)) {
                         String text = message.substring(1);
 
                         UUID bind = OceanBot.whitelist.getBind(memberID).uuid();
@@ -136,13 +136,13 @@ public class Group extends SimpleListenerHost {
     @EventHandler
     public void join(@NotNull MemberJoinEvent e) {
         net.mamoe.mirai.contact.Group group = e.getGroup();
-        if (!Objects.equals(group.getId(), MainGroup)) {
+        if (!Objects.equals(group.getId(), OceanBot.config.MainGroup)) {
             return;
         }
         MessageChain msg = new MessageChainBuilder()
             .append(new At(e.getMember().getId()))
             .append("\n")
-                .append(Config.join)
+                .append(OceanBot.config.join)
             .build();
         group.sendMessage(msg);
     }
@@ -150,12 +150,12 @@ public class Group extends SimpleListenerHost {
     @EventHandler
     public void leave(@NotNull MemberLeaveEvent e) {
         net.mamoe.mirai.contact.Group group = e.getGroup();
-        if (!Objects.equals(group.getId(), MainGroup)) {
+        if (!Objects.equals(group.getId(), OceanBot.config.MainGroup)) {
             return;
         }
         long id = e.getMember().getId();
         // 自带是否存在判断
-        KiteBot.whitelist.remove(id);
+        OceanBot.whitelist.remove(id);
     }
 
     @EventHandler
@@ -167,8 +167,8 @@ public class Group extends SimpleListenerHost {
         long memberID = member.getId();
         String nick = e.getNew();
 
-        BindData bindData = KiteBot.whitelist.getBind(memberID);
-        if (!Objects.equals(groupID, MainGroup) || bindData == null) {
+        BindData bindData = OceanBot.whitelist.getBind(memberID);
+        if (!Objects.equals(groupID, OceanBot.config.MainGroup) || bindData == null) {
             return;
         }
 
@@ -184,7 +184,7 @@ public class Group extends SimpleListenerHost {
     }
 
     protected boolean isEnableGroup(Long qq) {
-        for (Long num : Config.EnableGroup) {
+        for (Long num : OceanBot.config.EnableGroup) {
             if (qq.equals(num)) {
                 return true;
             }
@@ -195,7 +195,7 @@ public class Group extends SimpleListenerHost {
     // 同意管理的邀请
     @EventHandler
     public void invite(BotInvitedJoinGroupRequestEvent e) {
-        for (long n : Config.admin) {
+        for (long n : OceanBot.config.admin) {
             if (Objects.equals(n, e.getInvitorId())) {
                 e.accept();
                 return;
@@ -214,7 +214,7 @@ public class Group extends SimpleListenerHost {
         if (status == 1) {
             String reason = data.getString("text_lite");
             e.reject(true, "联合封禁" + (reason == null ? "" : ":" + reason));
-            KiteBot.core.getBot().getGroup(MainGroup).sendMessage("拒绝 " + qq + " 的入群申请\n云黑名单: " + reason);
+            OceanBot.core.getBot().getGroup(OceanBot.config.MainGroup).sendMessage("拒绝 " + qq + " 的入群申请\n云黑名单: " + reason);
         }
     }
 }

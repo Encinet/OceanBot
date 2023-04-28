@@ -1,4 +1,4 @@
-package org.encinet.kitebot.mirai.consciousness;
+package org.encinet.oceanbot.mirai.consciousness;
 
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;

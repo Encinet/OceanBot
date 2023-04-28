@@ -1,7 +1,6 @@
 package org.encinet.oceanbot.common.occommand.commands;
 
 import net.mamoe.mirai.contact.NormalMember;
-import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
@@ -44,7 +43,7 @@ public class bind extends BasicCommand {
       }
 
       NormalMember member =
-          Objects.requireNonNull(OceanBot.core.getBot().getGroup(Config.MainGroup))
+          Objects.requireNonNull(OceanBot.core.getBot().getGroup(OceanBot.config.MainGroup))
               .getMembers()
               .get(qq);
       if (member == null) {

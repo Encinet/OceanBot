@@ -1,9 +1,7 @@
 package org.encinet.oceanbot.common.occommand.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.until.Process;
@@ -72,25 +70,21 @@ public class whois extends BasicCommand {
   private String search(BindData data) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(data.uuid());
-        boolean online = player.isOnline();
+        Adapter.Player player = this.adapter.Server.getPlayer(data.uuid());
         if (!player.hasPlayedBefore()) {
             return "此玩家尚未进服";
         } else {
             String f;
-            if (online) {
-                Player o = Bukkit.getPlayer(data.uuid());
-                assert o != null;
-                f = "在线 " + o.getPing() + "ms";
+            if (player.isOnline()) {
+                f = "在线 " + player.ping + "ms";
             } else {
                 f = player.isBanned() ? "封禁" : "离线";
             }
-            return "ID: " + player.getName() + " " + f + "\n" +
+            return "ID: " + player.name + " " + f + "\n" +
                     "UUID: " + data.uuid() + "\n" +
                     "QQ: " + data.qq() + "\n" +
-                    "经济: " + OceanBot.econ.getBalance(player) + "米币\n" +
-                    "加入时间: " + dateFormat.format(player.getFirstPlayed()) + "\n" +
-                    "最近游玩: " + dateFormat.format(player.getLastSeen());
+                    "加入时间: " + dateFormat.format(player.firstPlayed) + "\n" +
+                    "最近游玩: " + dateFormat.format(player.lastSeen);
         }
     }
 }

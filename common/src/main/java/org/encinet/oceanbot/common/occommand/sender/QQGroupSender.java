@@ -34,6 +34,6 @@ public class QQGroupSender extends BasicSender {
 
     @Override
     public long getQQ() {
-        return  senderQQ;
+        return senderQQ;
     }
 }

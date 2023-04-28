@@ -1,4 +1,4 @@
-package org.encinet.kitebot.mirai.consciousness.AI;
+package org.encinet.oceanbot.mirai.consciousness.AI;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

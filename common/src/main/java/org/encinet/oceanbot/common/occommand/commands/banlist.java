@@ -1,8 +1,7 @@
 package org.encinet.oceanbot.common.occommand.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 
@@ -17,8 +16,8 @@ public class banlist extends BasicCommand {
   @Override
   public void onCommand(BasicSender sender, String label) {
     List<String> banedPlayers = new ArrayList<>();
-    for (OfflinePlayer n : Bukkit.getServer().getBannedPlayers()) {
-      banedPlayers.add(n.getName());
+    for (Adapter.Player player : this.adapter.Server.getBannedPlayers()) {
+      banedPlayers.add(player.name);
     }
     // 字母顺序
     banedPlayers = banedPlayers.stream().sorted().collect(Collectors.toList());

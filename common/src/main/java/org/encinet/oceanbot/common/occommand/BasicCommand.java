@@ -1,10 +1,13 @@
 package org.encinet.oceanbot.common.occommand;
 
+import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 
 import java.util.List;
 
 public abstract class BasicCommand {
+  public final Adapter adapter = OceanBot.occommand.adapter;
   // 命令头
   final String head;
   // 命令头别名

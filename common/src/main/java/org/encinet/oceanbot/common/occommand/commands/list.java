@@ -1,11 +1,9 @@
 package org.encinet.oceanbot.common.occommand.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.encinet.oceanbot.OceanBot;
+import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
-import org.encinet.oceanbot.event.PlayerNum;
 import org.encinet.oceanbot.file.Config;
 
 import java.util.*;
@@ -21,12 +19,10 @@ public class list extends BasicCommand {
   @Override
   public void onCommand(BasicSender sender, String label) {
     StringBuilder sb = new StringBuilder();
-    // 更新群昵称
-    PlayerNum.chance();
     // 添加玩家id列表
     List<String> onlinePlayers = new ArrayList<>();
-    for (Player n : Bukkit.getServer().getOnlinePlayers()) {
-      onlinePlayers.add(n.getName() + (n.isAfk() ? " [AFK]" : ""));
+    for (Adapter.Player n : this.adapter.Server.getOnlinePlayers()) {
+      onlinePlayers.add(n.name + (n.AFK ? " [AFK]" : ""));
     }
     // 字母顺序
     onlinePlayers = onlinePlayers.stream().sorted().collect(Collectors.toList());

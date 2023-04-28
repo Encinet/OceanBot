@@ -13,4 +13,6 @@ dependencies {
     
     // mirai
     shadow 'net.mamoe:mirai-core:2.14.0'
+    
+    implementation "net.kyori:adventure-api:4.13.1"
 }

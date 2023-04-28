@@ -1,7 +1,8 @@
-package org.encinet.kitebot.mirai.consciousness.AI;
+package org.encinet.oceanbot.mirai.consciousness.AI;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.until.HttpUnit;
 
 import java.io.IOException;
@@ -9,13 +10,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.encinet.kitebot.file.Config;
-
 public class AI {
     // the key is qq number, value is System.currentTimeMillis()
     static Map<Long, Long> dialogue = new ConcurrentHashMap<>();
     // 提及文本
-    static final String[] mentions = {"机器人", String.valueOf(BotID), "@" + BotID, "oceanbot", "ocean bot"};
+    static final String[] mentions = {"机器人", String.valueOf(OceanBot.config.BotID), "@" + OceanBot.config.BotID, "oceanbot", "ocean bot"};
     // 等待用户回复时间 (millis)
     static final long WAITING_TIME = 30000;
     // 回复的概率 (1-100)
