@@ -1,15 +1,15 @@
-package org.encinet.oceanbot.QQ.consciousness.AI;
+package org.encinet.kitebot.mirai.consciousness.AI;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import org.encinet.oceanbot.until.HttpUnit;
+import org.encinet.oceanbot.common.until.HttpUnit;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.encinet.oceanbot.file.Config.BotID;
+import org.encinet.kitebot.file.Config;
 
 public class AI {
     // the key is qq number, value is System.currentTimeMillis()

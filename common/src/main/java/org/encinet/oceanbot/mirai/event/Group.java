@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.QQ.event;
+package org.encinet.oceanbot.mirai.event;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -13,11 +13,10 @@ import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.*;
 import net.mamoe.mirai.message.data.*;
-import org.bukkit.Bukkit;
-import org.encinet.oceanbot.OceanBot;
-import org.encinet.oceanbot.common.occommand.sender.QQGroupSender;
+import org.encinet.oceanbot.KiteBot;
+import org.encinet.oceanbot.common.command.sender.QQGroupSender;
 import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.QQ.consciousness.CS;
+import org.encinet.oceanbot.mirai.consciousness.CS;
 import org.encinet.oceanbot.until.record.BindData;
 import org.encinet.oceanbot.until.HttpUnit;
 import org.encinet.oceanbot.until.Process;
@@ -31,22 +30,15 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.encinet.oceanbot.file.Config.*;
-
 public class Group extends SimpleListenerHost {
     private static final Map<Long, Integer> tiger = new ConcurrentHashMap<>();// 线程安全
-    
-    private static long yuukLastTime = 0;
-    private static final Random random = new Random();
-    // 给一个要中考的朋友加的（ 忽略就好
-    private static final String[] study = {"滚去学习", "火速滚去学习", "踏马的，想读职专？", "rnm, 快去学习", "建议主播火速滚去学习"};
 
 
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
         // 处理事件处理时抛出的异常
         // 向工作群发送报错
-        OceanBot.core.getBot().getGroup(LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception);
+        KiteBot.core.getBot().getGroup(Config.LogGroup).sendMessage("Bot Error " + System.currentTimeMillis() + "\n" + exception);
         exception.printStackTrace();
     }
 
@@ -90,17 +82,6 @@ public class Group extends SimpleListenerHost {
                 }
                 return;
             }
-            // YuuK
-            if (Objects.equals(memberID, 2704804982L)) {
-                long nowTime = System.currentTimeMillis();
-                if ((nowTime - yuukLastTime) >= 60000L) {
-                    yuukLastTime = nowTime;
-                    group.sendMessage(new MessageChainBuilder()
-                        .append(new QuoteReply(messageChain))
-                        .append(study[random.nextInt(study.length)])
-                        .build());
-                }
-            }
             if (message.length() > 1) {
                 // Get quote
                 QuoteReply quote = messageChain.get(QuoteReply.Key);
@@ -113,7 +94,7 @@ public class Group extends SimpleListenerHost {
                 // qq command
                 for (String n : Config.commandPrefix) {// 遍历前缀数组
                     if (message.startsWith(n)) {// 如果开头符合
-                        OceanBot.occommand.execute(new QQGroupSender(memberID, group, messageChain), message.substring(1));
+                        KiteBot.occommand.execute(new QQGroupSender(memberID, group, messageChain), message.substring(1));
                         break;
                     }
                 }
@@ -138,7 +119,8 @@ public class Group extends SimpleListenerHost {
                                         .clickEvent(ClickEvent.runCommand("/oc !whois " + memberID)))
                                 .append(Component.text(": ").color(NamedTextColor.GRAY))
                                 .append(Component.text(text).hoverEvent(HoverEvent.showText(Component.text(event.getTime()))));
-                        Bukkit.getServer().sendMessage(textComponent);
+                        // Bukkit.getServer().sendMessage(textComponent);
+                        KiteBot.SERVER.getPlayerManager().broadcast(textComponent);
                         break;
                     }
                 }
@@ -173,7 +155,7 @@ public class Group extends SimpleListenerHost {
         }
         long id = e.getMember().getId();
         // 自带是否存在判断
-        OceanBot.whitelist.remove(id);
+        KiteBot.whitelist.remove(id);
     }
 
     @EventHandler
@@ -185,7 +167,7 @@ public class Group extends SimpleListenerHost {
         long memberID = member.getId();
         String nick = e.getNew();
 
-        BindData bindData = OceanBot.whitelist.getBind(memberID);
+        BindData bindData = KiteBot.whitelist.getBind(memberID);
         if (!Objects.equals(groupID, MainGroup) || bindData == null) {
             return;
         }
@@ -232,7 +214,7 @@ public class Group extends SimpleListenerHost {
         if (status == 1) {
             String reason = data.getString("text_lite");
             e.reject(true, "联合封禁" + (reason == null ? "" : ":" + reason));
-            OceanBot.core.getBot().getGroup(MainGroup).sendMessage("拒绝 " + qq + " 的入群申请\n云黑名单: " + reason);
+            KiteBot.core.getBot().getGroup(MainGroup).sendMessage("拒绝 " + qq + " 的入群申请\n云黑名单: " + reason);
         }
     }
 }

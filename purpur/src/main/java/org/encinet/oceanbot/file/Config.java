@@ -10,37 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Config {
-    public static FileConfiguration config() {
+    public FileConfiguration config() {
         return OceanBot.plugin.getConfig();
     }
-
-    public static int ver;
-    public static List<String> commandPrefix;
-    public static Long BotID;
-    public static String BotPassword;
-    public static MiraiProtocol BotProtocol;
-    public static String BotNick;
     
-    public static List<Long> EnableGroup;
-    public static Long MainGroup;
-    public static Long LogGroup;
-
-    public static Map<Integer, List<String>> numMessage;
-    public static String noWhiteKick;
-    public static List<String> chatPrefix;
-    public static String serverToQQ;
-    public static String join;
-
-    public static List<Long> admin;
-    
-    public static boolean recallEnable;
-    public static int recallMuteValue;
-    public static int recallMuteTime;
-    public static List<String> recallText;
-    public static boolean ChatGPT_Enable;
-    public static List<String> ChatGPT_Tokens;
-    
-    public static void load() {
+    public void load() {
         OceanBot.plugin.reloadConfig();
 
         ver = config().getInt("ver", 3);

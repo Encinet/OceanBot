@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-public class Whitelist {
+public final class Whitelist {
     Connection con;
     
     // 记得测试sql注入

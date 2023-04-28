@@ -55,8 +55,9 @@ public class FabricBootstrap implements ModInitializer {
         });
         
         try {
-            config = FileManager.config();
-            whitelist = FileManager.whitelist();
+            FileManager fileManager = new FileManager(new File(FabricLoader.getInstance().getConfigDirectory(), "kitebot"));
+            config = fileManager.config();
+            whitelist = fileManager.whitelist();
 	        LOGGER.info("File loaded");
         } catch (IOException e) {
             e.printStackTrace();

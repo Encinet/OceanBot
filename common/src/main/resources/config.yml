@@ -7,7 +7,7 @@ bot:
   id: 1802732019
   password: "5CMg66JcKSZydi"
   protocol: "ANDROID_WATCH"
-BotNick: "人工制杖"
+  main-group-nick: "人工制杖"
 group:
   # 开启机器人基础功能的群(命令)
   enable:

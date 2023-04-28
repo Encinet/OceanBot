@@ -3,30 +3,10 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-repositories {
-    maven {
-        name = "aliyun"
-        url = "https://maven.aliyun.com/repository/public"
-    }
-    mavenCentral()
-    jcenter()
-    maven {
-        name = 'purpur'
-        url = 'https://repo.purpurmc.org/snapshots'
-    }
-    maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
-    maven {
-        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
-    }
-    maven { url 'https://jitpack.io' }
-}
-
 dependencies {
     implementation "org.xerial:sqlite-jdbc:3.41.2.1"
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.27'
+    implementation 'org.yaml:snakeyaml:2.0'
 
     // chatgpt
     implementation 'com.github.plexpt:chatgpt:4.0.6'

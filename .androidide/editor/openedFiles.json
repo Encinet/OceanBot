@@ -1,50 +1,35 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/OceanBot/.github/workflows/build.yml",
+      "file": "/storage/emulated/0/AndroidIDEProjects/OceanBot/common/src/main/java/org/encinet/oceanbot/file/Config.java",
       "selection": {
         "end": {
-          "column": 0,
+          "column": 12,
           "index": -1,
-          "line": 0
+          "line": 93
         },
         "start": {
-          "column": 0,
+          "column": 12,
           "index": -1,
-          "line": 0
+          "line": 93
         }
       }
     },
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/OceanBot/.gitignore",
+      "file": "/storage/emulated/0/AndroidIDEProjects/OceanBot/common/build.gradle",
       "selection": {
         "end": {
-          "column": 0,
+          "column": 43,
           "index": -1,
-          "line": 0
+          "line": 8
         },
         "start": {
-          "column": 0,
+          "column": 43,
           "index": -1,
-          "line": 0
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/OceanBot/purpur/build.gradle",
-      "selection": {
-        "end": {
-          "column": 0,
-          "index": -1,
-          "line": 0
-        },
-        "start": {
-          "column": 0,
-          "index": -1,
-          "line": 0
+          "line": 8
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/OceanBot/.github/workflows/build.yml"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/OceanBot/common/src/main/java/org/encinet/oceanbot/file/Config.java"
 }

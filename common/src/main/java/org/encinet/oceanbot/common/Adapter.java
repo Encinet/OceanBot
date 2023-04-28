@@ -1,6 +1,6 @@
 package org.encinet.oceanbot.common;
 
-public abstract class adapter {
+public abstract class Adapter {
     public abstract class Player {
     }
     

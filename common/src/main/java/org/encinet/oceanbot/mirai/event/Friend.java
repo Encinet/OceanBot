@@ -1,15 +1,13 @@
-package org.encinet.oceanbot.QQ.event;
+package org.encinet.oceanbot.mirai.event;
 
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
-import org.encinet.oceanbot.common.occommand.sender.QQFriendSender;
-import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.OceanBot;
+import org.encinet.kitebot.common.command.sender.QQFriendSender;
+import org.encinet.kitebot.file.Config;
+import org.encinet.kitebot.KiteBot;
 
 import java.util.Objects;
-
-import static org.encinet.oceanbot.file.Config.MainGroup;
 
 public class Friend extends SimpleListenerHost {
 
@@ -17,7 +15,7 @@ public class Friend extends SimpleListenerHost {
     public void Players(FriendMessageEvent e) {
         net.mamoe.mirai.contact.Friend friend = e.getFriend();
         long friendId = friend.getId();
-        if (Objects.requireNonNull(OceanBot.core.getBot().getGroup(MainGroup)).contains(friendId)) {
+        if (Objects.requireNonNull(KiteBot.core.getBot().getGroup(Config.MainGroup)).contains(friendId)) {
             String message = e.getMessage().contentToString();
 
             for (String n : Config.commandPrefix) {// 遍历前缀数组

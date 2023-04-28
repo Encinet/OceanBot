@@ -1,19 +1,19 @@
-package org.encinet.kitebot.mirai;
+package org.encinet.oceanbot.mirai;
 
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.utils.BotConfiguration;
+import net.mamoe.mirai.utils.BotConfiguration.MiraiProtocol;
 
-import org.encinet.kitebot.KiteBot;
-import org.encinet.kitebot.mirai.event.*;
+import org.encinet.oceanbot.mirai.event.*;
 
 import java.io.File;
 
 public class Core {
     static Bot bot;
 
-    public Core(long qq, String password) {
+    public Core(long qq, String password, MiraiProtocol protocal) {
         // 数据文件夹
         File dataFolder = new File("mirai/" + qq + "/");
         if (!dataFolder.exists()) {
@@ -30,7 +30,7 @@ public class Core {
             // 配置
             fileBasedDeviceInfo(new File(dataFolder, "device.json").toString());
             // 登录协议
-            setProtocol(KiteBot.config.BotProtocol);
+            setProtocol(protocal);
             // 切换心跳策略
             // https://github.com/mamoe/mirai/blob/dev/docs/Bots.md#%E5%88%87%E6%8D%A2%E5%BF%83%E8%B7%B3%E7%AD%96%E7%95%A5
             // setHeartbeatStrategy(BotConfiguration.HeartbeatStrategy.REGISTER);
