@@ -17,10 +17,10 @@ import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.sender.QQGroupSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.mirai.consciousness.CS;
-import org.encinet.oceanbot.until.record.BindData;
-import org.encinet.oceanbot.until.HttpUnit;
-import org.encinet.oceanbot.until.Process;
-import org.encinet.oceanbot.until.QQUntil;
+import org.encinet.oceanbot.common.until.record.BindData;
+import org.encinet.oceanbot.common.until.HttpUnit;
+import org.encinet.oceanbot.common.until.Process;
+import org.encinet.oceanbot.common.until.QQUntil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class Group extends SimpleListenerHost {
                     Process.mapCountAdd(tiger, memberID);
                     if (tiger.get(memberID) >= OceanBot.config.recallMuteValue) {
                         if (!NormalMemberKt.isMuted(normalMember)) {
-                            member.mute(OceanBon.config.recallMuteTime);
+                            member.mute(OceanBot.config.recallMuteTime);
                         }
                         tiger.remove(memberID);
                     }
@@ -106,7 +106,7 @@ public class Group extends SimpleListenerHost {
 
                         UUID bind = OceanBot.whitelist.getBind(memberID).uuid();
                         String hoverName = "§7QQ: §3" + memberID + "\n" +
-                                "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : Bukkit.getOfflinePlayer(bind).getName());
+                                "§7绑定ID: §3" + (bind == null ? "§e尚未绑定" : OceanBot.adapter.Server.getPlayer(bind).name);
                         final TextComponent textComponent = Component.text("")
                                 .append(Component.text("§8[§cQQ§8]").hoverEvent(HoverEvent.showText(Component.text("""
                                                 §8| §b这是一条从QQ群发来的消息
@@ -120,7 +120,7 @@ public class Group extends SimpleListenerHost {
                                 .append(Component.text(": ").color(NamedTextColor.GRAY))
                                 .append(Component.text(text).hoverEvent(HoverEvent.showText(Component.text(event.getTime()))));
                         // Bukkit.getServer().sendMessage(textComponent);
-                        OceanBot.adapter.sendMessage(textComponent);
+                        OceanBot.adapter.Server.sendMessage(textComponent);
                         break;
                     }
                 }

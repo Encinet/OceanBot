@@ -1,8 +1,8 @@
-package org.encinet.oceanbot.until;
+package org.encinet.oceanbot.common.until;
 
 import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.until.HttpUnit;
+import org.encinet.oceanbot.common.until.HttpUnit;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -21,7 +21,7 @@ public class QQUntil {
       // 分词api
       String words =
           HttpUnit.get("http://api.pullword.com/get.php?source=" + m + "&param1=0.8&param2=0").toLowerCase();
-      for (String n : Config.recallText) {
+      for (String n : OceanBot.config.recallText) {
         if (words.contains(n)) {
           return true;
         }
@@ -29,7 +29,7 @@ public class QQUntil {
     } catch (IOException | InterruptedException e) {
       OceanBot.core
           .getBot()
-          .getGroup(Config.LogGroup)
+          .getGroup(OceanBot.config.LogGroup)
           .sendMessage("Recall Error " + System.currentTimeMillis() + "\n" + e.toString());
     }
     return false;
@@ -42,7 +42,7 @@ public class QQUntil {
    * @return true 为是管理员
    */
   public static boolean isAdmin(long qq) {
-    for (Long now : Config.admin) {
+    for (Long now : OceanBot.config.admin) {
       if (now.equals(qq)) {
         return true;
       }

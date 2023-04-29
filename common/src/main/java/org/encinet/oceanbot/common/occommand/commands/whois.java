@@ -4,8 +4,8 @@ import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
-import org.encinet.oceanbot.until.Process;
-import org.encinet.oceanbot.until.record.BindData;
+import org.encinet.oceanbot.common.until.Process;
+import org.encinet.oceanbot.common.until.record.BindData;
 
 import java.util.*;
 import java.text.SimpleDateFormat;

@@ -3,7 +3,7 @@ package org.encinet.oceanbot.mirai.consciousness;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 
-import org.encinet.kitebot.mirai.consciousness.response.*;
+import org.encinet.oceanbot.mirai.consciousness.response.*;
 
 public class CS {
   public static MessageChain enter(String msg) {

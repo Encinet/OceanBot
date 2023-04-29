@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.until;
+package org.encinet.oceanbot.common.until;
 
 import org.encinet.oceanbot.OceanBot;
 
@@ -84,7 +84,7 @@ public class Process {
             }
         } catch (NumberFormatException e) {
             // 尝试为游戏ID
-            UUID uuid = adapter.Server.getPlayer(text);
+            UUID uuid = adapter.Server.getPlayer(text).uuid;
             return OceanBot.whitelist.getBind(uuid).qq();
         }
     }

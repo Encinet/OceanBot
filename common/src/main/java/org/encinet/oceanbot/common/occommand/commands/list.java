@@ -28,8 +28,8 @@ public class list extends BasicCommand {
     onlinePlayers = onlinePlayers.stream().sorted().collect(Collectors.toList());
     // 执行
     int num = onlinePlayers.size();
-    if (Config.numMessage.containsKey(num)) {
-      List<String> messages = Config.numMessage.get(num);
+    if (OceanBot.config.numMessage.containsKey(num)) {
+      List<String> messages = OceanBot.config.numMessage.get(num);
       sb.append(messages.get(random.nextInt(messages.size()))); // 随机使用消息
       for (int i = 0; i < num; i++) {
         replaceAll(sb, "{" + i + "}", onlinePlayers.get(i));

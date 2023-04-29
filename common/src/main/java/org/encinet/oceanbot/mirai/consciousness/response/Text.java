@@ -1,4 +1,4 @@
-package org.encinet.kitebot.mirai.consciousness.response;
+package org.encinet.oceanbot.mirai.consciousness.response;
 
 import java.util.concurrent.ThreadLocalRandom;
 import org.encinet.oceanbot.OceanBot;

@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.until;
+package org.encinet.oceanbot.common.until;
 
 import java.util.Random;
 

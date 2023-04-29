@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
-import org.encinet.oceanbot.until.record.BindData;
+import org.encinet.oceanbot.common.until.record.BindData;
 
 public final class Whitelist {
     String file;

@@ -7,6 +7,7 @@ import com.plexpt.chatgpt.entity.chat.Message;
 
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.message.MessageReceipt;
+import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.common.occommand.sender.QQFriendSender;
@@ -19,7 +20,7 @@ public class gpt extends BasicCommand {
 
   ChatGPT chatGPT =
       ChatGPT.builder()
-          .apiKeyList(Config.ChatGPT_Tokens)
+          .apiKeyList(OceanBot.config.ChatGPT_Tokens)
           .timeout(900)
           // .proxy(proxy)
           .apiHost("https://api.openai.com/") // 代理地址
@@ -34,7 +35,7 @@ public class gpt extends BasicCommand {
 
   @Override
   public synchronized void onCommand(BasicSender sender, String label) {
-    if (Config.ChatGPT_Enable) {
+    if (OceanBot.config.ChatGPT_Enable) {
       String[] split = label.split(" ", 2);
             long senderQQ = sender.getQQ();
       if (split.length == 1) {

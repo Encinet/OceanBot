@@ -5,7 +5,7 @@ import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.OcCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.until.QQUntil;
+import org.encinet.oceanbot.common.until.QQUntil;
 
 import java.util.*;
 
@@ -27,7 +27,7 @@ public class help extends BasicCommand {
     if (choose == null) {
       List<BasicCommand> commands = OceanBot.occommand.commands;
       sb.append("消息前加#可发送到服务器或QQ群\n");
-      sb.append("可用指令前缀 ").append(Config.commandPrefix).append("\n");
+      sb.append("可用指令前缀 ").append(OceanBot.config.commandPrefix).append("\n");
       sb.append("-----\n");
       for (BasicCommand command : commands) {
         if (QQUntil.canEnter(command.getAdmin(), sender.getQQ())) {

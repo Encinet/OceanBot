@@ -1,4 +1,4 @@
-package org.encinet.kitebot.mirai.event;
+package org.encinet.oceanbot.mirai.event;
 
 import net.mamoe.mirai.contact.*;
 import net.mamoe.mirai.event.EventHandler;
@@ -10,7 +10,7 @@ import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.MessageSource;
 import net.mamoe.mirai.message.data.QuoteReply;
 
-import org.encinet.kitebot.mirai.consciousness.response.Text;
+import org.encinet.oceanbot.mirai.consciousness.response.Text;
 import org.jetbrains.annotations.NotNull;
 
 public class Other extends SimpleListenerHost {

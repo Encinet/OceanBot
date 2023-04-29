@@ -1,4 +1,4 @@
-package org.encinet.oceanbot.until.record;
+package org.encinet.oceanbot.common.until.record;
 
 import java.util.UUID;
 

@@ -33,7 +33,7 @@ public class FabricAdapter extends Adapter {
             PlayerManager playerManager = FabricBootstrap.SERVER.getPlayerManager();
             List<Player> list = new ArrayList<>();
             for (ServerPlayerEntity player : playerManager.getPlayerList()) {
-                list.add(new Player(player.getName().toString(), player.getUuid(), PlayerStatus.Online)));
+                list.add(new Player(player.getName().toString(), player.getUuid(), PlayerStatus.Online));
             }
             return list;
         }
@@ -42,7 +42,7 @@ public class FabricAdapter extends Adapter {
             List<Player> list = new ArrayList<>();
             for (String playerName : playerManager.getUserBanList().getNames()) {
                 UUID uuid = playerManager.getPlayer(playerName).getUuid();
-                list.add(new Player(playerName, uuid, PlayerStatus.Banned)));
+                list.add(new Player(playerName, uuid, PlayerStatus.Banned));
             }
             return list;
         }
@@ -51,6 +51,7 @@ public class FabricAdapter extends Adapter {
             
         }
         public void sendMessage(Component message) {
+            
         }
     }
 }

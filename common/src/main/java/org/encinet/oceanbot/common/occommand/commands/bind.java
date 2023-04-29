@@ -5,7 +5,7 @@ import org.encinet.oceanbot.OceanBot;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
-import org.encinet.oceanbot.until.record.Data;
+import org.encinet.oceanbot.common.until.record.Data;
 
 import java.util.HashMap;
 import java.util.Map;

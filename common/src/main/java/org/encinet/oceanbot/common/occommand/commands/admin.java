@@ -8,7 +8,7 @@ import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.BasicCommand;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.until.HttpUnit;
+import org.encinet.oceanbot.common.until.HttpUnit;
 
 import java.io.IOException;
 import java.util.*;

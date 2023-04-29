@@ -5,8 +5,8 @@ import org.encinet.oceanbot.common.Adapter;
 import org.encinet.oceanbot.common.occommand.commands.*;
 import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.file.Config;
-import org.encinet.oceanbot.until.QQUntil;
-import org.encinet.oceanbot.until.TextUntil;
+import org.encinet.oceanbot.common.until.QQUntil;
+import org.encinet.oceanbot.common.until.TextUntil;
 
 import java.io.IOException;
 import java.util.ArrayList;
