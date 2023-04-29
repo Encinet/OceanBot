@@ -37,8 +37,6 @@ dependencies {
     
     modImplementation include("net.kyori:adventure-platform-fabric:5.5.1")
     
-    shadow 'com.google.code.gson:gson:2.10.1'
-    
     implementation project(':common')
 }
 

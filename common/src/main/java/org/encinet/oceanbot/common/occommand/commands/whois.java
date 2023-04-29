@@ -83,8 +83,8 @@ public class whois extends BasicCommand {
             return "ID: " + player.name + " " + f + "\n" +
                     "UUID: " + data.uuid() + "\n" +
                     "QQ: " + data.qq() + "\n" +
-                    "加入时间: " + dateFormat.format(player.firstPlayed) + "\n" +
-                    "最近游玩: " + dateFormat.format(player.lastSeen);
+                    ((player.firstPlayed != 0L) ? "加入时间: " + dateFormat.format(player.firstPlayed) + "\n" : "") +
+                    ((player.lastSeen != 0L) ? "最近游玩: " + dateFormat.format(player.lastSeen): "");
         }
     }
 }

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class OceanBot {
     public static Logger logger;
     final File dir;
-    final Adapter adapter;
+    public static Adapter adapter;
     // mirai
     public static Core core;
     // 机器人命令

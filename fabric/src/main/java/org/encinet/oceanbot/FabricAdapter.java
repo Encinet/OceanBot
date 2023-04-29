@@ -1,5 +1,6 @@
 package org.encinet.oceanbot;
 
+import net.kyori.adventure.text.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.PlayerManager;
@@ -20,6 +21,13 @@ public class FabricAdapter extends Adapter {
             PlayerStatus status = playerManager.getUserBanList().get(player.getGameProfile()) == null ? (player == null ? PlayerStatus.Offine : PlayerStatus.Online): PlayerStatus.Banned;
             return new Player(player.getName().toString(), player.getUuid(), status, false, player.pingMilliseconds, 0L, 0L);
         }
+        public Player getPlayer(String name) {
+            PlayerManager playerManager = FabricBootstrap.SERVER.getPlayerManager();
+            ServerPlayerEntity player = playerManager.getPlayer(name);
+            
+            PlayerStatus status = playerManager.getUserBanList().get(player.getGameProfile()) == null ? (player == null ? PlayerStatus.Offine : PlayerStatus.Online): PlayerStatus.Banned;
+            return new Player(player.getName().toString(), player.getUuid(), status, false, player.pingMilliseconds, 0L, 0L);
+        }
         
         public List<Player> getOnlinePlayers() {
             PlayerManager playerManager = FabricBootstrap.SERVER.getPlayerManager();
@@ -34,9 +42,15 @@ public class FabricAdapter extends Adapter {
             List<Player> list = new ArrayList<>();
             for (String playerName : playerManager.getUserBanList().getNames()) {
                 UUID uuid = playerManager.getPlayer(playerName).getUuid();
-                list.add(new Player(playerName, uuid, PlayerStatus.Online)));
+                list.add(new Player(playerName, uuid, PlayerStatus.Banned)));
             }
             return list;
+        }
+        
+        public void sendMessage(String message) {
+            
+        }
+        public void sendMessage(Component message) {
         }
     }
 }

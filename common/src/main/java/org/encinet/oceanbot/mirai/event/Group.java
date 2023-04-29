@@ -120,7 +120,7 @@ public class Group extends SimpleListenerHost {
                                 .append(Component.text(": ").color(NamedTextColor.GRAY))
                                 .append(Component.text(text).hoverEvent(HoverEvent.showText(Component.text(event.getTime()))));
                         // Bukkit.getServer().sendMessage(textComponent);
-                        KiteBot.SERVER.getPlayerManager().broadcast(textComponent);
+                        OceanBot.adapter.sendMessage(textComponent);
                         break;
                     }
                 }

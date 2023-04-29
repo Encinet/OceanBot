@@ -7,7 +7,8 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.IOException;
+import java.io.IOException; 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +78,7 @@ public final class Config {
             
             admin = (List<Long>) data.get("admin");
             
-            Map<String, Object> recall = (Map<String, Object>) data.get("recall")
+            Map<String, Object> recall = (Map<String, Object>) data.get("recall");
             recallEnable = (boolean) recall.get("enable");
             Map<String, Object> mute = (Map<String, Object>) recall.get("mute");
             recallMuteValue = (int) mute.get("value");

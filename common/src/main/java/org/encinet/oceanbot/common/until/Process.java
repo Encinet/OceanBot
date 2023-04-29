@@ -1,11 +1,11 @@
 package org.encinet.oceanbot.until;
 
-import org.bukkit.Bukkit;
 import org.encinet.oceanbot.OceanBot;
 
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.UUID;
+import org.encinet.oceanbot.common.Adapter;
 
 public class Process {
     static final double tickSecond = 20;
@@ -66,7 +66,7 @@ public class Process {
      * @param text 文本
      * @return QQ号码
      */
-    public static long stringToQBind(String text) {
+    public static long stringToQBind(Adapter adapter, String text) {
         try {
             if (text.startsWith("@")) {
                 // @123
@@ -84,7 +84,7 @@ public class Process {
             }
         } catch (NumberFormatException e) {
             // 尝试为游戏ID
-            UUID uuid = Bukkit.getOfflinePlayer(text).getUniqueId();
+            UUID uuid = adapter.Server.getPlayer(text);
             return OceanBot.whitelist.getBind(uuid).qq();
         }
     }
