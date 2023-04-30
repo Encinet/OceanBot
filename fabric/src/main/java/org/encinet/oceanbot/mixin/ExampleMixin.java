@@ -1,4 +1,4 @@
-package org.encinet.kitebot.mixin;
+package org.encinet.oceanbot.mixin;
 
 import org.encinet.oceanbot.FabricBootstrap;
 import net.minecraft.client.gui.screen.TitleScreen;

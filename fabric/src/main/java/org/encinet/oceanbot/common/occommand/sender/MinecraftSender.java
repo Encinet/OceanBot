@@ -1,4 +1,4 @@
-package org.encinet.kitebot.common.command.sender;
+package org.encinet.oceanbot.common.command.sender;
 
 import net.minecraft.text.Text;
 import net.minecraft.server.command.ServerCommandSource;
