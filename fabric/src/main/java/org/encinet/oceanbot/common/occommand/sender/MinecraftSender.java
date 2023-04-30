@@ -3,7 +3,7 @@ package org.encinet.kitebot.common.command.sender;
 import net.minecraft.text.Text;
 import net.minecraft.server.command.ServerCommandSource;
 
-import org.encinet.oceanbot.common.occommand.BasicSender;
+import org.encinet.oceanbot.common.occommand.sender.BasicSender;
 import org.encinet.oceanbot.FabricBootstrap;
 
 public class MinecraftSender extends BasicSender {
@@ -17,7 +17,7 @@ public class MinecraftSender extends BasicSender {
     
     @Override
     public void sendMessage(String message) {
-        String prefix = FabricBootstrap.oceanbot.config.prefix;
+        String prefix = " §6Ocean§fBot §8>> §r";
         if (message.contains("\n")) {
             // 多行
             message = prefix + " --------\n" + message + "\n------------";
