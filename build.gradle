@@ -27,3 +27,7 @@ repositories {
     }
 }
 }
+
+configurations.all {
+    resolutionStrategy.force 'net.mamoe:mirai-core:2.15.0-M1:jvmRuntimeElements-published'
+}
