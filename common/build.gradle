@@ -1,17 +1,17 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.8.20'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.21'
 }
 
 dependencies {
     implementation "org.xerial:sqlite-jdbc:3.41.2.1"
-    implementation 'com.alibaba.fastjson2:fastjson2:2.0.27'
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.29'
     implementation 'org.yaml:snakeyaml:2.0'
 
     // chatgpt
-    implementation 'com.github.plexpt:chatgpt:4.0.6'
+    implementation 'com.github.plexpt:chatgpt:4.0.7'
     
     // mirai
-    implementation 'net.mamoe:mirai-core:2.15.0-M1'
+    implementation 'net.mamoe:mirai-core:2.15.0-M1:jvmRuntimeElements-published'
     
     implementation "net.kyori:adventure-api:4.13.1"
 }

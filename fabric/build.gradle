@@ -33,7 +33,7 @@ dependencies {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
     
-    modImplementation include("net.kyori:adventure-platform-fabric:5.5.1")
+    modImplementation include("net.kyori:adventure-platform-fabric:5.8.0")
     
     shadow project(':common')
 }
