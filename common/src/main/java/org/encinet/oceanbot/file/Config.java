@@ -7,13 +7,16 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.IOException; 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class Config {
-    private File file;
+    private File config;
     
     public List<String> commandPrefix;
     public long BotID;
@@ -42,14 +45,24 @@ public final class Config {
     public String noWhiteKick;
     public String join;
     
-    public Config(File file) {
-        this.file = file;
+    public Config(File config) {
+        this.config = config;
         load();
     }
     
     public void load() {
+        if (!config.exists()) {
+            config.mkdirs();
+            try {
+            Files.copy(Objects.requireNonNull(
+                    this.getClass().getClassLoader().getResourceAsStream(config.getName()),
+                    "Couldn't find the configuration file in the JAR"), config.toPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
         Yaml yaml = new Yaml();
-        try (InputStream inputStream = new FileInputStream(file)) {
+        try (InputStream inputStream = new FileInputStream(config)) {
             Map<String, Object> data = yaml.load(inputStream);
             
             commandPrefix = (List<String>) data.get("prefix");

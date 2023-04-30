@@ -43,6 +43,7 @@ public class FabricBootstrap implements ModInitializer {
     }
     
     private void onServerStarted(MinecraftServer server) {
+        oceanbot.loadMirai();
     }
     
     private void onServerStopping(MinecraftServer server) {

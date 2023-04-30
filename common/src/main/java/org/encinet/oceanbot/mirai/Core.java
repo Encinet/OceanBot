@@ -13,9 +13,9 @@ import java.io.File;
 public class Core {
     static Bot bot;
 
-    public Core(long qq, String password, MiraiProtocol protocal) {
+    public Core(File dir, long qq, String password, MiraiProtocol protocal) {
         // 数据文件夹
-        File dataFolder = new File("mirai/" + qq + "/");
+        File dataFolder = new File(dir, "mirai/" + qq + "/");
         if (!dataFolder.exists()) {
             // mkdir() 是创建文件夹不含父文件夹
             // mkdirs() 是创建文件夹含父文件夹

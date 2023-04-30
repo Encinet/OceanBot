@@ -43,7 +43,7 @@ public class OceanBot {
     }
     
     public void loadMirai() {
-        core = new Core(config.BotID, config.BotPassword, config.BotProtocol);
+        core = new Core(dir, config.BotID, config.BotPassword, config.BotProtocol);
         core.getBot().join();
     }
 }
