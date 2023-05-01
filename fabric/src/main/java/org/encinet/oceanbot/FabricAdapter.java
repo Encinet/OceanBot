@@ -1,10 +1,11 @@
 package org.encinet.oceanbot;
 
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.BannedPlayerList;
+import net.minecraft.text.Text;
 
 import org.encinet.oceanbot.common.Adapter;
 
@@ -48,10 +49,10 @@ public class FabricAdapter extends Adapter {
         }
         
         public void sendMessage(String message) {
-            
+            FabricBootstrap.SERVER.sendMessage(Text.of(message));
         }
-        public void sendMessage(Component message) {
-            
+        public void sendMessage(TextComponent message) {
+            FabricBootstrap.SERVER.sendMessage(message);
         }
     }
 }

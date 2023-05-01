@@ -1,6 +1,6 @@
 package org.encinet.oceanbot.common;
 
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 
 import java.util.List;
 import java.util.UUID;
@@ -61,6 +61,6 @@ public abstract class Adapter {
         public abstract List<Player> getBannedPlayers();
         
         public abstract void sendMessage(String message);
-        public abstract void sendMessage(Component message);
+        public abstract void sendMessage(TextComponent message);
     }
 }
