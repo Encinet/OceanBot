@@ -3,10 +3,8 @@ plugins {
 }
 
 repositories {
-    maven {
-        name = "mirai snapshots"
-        url = "https://repo.mirai.mamoe.net/snapshots"
-    }
+   maven("https://repo.mirai.mamoe.net/snapshots") 
+   maven { url 'https://repo.mirai.mamoe.net/snapshots' }
 }
 
 dependencies {
