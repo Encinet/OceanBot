@@ -2,6 +2,13 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.8.21'
 }
 
+repositories {
+    maven {
+        name = "mirai snapshots"
+        url = "https://repo.mirai.mamoe.net/snapshots"
+    }
+}
+
 dependencies {
     implementation "org.xerial:sqlite-jdbc:3.41.2.1"
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.29'
